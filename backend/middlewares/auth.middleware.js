@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import asyncHandler from 'express-async-handler';
-import User from '../models/User.model';
+const jwt = require('jsonwebtoken');
+const asyncHandler = require('express-async-handler');
+const User = require('../models/User.model');
 
 // Restrict routes to only logged in users using JWT
 const auth = asyncHandler(async (req, res, next) => {
