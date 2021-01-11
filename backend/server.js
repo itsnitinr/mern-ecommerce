@@ -15,7 +15,11 @@ connectDB();
 
 const app = express();
 
-app.get('/', (req, res) => res.send('API is up and running!'));
+// Parse JSON from body
+app.use(express.json());
+
+// Mount routes
+app.use('/api/users', require('./routes/user.routes'));
 
 // Handle errors
 app.use(routeNotFound);
