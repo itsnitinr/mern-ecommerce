@@ -1,0 +1,36 @@
+{
+  "name": "pcb_website",
+  "version": "1.0.0",
+  "description": "A website for PCB manufacturers to showcase and accept orders",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheFirm-dev/PCB_website.git"
+  },
+  "keywords": [
+    "pcb"
+  ],
+  "author": "Nitin Ranganath",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheFirm-dev/PCB_website/issues"
+  },
+  "homepage": "https://github.com/TheFirm-dev/PCB_website#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.11",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.7"
+  }
+}
