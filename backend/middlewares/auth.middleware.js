@@ -13,7 +13,7 @@ const auth = asyncHandler(async (req, res, next) => {
   ) {
     try {
       // Get token from authorization string
-      token = req.headers.authorization.split(' ')[0];
+      token = req.headers.authorization.split(' ')[1];
       // Verify if the token matches
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       // Get the logged in user from decoded token's id field
