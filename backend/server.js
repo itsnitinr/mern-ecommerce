@@ -20,6 +20,7 @@ app.use(express.json());
 
 // Mount routes
 app.use('/api/users', require('./routes/user.routes'));
+app.use('/api/orders', require('./routes/order.routes'));
 
 // Handle errors
 app.use(routeNotFound);
