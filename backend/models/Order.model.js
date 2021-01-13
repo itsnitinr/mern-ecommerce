@@ -63,6 +63,9 @@ const orderSchema = new mongoose.Schema(
         type: Boolean,
         required: [true, 'Please select if you want castellated holes'],
       },
+      remarks: {
+        type: String,
+      },
     },
     orderPrice: {
       type: Number,
