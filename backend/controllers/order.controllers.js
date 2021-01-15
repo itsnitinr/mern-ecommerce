@@ -34,4 +34,22 @@ const placeOrder = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { placeOrder };
+// @route   GET /api/orders/:id
+// @desc    Get order details by ID
+// @access  Private
+const getOrderById = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  );
+
+  // Check if order exists
+  if (order) {
+    res.json(order);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
+module.exports = { placeOrder, getOrderById };
