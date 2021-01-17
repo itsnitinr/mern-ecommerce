@@ -14,10 +14,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="http://thefirm.dev/">
-        The Firm
-      </Link>{' '}
-      {new Date().getFullYear()}
+      <a href="http://thefirm.dev/">The Firm</a> {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -70,7 +67,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to="/" variant="body2">
                 Forgot password?
               </Link>
             </Grid>

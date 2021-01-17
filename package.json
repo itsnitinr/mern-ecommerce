@@ -5,7 +5,9 @@
   "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server",
-    "server": "nodemon backend/server"
+    "server": "nodemon backend/server",
+    "client": "BROWSER=none npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",

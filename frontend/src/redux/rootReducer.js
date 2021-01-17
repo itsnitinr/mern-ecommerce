@@ -1,3 +1,7 @@
 import { combineReducers } from 'redux';
 
-export default combineReducers({});
+import { userRegisterReducer } from './user/user.reducer';
+
+export default combineReducers({
+  userRegister: userRegisterReducer,
+});
