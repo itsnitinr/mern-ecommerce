@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 
 import Notifier from './components/notifier/Notifier.component';
+import LandingPage from './pages/landing/LandingPage.component';
 import SignupPage from './pages/sign-up/SignupPage.component';
 import SigninPage from './pages/sign-in/SigninPage.component';
 import { closeSnackbar } from './redux/alert/alert.actions';
@@ -28,6 +29,7 @@ const App = () => {
           >
             <Notifier />
             <Switch>
+              <Route exact path="/" component={LandingPage} />
               <Route path="/signup" component={SignupPage} />
               <Route path="/signin" component={SigninPage} />
             </Switch>

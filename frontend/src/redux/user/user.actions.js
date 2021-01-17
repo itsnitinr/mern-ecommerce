@@ -8,6 +8,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT,
 } from './user.types';
 
 export const registerUser = (name, email, password) => async (dispatch) => {
@@ -93,4 +94,9 @@ export const loginUser = (email, password) => async (dispatch) => {
       })
     );
   }
+};
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('userInfo');
+  dispatch({ type: LOGOUT });
 };

@@ -5,6 +5,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT,
 } from './user.types';
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -32,6 +33,8 @@ export const userLoginReducer = (state = {}, action) => {
       return { loading: false, user: payload };
     case LOGIN_FAIL:
       return { loading: false, error: payload };
+    case LOGOUT:
+      return {};
     default:
       return state;
   }
