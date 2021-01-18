@@ -45,7 +45,7 @@ export default function Navigation() {
 
   return (
     <>
-      <AppBar color="inherit" elevation={0}>
+      <AppBar color="inherit" elevation={0} position="static">
         <Container maxWidth={false} disableGutters>
           <Toolbar className={classes.searchMobileRoot} disableGutters>
             <InputBase
@@ -63,7 +63,7 @@ export default function Navigation() {
         <Container maxWidth={false}>
           <Toolbar className={classes.navbarWrapper}>
             <div style={{ display: 'flex', flex: 1 }}>
-              <Link to="/">
+              <Link>
                 <Logo className={classes.navbarIcon} />
               </Link>
             </div>

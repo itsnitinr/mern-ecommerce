@@ -28,6 +28,7 @@ export default makeStyles((theme) => ({
   navbarIcon: {
     height: '100%',
     width: '100%',
+    overflow: 'hidden',
     maxWidth: '8rem',
     marginRight: '1rem',
     [theme.breakpoints.up('sm')]: {
