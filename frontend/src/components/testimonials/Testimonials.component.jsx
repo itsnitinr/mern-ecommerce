@@ -24,7 +24,7 @@ const Testimonials = () => {
             <div className={classes.testimonialLeft}>
               <img
                 src={pcbImage}
-                alt="PCB Image"
+                alt="Ordered PCB"
                 className={classes.testimonialImage}
               />
             </div>
@@ -60,7 +60,7 @@ const Testimonials = () => {
             <div className={classes.testimonialLeft}>
               <img
                 src={pcbImage}
-                alt="PCB Image"
+                alt="Ordered PCB"
                 className={classes.testimonialImage}
               />
             </div>
@@ -96,7 +96,7 @@ const Testimonials = () => {
             <div className={classes.testimonialLeft}>
               <img
                 src={pcbImage}
-                alt="PCB Image"
+                alt="Ordered PCB"
                 className={classes.testimonialImage}
               />
             </div>
