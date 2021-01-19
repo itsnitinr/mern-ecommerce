@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
       transform: 'translate(0, -10px)',
       width: '100vw',
       opacity: 1,
+      background: '#eee',
+      border: 'none',
     },
   },
 }));
