@@ -3,9 +3,10 @@ import Navbar from '../../components/navbar/Navbar.component';
 import HeroCarousel from '../../components/hero-carousel/HeroCarousel.component';
 import HeroForm from '../../components/hero-form/HeroForm.component';
 import FeatureCard from '../../components/feature-card/FeatureCard.component';
-import aboutImage from '../../assets/bg1.jpg';
+import Testimonials from '../../components/testimonials/Testimonials.component';
 import useStyles from './LandingPage.styles';
 
+import aboutImage from '../../assets/bg1.jpg';
 import printerImage from '../../assets/3d-printer.svg';
 import microcontrollerImage from '../../assets/microcontroller.svg';
 import pcbImage from '../../assets/pcb.svg';
@@ -105,6 +106,17 @@ const LandingPage = () => {
             </Grid>
           </Grid>
         </div>
+      </section>
+      <section className={classes.testimonialsContainer}>
+        <Typography
+          variant="h4"
+          align="center"
+          className={classes.featuresHeading}
+          color="primary"
+        >
+          Testimonials
+        </Typography>
+        <Testimonials />
       </section>
     </>
   );

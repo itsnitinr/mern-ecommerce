@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     transform: 'skewY(-6deg)',
     maxWidth: '100%',
     overflow: 'hidden',
+    marginBottom: '5rem',
     [theme.breakpoints.down('xs')]: {
       padding: '4rem 2.5rem',
     },
@@ -75,6 +76,9 @@ const useStyles = makeStyles((theme) => ({
     width: '15%',
     margin: '0 auto',
     marginBottom: '4rem',
+  },
+  testimonialsContainer: {
+    padding: '3rem 0',
   },
 }));
 
