@@ -70,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '2px',
     padding: 0,
     marginBottom: '0.75rem',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '2rem',
+    },
   },
   horizontalRule: {
     border: '2px solid white',

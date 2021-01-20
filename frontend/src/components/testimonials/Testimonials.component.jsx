@@ -9,6 +9,7 @@ import pcbImage from '../../assets/bg1.jpg';
 
 const Testimonials = () => {
   const settings = {
+    arrows: true,
     dots: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -19,34 +20,33 @@ const Testimonials = () => {
   return (
     <Slider {...settings} className={classes.wrapper}>
       <div>
-        <Grid container>
-          <Grid item lg={6} sm={6} xs={12}>
-            <div className={classes.testimonialLeft}>
-              <img
-                src={pcbImage}
-                alt="Ordered PCB"
-                className={classes.testimonialImage}
-              />
-            </div>
+        <Grid container className={classes.testimonialCard}>
+          <Grid item sm={6} xs={12}>
+            <img
+              src={pcbImage}
+              className={classes.testimonialCardImage}
+              alt="Ordered PCB"
+            />
           </Grid>
-          <Grid item lg={6} sm={6} xs={12}>
-            <div className={classes.testimonialRight}>
+          <Grid item sm={6} xs={12}>
+            <div className={classes.testimonialCardText}>
               <FormatQuote
-                color="secondary"
                 fontSize="large"
+                color="secondary"
                 className={classes.quoteIcon}
               />
-              <Typography variant="body1" align="center">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
-                blanditiis adipisci provident dolores quis impedit cum nostrum
-                eos odio ipsam aut consectetur eveniet inventore, eaque amet
-                facilis atque natus!
+              <Typography variant="body1" gutterBottom>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
+                odio aspernatur quam ducimus repudiandae voluptate aliquid,
+                nobis consectetur officia, temporibus unde voluptatem cumque
+                praesentium dicta culpa aliquam consequatur veniam magni.
               </Typography>
-              <div className={classes.userDetails}>
+              <div className={classes.userInfo}>
                 <img
-                  src="https://i.pravatar.cc/150"
-                  alt="User Avatar"
+                  src="https://picsum.photos/100"
                   className={classes.userImage}
+                  width="50"
+                  height="50"
                 />
                 <Typography variant="h6">John Doe</Typography>
               </div>
@@ -55,34 +55,33 @@ const Testimonials = () => {
         </Grid>
       </div>
       <div>
-        <Grid container>
-          <Grid item lg={6} sm={6} xs={12}>
-            <div className={classes.testimonialLeft}>
-              <img
-                src={pcbImage}
-                alt="Ordered PCB"
-                className={classes.testimonialImage}
-              />
-            </div>
+        <Grid container className={classes.testimonialCard}>
+          <Grid item sm={6} xs={12}>
+            <img
+              src={pcbImage}
+              className={classes.testimonialCardImage}
+              alt="Ordered PCB"
+            />
           </Grid>
-          <Grid item lg={6} sm={6} xs={12}>
-            <div className={classes.testimonialRight}>
+          <Grid item sm={6} xs={12}>
+            <div className={classes.testimonialCardText}>
               <FormatQuote
-                color="secondary"
                 fontSize="large"
+                color="secondary"
                 className={classes.quoteIcon}
               />
-              <Typography variant="body1" align="center">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
-                blanditiis adipisci provident dolores quis impedit cum nostrum
-                eos odio ipsam aut consectetur eveniet inventore, eaque amet
-                facilis atque natus!
+              <Typography variant="body1" gutterBottom>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
+                odio aspernatur quam ducimus repudiandae voluptate aliquid,
+                nobis consectetur officia, temporibus unde voluptatem cumque
+                praesentium dicta culpa aliquam consequatur veniam magni.
               </Typography>
-              <div className={classes.userDetails}>
+              <div className={classes.userInfo}>
                 <img
-                  src="https://i.pravatar.cc/150"
-                  alt="User Avatar"
+                  src="https://picsum.photos/100"
                   className={classes.userImage}
+                  width="50"
+                  height="50"
                 />
                 <Typography variant="h6">John Doe</Typography>
               </div>
@@ -91,34 +90,33 @@ const Testimonials = () => {
         </Grid>
       </div>
       <div>
-        <Grid container>
-          <Grid item lg={6} sm={6} xs={12}>
-            <div className={classes.testimonialLeft}>
-              <img
-                src={pcbImage}
-                alt="Ordered PCB"
-                className={classes.testimonialImage}
-              />
-            </div>
+        <Grid container className={classes.testimonialCard}>
+          <Grid item sm={6} xs={12}>
+            <img
+              src={pcbImage}
+              className={classes.testimonialCardImage}
+              alt="Ordered PCB"
+            />
           </Grid>
-          <Grid item lg={6} sm={6} xs={12}>
-            <div className={classes.testimonialRight}>
+          <Grid item sm={6} xs={12}>
+            <div className={classes.testimonialCardText}>
               <FormatQuote
-                color="secondary"
                 fontSize="large"
+                color="secondary"
                 className={classes.quoteIcon}
               />
-              <Typography variant="body1" align="center">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
-                blanditiis adipisci provident dolores quis impedit cum nostrum
-                eos odio ipsam aut consectetur eveniet inventore, eaque amet
-                facilis atque natus!
+              <Typography variant="body1" gutterBottom>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
+                odio aspernatur quam ducimus repudiandae voluptate aliquid,
+                nobis consectetur officia, temporibus unde voluptatem cumque
+                praesentium dicta culpa aliquam consequatur veniam magni.
               </Typography>
-              <div className={classes.userDetails}>
+              <div className={classes.userInfo}>
                 <img
-                  src="https://i.pravatar.cc/150"
-                  alt="User Avatar"
+                  src="https://picsum.photos/100"
                   className={classes.userImage}
+                  width="50"
+                  height="50"
                 />
                 <Typography variant="h6">John Doe</Typography>
               </div>

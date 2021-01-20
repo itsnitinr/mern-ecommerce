@@ -3,6 +3,7 @@ import { ThemeProvider, Button } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 
+import Navbar from './components/navbar/Navbar.component';
 import Notifier from './components/notifier/Notifier.component';
 import LandingPage from './pages/landing/LandingPage.component';
 import SignupPage from './pages/sign-up/SignupPage.component';
@@ -28,6 +29,7 @@ const App = () => {
             anchorOrigin={snackbarPosition()}
           >
             <Notifier />
+            <Navbar />
             <Switch>
               <Route exact path="/" component={LandingPage} />
               <Route path="/signup" component={SignupPage} />

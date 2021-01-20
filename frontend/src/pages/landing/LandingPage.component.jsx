@@ -1,5 +1,4 @@
 import { Typography, Container, Button, Grid } from '@material-ui/core';
-import Navbar from '../../components/navbar/Navbar.component';
 import HeroCarousel from '../../components/hero-carousel/HeroCarousel.component';
 import HeroForm from '../../components/hero-form/HeroForm.component';
 import FeatureCard from '../../components/feature-card/FeatureCard.component';
@@ -17,7 +16,6 @@ const LandingPage = () => {
 
   return (
     <>
-      <Navbar />
       <HeroCarousel />
       <HeroForm />
       <section>
@@ -67,7 +65,7 @@ const LandingPage = () => {
       <section className={classes.featuresSection}>
         <div className={classes.featuresContent}>
           <Typography
-            variant="h4"
+            variant="h3"
             align="center"
             className={classes.featuresHeading}
             color="secondary"
@@ -109,12 +107,20 @@ const LandingPage = () => {
       </section>
       <section className={classes.testimonialsContainer}>
         <Typography
-          variant="h4"
+          variant="h2"
           align="center"
           className={classes.featuresHeading}
           color="primary"
         >
           Testimonials
+        </Typography>
+        <Typography
+          variant="h5"
+          align="center"
+          color="secondary"
+          className={classes.featuresHeading}
+        >
+          Clients Love Us
         </Typography>
         <Testimonials />
       </section>
