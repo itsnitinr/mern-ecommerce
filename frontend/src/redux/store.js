@@ -4,7 +4,14 @@ import thunk from 'redux-thunk';
 
 import reducers from './rootReducer';
 
-const initialState = {};
+const userFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null;
+
+const initialState = {
+  userLogin: { user: userFromStorage },
+};
+
 const middleware = [thunk];
 
 const store = createStore(
