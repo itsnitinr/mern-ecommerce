@@ -98,7 +98,7 @@ export default function SignIn({ history, location }) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link to="/" variant="body2">
+                <Link to="/forgot-password" className={classes.link}>
                   Forgot password?
                 </Link>
               </Grid>

@@ -8,6 +8,8 @@ import Notifier from './components/notifier/Notifier.component';
 import LandingPage from './pages/landing/LandingPage.component';
 import SignupPage from './pages/sign-up/SignupPage.component';
 import SigninPage from './pages/sign-in/SigninPage.component';
+import ForgotPasswordPage from './pages/forgot-password/ForgotPassword.component';
+import ResetPasswordPage from './pages/reset-password/ResetPassword.component';
 import { closeSnackbar } from './redux/alert/alert.actions';
 import store from './redux/store';
 import theme from './theme';
@@ -34,6 +36,11 @@ const App = () => {
               <Route exact path="/" component={LandingPage} />
               <Route path="/signup" component={SignupPage} />
               <Route path="/signin" component={SigninPage} />
+              <Route path="/forgot-password" component={ForgotPasswordPage} />
+              <Route
+                path="/reset-password/:resetToken"
+                component={ResetPasswordPage}
+              />
             </Switch>
           </SnackbarProvider>
         </ThemeProvider>
