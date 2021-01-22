@@ -89,7 +89,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
   const resetUrl = `${req.protocol}://${req.get(
     'host'
-  )}/api/users/reset-password/${resetToken}`;
+  )}/reset-password/${resetToken}`;
 
   const message = `You are receiving this email because you (or someone else) has requested the reset of your password. Please make a PUT request to: \n\n ${resetUrl}`;
 
