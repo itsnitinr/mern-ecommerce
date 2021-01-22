@@ -45,6 +45,7 @@ const Testimonials = () => {
                 <img
                   src="https://picsum.photos/100"
                   className={classes.userImage}
+                  alt="Testimonial user avatar"
                   width="50"
                   height="50"
                 />
@@ -80,6 +81,7 @@ const Testimonials = () => {
                 <img
                   src="https://picsum.photos/100"
                   className={classes.userImage}
+                  alt="Testimonial user avatar"
                   width="50"
                   height="50"
                 />
@@ -115,6 +117,7 @@ const Testimonials = () => {
                 <img
                   src="https://picsum.photos/100"
                   className={classes.userImage}
+                  alt="Testimonial user avatar"
                   width="50"
                   height="50"
                 />
