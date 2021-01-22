@@ -1,5 +1,7 @@
+const crypto = require('crypto');
 const asyncHandler = require('express-async-handler');
 const generateJWT = require('../utils/generateJWT.utils');
+const sendEmail = require('../utils/sendEmail.utils');
 const User = require('../models/User.model');
 
 // @route   POST /api/users/
@@ -71,4 +73,81 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, loginUser, getUserProfile };
+// @route   PUT /api/users/forgot-password
+// @desc    Send password reset email with token
+// @access  Public
+const forgotPassword = asyncHandler(async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  const resetToken = user.getResetPasswordToken();
+  await user.save({ validateBeforeSave: false });
+
+  const resetUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/api/users/reset-password/${resetToken}`;
+
+  const message = `You are receiving this email because you (or someone else) has requested the reset of your password. Please make a PUT request to: \n\n ${resetUrl}`;
+
+  try {
+    sendEmail({
+      toEmail: user.email,
+      subject: 'Password reset',
+      message,
+    });
+  } catch (err) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    res.status(500);
+    throw new Error('Email could not be sent');
+  }
+
+  res.json({ message: 'Email sent' });
+});
+
+// @route   PUT /api/users/reset-password
+// @desc    Resets password
+// @access  Public
+const resetPassword = asyncHandler(async (req, res) => {
+  // Get hashed token
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.resetToken)
+    .digest('hex');
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    res.status(400);
+    throw new Error('Invalid or expired token.');
+  }
+
+  // Set new password
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+
+  res.json({
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  });
+});
+
+module.exports = {
+  registerUser,
+  loginUser,
+  getUserProfile,
+  forgotPassword,
+  resetPassword,
+};
