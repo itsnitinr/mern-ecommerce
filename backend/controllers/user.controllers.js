@@ -110,7 +110,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
   res.json({ message: 'Email sent' });
 });
 
-// @route   PUT /api/users/reset-password
+// @route   PUT /api/users/reset-password/:resetToken
 // @desc    Resets password
 // @access  Public
 const resetPassword = asyncHandler(async (req, res) => {
@@ -144,10 +144,44 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 });
 
+// @desc    Update Logged In User's Profile
+// @route   PUT /api/users/profile
+// @access  Private
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  const emailExists =
+    (await User.findOne({ email: req.body.email })) &&
+    req.body.email !== user.email;
+  if (emailExists) {
+    throw new Error('This email is already in use by another user.');
+  }
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+    const updatedUser = await user.save();
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token: generateJWT(updatedUser._id),
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found.');
+  }
+});
+
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
   forgotPassword,
   resetPassword,
+  updateUserProfile,
 };
