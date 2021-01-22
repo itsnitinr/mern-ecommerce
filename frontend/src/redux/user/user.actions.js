@@ -15,6 +15,13 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_RESET,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAIL,
 } from './user.types';
 
 export const registerUser = (name, email, password) => async (dispatch) => {
@@ -105,6 +112,7 @@ export const loginUser = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: LOGOUT });
+  dispatch({ type: USER_DETAILS_RESET });
 };
 
 export const forgotPassword = (email) => async (dispatch) => {
@@ -183,6 +191,80 @@ export const resetPassword = (password, resetToken) => async (dispatch) => {
 
     dispatch({
       type: RESET_PASSWORD_FAIL,
+      payload: errorMsg,
+    });
+
+    dispatch(
+      enqueueSnackbar({
+        message: errorMsg,
+        options: { variant: 'error' },
+      })
+    );
+  }
+};
+
+export const getUserDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/users/${id}`, config);
+
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateUserProfile = (formData) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: UPDATE_PROFILE_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/users/profile`, formData, config);
+
+    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data });
+
+    dispatch(
+      enqueueSnackbar({
+        message: 'Profile updated!',
+        options: { variant: 'success' },
+      })
+    );
+  } catch (error) {
+    const errorMsg =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: UPDATE_PROFILE_FAIL,
       payload: errorMsg,
     });
 

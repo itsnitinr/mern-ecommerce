@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   AppBar,
@@ -8,7 +8,6 @@ import {
   Typography,
   Button,
   InputBase,
-  Link,
   IconButton,
 } from '@material-ui/core';
 import { ReactComponent as Logo } from '../../assets/firmLogo.svg';
@@ -63,7 +62,7 @@ export default function Navigation() {
         <Container maxWidth={false}>
           <Toolbar className={classes.navbarWrapper}>
             <div style={{ display: 'flex', flex: 1 }}>
-              <Link>
+              <Link to="/">
                 <Logo className={classes.navbarIcon} />
               </Link>
             </div>
@@ -108,7 +107,7 @@ const NavMenu = ({ classes, navItems, navCommon }) => (
         className={item.class}
         onClick={item.onClick}
         to={item.href}
-        component={RouterLink}
+        component={Link}
         key={key}
       >
         {item.label}
@@ -126,7 +125,7 @@ const NavMenu = ({ classes, navItems, navCommon }) => (
                 className={item.class}
                 onClick={item.onClick}
                 to={item.href}
-                component={RouterLink}
+                component={Link}
               >
                 {item.label}
               </Button>
