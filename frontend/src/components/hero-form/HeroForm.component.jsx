@@ -64,8 +64,8 @@ const HeroForm = () => {
               value={layers}
               onChange={(e) => setLayers(e.target.value)}
             >
-              <MenuItem value={10}>One</MenuItem>
-              <MenuItem value={20}>Two</MenuItem>
+              <MenuItem value={1}>One</MenuItem>
+              <MenuItem value={2}>Two</MenuItem>
             </Select>
           </FormControl>
         </Grid>
