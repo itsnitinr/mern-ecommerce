@@ -62,7 +62,7 @@ const PlaceOrderPage = ({ history }) => {
       orderPrice += 100;
     }
     taxPrice = 0.18 * orderPrice;
-    shippingPrice = orderPrice > 100 ? 0 : 50;
+    shippingPrice = details.quantity > 50 ? 0 : 100;
   }
 
   const onChange = (e) => {
