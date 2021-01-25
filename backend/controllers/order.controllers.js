@@ -9,6 +9,7 @@ const placeOrder = asyncHandler(async (req, res) => {
   const {
     pcbDetails,
     orderPrice,
+    gerberFileUrl,
     taxPrice,
     shippingPrice,
     totalPrice,
@@ -21,13 +22,13 @@ const placeOrder = asyncHandler(async (req, res) => {
   } else {
     const order = new Order({
       user: req.user.id,
-      gerberFileUrl: req.file.path,
-      pcbDetails: JSON.parse(pcbDetails),
+      gerberFileUrl,
+      pcbDetails,
       orderPrice,
       taxPrice,
       shippingPrice,
       totalPrice,
-      shippingDetails: JSON.parse(shippingDetails),
+      shippingDetails,
     });
     const createdOrder = await order.save();
     res.status(201).json(createdOrder);

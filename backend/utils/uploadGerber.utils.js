@@ -13,11 +13,11 @@ function checkFileType(file, cb) {
   }
 }
 
-const uploadImage = multer({
+const uploadGerber = multer({
   storage,
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
 });
 
-module.exports = uploadImage;
+module.exports = uploadGerber;

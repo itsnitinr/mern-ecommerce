@@ -13,6 +13,8 @@ import PageHeader from '../../components/page-header/PageHeader.component';
 import useStyles from './PlaceOrderPage.styles';
 
 import PCBDetails from './PCBDetails.component';
+import GerberUpload from './GerberUpload.component';
+import ShippingDetails from './ShippingDetails.component';
 
 function getSteps() {
   return ['Enter PCB Details', 'Gerber File Upload', 'Enter Shipping Details'];
@@ -53,6 +55,16 @@ const PlaceOrderPage = ({ history }) => {
     remarks: '',
   });
 
+  const [file, setFile] = useState('');
+
+  const [shippingDetails, setShippingDetails] = useState({
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    pincode: '',
+  });
+
   let orderPrice, taxPrice, shippingPrice;
 
   if (details.height && details.width && details.quantity) {
@@ -69,26 +81,38 @@ const PlaceOrderPage = ({ history }) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   };
 
-  //   const onSubmit = (e) => {
-  //     e.preventDefault();
-  //     const orderDetails = {
-  //       layers,
-  //       dimensions: {
-  //         x: parseInt(height),
-  //         y: parseInt(width),
-  //       },
-  //       quantity: parseInt(quantity),
-  //       thickness,
-  //       color,
-  //       surfaceFinish,
-  //       copperWeight,
-  //       goldFingers,
-  //       flyingProbeTest,
-  //       castellatedHoles,
-  //       remarks,
-  //     };
-  //     console.log(orderDetails);
-  //   };
+  const onShippingChange = (e) => {
+    setShippingDetails({ ...shippingDetails, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const orderDetails = {
+      pcbDetails: {
+        layers: details.layers,
+        dimensions: {
+          x: parseInt(details.height),
+          y: parseInt(details.width),
+        },
+        quantity: parseInt(details.quantity),
+        thickness: details.thickness,
+        color: details.color,
+        surfaceFinish: details.surfaceFinish,
+        copperWeight: details.copperWeight,
+        goldFingers: details.goldFingers,
+        flyingProbeTest: details.flyingProbeTest,
+        castellatedHoles: details.castellatedHoles,
+        remarks: details.remarks,
+      },
+      orderPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice: orderPrice + taxPrice + shippingPrice,
+      gerberFileUrl: file,
+      shippingDetails,
+    };
+    console.log(orderDetails);
+  };
 
   function getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -101,13 +125,36 @@ const PlaceOrderPage = ({ history }) => {
           />
         );
       case 1:
-        return 'Gerber View Component';
+        return <GerberUpload file={file} setFile={setFile} />;
       case 2:
-        return 'Shipping Component';
+        return (
+          <ShippingDetails
+            details={shippingDetails}
+            onChange={onShippingChange}
+          />
+        );
       default:
         return 'You were not supposed to reach here!';
     }
   }
+
+  const pcbDetailsCheck = () => {
+    if (
+      details.height !== '' &&
+      details.width !== '' &&
+      details.layers !== '' &&
+      details.thickness !== '' &&
+      details.quantity !== '' &&
+      details.color !== '' &&
+      details.surfaceFinish !== '' &&
+      details.goldFingers !== '' &&
+      details.flyingProbeTest !== '' &&
+      details.castellatedHoles !== '' &&
+      details.copperWeight !== ''
+    )
+      return false;
+    return true;
+  };
 
   useEffect(() => {
     if (!user) {
@@ -141,14 +188,37 @@ const PlaceOrderPage = ({ history }) => {
             >
               Back
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-              onClick={handleNext}
-            >
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
+            {activeStep < 2 && (
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                onClick={handleNext}
+                disabled={
+                  (activeStep === 0 && pcbDetailsCheck()) ||
+                  (activeStep === 1 && !file)
+                }
+              >
+                Next
+              </Button>
+            )}
+            {activeStep === 2 && (
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                onClick={onSubmit}
+                disabled={
+                  !shippingDetails.addressLine1 ||
+                  !shippingDetails.addressLine2 ||
+                  !shippingDetails.city ||
+                  !shippingDetails.state ||
+                  !shippingDetails.pincode
+                }
+              >
+                Place Order
+              </Button>
+            )}
           </Grid>
         )}
       </Container>

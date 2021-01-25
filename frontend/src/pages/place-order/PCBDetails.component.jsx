@@ -64,7 +64,6 @@ const PCBDetails = ({ details, onChange, price }) => {
                 variant="outlined"
                 color="secondary"
                 name="quantity"
-                onChange={onChange}
                 value={details.quantity}
                 onChange={onChange}
                 required
