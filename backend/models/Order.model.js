@@ -123,6 +123,13 @@ const orderSchema = new mongoose.Schema(
     deliveredAt: {
       type: Date,
     },
+    underReview: {
+      type: Boolean,
+      default: true,
+    },
+    reviewPassed: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,
