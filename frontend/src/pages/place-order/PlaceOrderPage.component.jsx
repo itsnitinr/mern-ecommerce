@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Stepper,
   Step,
@@ -12,9 +12,12 @@ import {
 import PageHeader from '../../components/page-header/PageHeader.component';
 import useStyles from './PlaceOrderPage.styles';
 
+import { placeOrder } from '../../redux/order/order.actions';
+
 import PCBDetails from './PCBDetails.component';
 import GerberUpload from './GerberUpload.component';
 import ShippingDetails from './ShippingDetails.component';
+import OrderSuccess from './OrderSuccess.component';
 
 function getSteps() {
   return ['Enter PCB Details', 'Gerber File Upload', 'Enter Shipping Details'];
@@ -22,6 +25,8 @@ function getSteps() {
 
 const PlaceOrderPage = ({ history }) => {
   const { user } = useSelector((state) => state.userLogin);
+
+  const { order } = useSelector((state) => state.orderCreate);
 
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
@@ -85,6 +90,8 @@ const PlaceOrderPage = ({ history }) => {
     setShippingDetails({ ...shippingDetails, [e.target.name]: e.target.value });
   };
 
+  const dispatch = useDispatch();
+
   const onSubmit = (e) => {
     e.preventDefault();
     const orderDetails = {
@@ -111,7 +118,8 @@ const PlaceOrderPage = ({ history }) => {
       gerberFileUrl: file,
       shippingDetails,
     };
-    console.log(orderDetails);
+    dispatch(placeOrder(orderDetails));
+    setActiveStep(3);
   };
 
   function getStepContent(stepIndex) {
@@ -176,7 +184,7 @@ const PlaceOrderPage = ({ history }) => {
       </Stepper>
       <Container className={classes.contentContainer}>
         {activeStep === steps.length ? (
-          <h1>All steps completed</h1>
+          <OrderSuccess orderId={order && order._id} />
         ) : (
           <Grid container className={classes.root}>
             {getStepContent(activeStep)}
