@@ -24,6 +24,8 @@ import {
   UPDATE_PROFILE_FAIL,
 } from './user.types';
 
+import { MY_ORDERS_RESET } from '../order/order.types';
+
 export const registerUser = (name, email, password) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_REQUEST });
@@ -113,6 +115,7 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: MY_ORDERS_RESET });
 };
 
 export const forgotPassword = (email) => async (dispatch) => {

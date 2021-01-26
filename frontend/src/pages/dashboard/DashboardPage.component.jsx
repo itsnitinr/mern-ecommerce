@@ -1,14 +1,22 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Container,
   Grid,
   Typography,
-  Avatar,
   Button,
   TextField,
   LinearProgress,
+  Paper,
+  Table,
+  TableHead,
+  TableBody,
+  TableContainer,
+  TableRow,
+  TableCell,
 } from '@material-ui/core';
+import { Check, Clear } from '@material-ui/icons';
 import PageHeader from '../../components/page-header/PageHeader.component';
 import useStyles from './Dashboard.styles';
 
@@ -16,10 +24,14 @@ import {
   getUserDetails,
   updateUserProfile,
 } from '../../redux/user/user.actions';
+import { getMyOrders } from '../../redux/order/order.actions';
 
 const DashboardPage = ({ history }) => {
   const { user } = useSelector((state) => state.userLogin);
   const { loading, userDetails } = useSelector((state) => state.userDetails);
+  const { loading: orderLoading, orders } = useSelector(
+    (state) => state.orderListMy
+  );
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -33,6 +45,7 @@ const DashboardPage = ({ history }) => {
     } else {
       if (!userDetails.name) {
         dispatch(getUserDetails('profile'));
+        dispatch(getMyOrders());
       } else {
         setName(userDetails.name);
         setEmail(userDetails.email);
@@ -53,16 +66,13 @@ const DashboardPage = ({ history }) => {
       <PageHeader title="Dashboard" subtitle="Manage Profile & Orders" />
       <Container>
         <Grid container spacing={5}>
-          <Grid item sm={4} xs={12}>
+          <Grid item md={3} sm={4} xs={12}>
             <Typography variant="h5" gutterBottom>
               Manage Profile
             </Typography>
             <div className={classes.cardContainer}>
               <div className={classes.cardTop}>
-                <Avatar
-                  src="https://www.gravatar.com/d=mp"
-                  className={classes.avatar}
-                ></Avatar>
+                <Typography>Profile Info</Typography>
               </div>
               <div>
                 <form
@@ -109,10 +119,78 @@ const DashboardPage = ({ history }) => {
               </div>
             </div>
           </Grid>
-          <Grid item sm={8} xs={12}>
+          <Grid item md={9} sm={8} xs={12}>
             <Typography variant="h5" gutterBottom>
               Manage Orders
             </Typography>
+            <TableContainer component={Paper}>
+              {orderLoading ? (
+                <LinearProgress />
+              ) : (
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <b>Order ID</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>Quantity</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>Placed On</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>Total Price</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>Review Status</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>Paid</b>
+                      </TableCell>
+                      <TableCell>
+                        <b>Dispatched</b>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {orders.map((order) => (
+                      <TableRow key={order._id}>
+                        <TableCell component="th" scope="row">
+                          <Link to={`/order/${order._id}`}>{order._id}</Link>
+                        </TableCell>
+                        <TableCell>{order.pcbDetails.quantity}</TableCell>
+                        <TableCell>
+                          {order.createdAt.substring(0, 10)}
+                        </TableCell>
+                        <TableCell>₹ {order.totalPrice}</TableCell>
+                        <TableCell>
+                          {order.underReview
+                            ? 'Under Review'
+                            : order.reviewPassed
+                            ? 'Passed'
+                            : 'Failed'}
+                        </TableCell>
+                        <TableCell>
+                          {order.isPaid ? (
+                            <Check className={classes.checkIcon} />
+                          ) : (
+                            <Clear className={classes.clearIcon} />
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {order.isDelivered ? (
+                            <Check className={classes.checkIcon} />
+                          ) : (
+                            <Clear className={classes.clearIcon} />
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </TableContainer>
           </Grid>
         </Grid>
       </Container>

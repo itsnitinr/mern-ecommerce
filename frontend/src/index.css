@@ -6,7 +6,18 @@
   box-sizing: border-box;
 }
 
+body {
+  padding-right: 0 !important;
+  overflow: hidden !important;
+  overflow-y: scroll !important;
+}
+
 .slick-prev:before,
 .slick-next:before {
   color: red !important;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }

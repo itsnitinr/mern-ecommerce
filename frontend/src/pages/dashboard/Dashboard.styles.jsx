@@ -8,24 +8,24 @@ const useStyles = makeStyles((theme) => ({
   },
   cardTop: {
     background: theme.palette.secondary.main,
-    height: '80px',
+    color: 'white',
+    height: '50px',
     display: 'flex',
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    fontWeight: 'bold',
     justifyContent: 'center',
-    position: 'relative',
-    marginBottom: '1.5rem',
-  },
-  avatar: {
-    height: 70,
-    width: 70,
-    position: 'absolute',
-    top: 40,
   },
   cardContent: {
-    padding: '2rem 2rem 0.5rem 2rem',
+    padding: '2rem 1rem 0.5rem 1rem',
     '& > *': {
       marginBottom: '1.5rem',
     },
+  },
+  checkIcon: {
+    fill: theme.palette.secondary.main,
+  },
+  clearIcon: {
+    fill: theme.palette.error.main,
   },
 }));
 

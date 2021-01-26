@@ -5,6 +5,9 @@ import {
   PLACE_ORDER_REQUEST,
   PLACE_ORDER_SUCCESS,
   PLACE_ORDER_FAIL,
+  MY_ORDERS_REQUEST,
+  MY_ORDERS_SUCCESS,
+  MY_ORDERS_FAIL,
 } from './order.types';
 
 export const placeOrder = (order) => async (dispatch, getState) => {
@@ -49,5 +52,34 @@ export const placeOrder = (order) => async (dispatch, getState) => {
         options: { variant: 'error' },
       })
     );
+  }
+};
+
+export const getMyOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: MY_ORDERS_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/orders/my', config);
+
+    dispatch({ type: MY_ORDERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: MY_ORDERS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };
