@@ -4,7 +4,6 @@ import {
   Avatar,
   Grid,
   TextField,
-  Button,
   Typography,
 } from '@material-ui/core';
 import { AddShoppingCart } from '@material-ui/icons';

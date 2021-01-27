@@ -6,6 +6,9 @@ import {
   MY_ORDERS_SUCCESS,
   MY_ORDERS_FAIL,
   MY_ORDERS_RESET,
+  ORDER_DETAILS_REQUEST,
+  ORDER_DETAILS_SUCCESS,
+  ORDER_DETAILS_FAIL,
 } from './order.types';
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -31,6 +34,22 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
       return { loading: false, error: action.payload };
     case MY_ORDERS_RESET:
       return { orders: [] };
+    default:
+      return state;
+  }
+};
+
+export const orderDetailsReducer = (
+  state = { order: {}, loading: true },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_DETAILS_REQUEST:
+      return { ...state, loading: true };
+    case ORDER_DETAILS_SUCCESS:
+      return { loading: false, order: action.payload };
+    case ORDER_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

@@ -15,8 +15,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     color: 'white',
     marginBottom: '2rem',
+    textAlign: 'center',
     [theme.breakpoints.down('sm')]: {
       height: '30vh',
+      padding: '0 1.5rem',
     },
   },
   heading: {

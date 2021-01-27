@@ -8,7 +8,11 @@ import {
   userUpdateProfileReducer,
 } from './user/user.reducers';
 
-import { orderCreateReducer, orderListMyReducer } from './order/order.reducers';
+import {
+  orderCreateReducer,
+  orderListMyReducer,
+  orderDetailsReducer,
+} from './order/order.reducers';
 
 export default combineReducers({
   alert: alertReducer,
@@ -18,4 +22,5 @@ export default combineReducers({
   userUpdate: userUpdateProfileReducer,
   orderCreate: orderCreateReducer,
   orderListMy: orderListMyReducer,
+  orderDetails: orderDetailsReducer,
 });
