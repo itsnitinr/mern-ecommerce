@@ -22,6 +22,9 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAIL,
+  ADMIN_GET_USERS_REQUEST,
+  ADMIN_GET_USERS_SUCCESS,
+  ADMIN_GET_USERS_FAIL,
 } from './user.types';
 
 import { MY_ORDERS_RESET } from '../order/order.types';
@@ -277,5 +280,34 @@ export const updateUserProfile = (formData) => async (dispatch, getState) => {
         options: { variant: 'error' },
       })
     );
+  }
+};
+
+export const getAllUsers = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_GET_USERS_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/users/', config);
+
+    dispatch({ type: ADMIN_GET_USERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_GET_USERS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
 };

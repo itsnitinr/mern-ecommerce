@@ -12,6 +12,9 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAIL,
+  ADMIN_GET_USERS_REQUEST,
+  ADMIN_GET_USERS_SUCCESS,
+  ADMIN_GET_USERS_FAIL,
   LOGOUT,
 } from './user.types';
 
@@ -69,6 +72,19 @@ export const userUpdateProfileReducer = (state = {}, action) => {
     case UPDATE_PROFILE_SUCCESS:
       return { loading: false, success: true, userDetails: action.payload };
     case UPDATE_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userListReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case ADMIN_GET_USERS_REQUEST:
+      return { loading: true };
+    case ADMIN_GET_USERS_SUCCESS:
+      return { loading: false, users: action.payload };
+    case ADMIN_GET_USERS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

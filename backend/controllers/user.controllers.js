@@ -178,6 +178,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get all users
+// @route   PUT /api/users
+// @access  Admin
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().select('-password');
+  res.json(users);
+});
+
 module.exports = {
   registerUser,
   loginUser,
@@ -185,4 +193,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   updateUserProfile,
+  getAllUsers,
 };

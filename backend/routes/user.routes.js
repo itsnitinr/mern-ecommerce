@@ -8,11 +8,12 @@ const {
   forgotPassword,
   resetPassword,
   updateUserProfile,
+  getAllUsers,
 } = require('../controllers/user.controllers');
 
-const { auth } = require('../middlewares/auth.middleware');
+const { auth, admin } = require('../middlewares/auth.middleware');
 
-router.route('/').post(registerUser);
+router.route('/').post(registerUser).get(auth, admin, getAllUsers);
 
 router.post('/login', loginUser);
 

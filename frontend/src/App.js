@@ -13,6 +13,7 @@ import ResetPasswordPage from './pages/reset-password/ResetPassword.component';
 import DashboardPage from './pages/dashboard/DashboardPage.component';
 import PlaceOrderPage from './pages/place-order/PlaceOrderPage.component';
 import OrderDetailsPage from './pages/order-details/OrderDetailsPage.component';
+import AdminPanelUsers from './pages/admin-panel-users/AdminPanelUsers.component';
 import { closeSnackbar } from './redux/alert/alert.actions';
 import store from './redux/store';
 import theme from './theme';
@@ -47,6 +48,7 @@ const App = () => {
                 path="/reset-password/:resetToken"
                 component={ResetPasswordPage}
               />
+              <Route path="/admin/users" component={AdminPanelUsers} />
             </Switch>
           </SnackbarProvider>
         </ThemeProvider>
