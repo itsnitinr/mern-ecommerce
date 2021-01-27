@@ -18,7 +18,7 @@ import {
 import { Check, Clear, CloudDownload } from '@material-ui/icons';
 
 import PageHeader from '../../components/page-header/PageHeader.component';
-import { getOrderDetails } from '../../redux/order/order.actions';
+import { getOrderDetails, reviewOrder } from '../../redux/order/order.actions';
 import useStyles from './OrderDetails.styles';
 
 const OrderDetailsPage = ({ history }) => {
@@ -205,12 +205,13 @@ const OrderDetailsPage = ({ history }) => {
                     </TableRow>
                   </TableBody>
                 </Table>
-                {user && user.isAdmin && !order.isPaid ? (
+                {user && user.isAdmin && !order.isPaid && order.underReview ? (
                   <>
                     <Button
                       style={{ width: '50%', borderRadius: 0 }}
                       variant="contained"
                       color="secondary"
+                      onClick={() => dispatch(reviewOrder(order._id, true))}
                     >
                       Approve
                     </Button>
@@ -221,19 +222,23 @@ const OrderDetailsPage = ({ history }) => {
                         borderRadius: 0,
                       }}
                       variant="contained"
+                      onClick={() => dispatch(reviewOrder(order._id, false))}
                     >
                       Reject
                     </Button>
                   </>
                 ) : (
-                  <Button
-                    disabled={order.underReview || order.isPaid}
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                  >
-                    Pay
-                  </Button>
+                  user &&
+                  !user.isAdmin && (
+                    <Button
+                      disabled={order.underReview || order.isPaid}
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      Pay
+                    </Button>
+                  )
                 )}
               </TableContainer>
               <Typography

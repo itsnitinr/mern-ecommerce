@@ -14,6 +14,9 @@ import {
   ADMIN_GET_ORDERS_REQUEST,
   ADMIN_GET_ORDERS_SUCCESS,
   ADMIN_GET_ORDERS_FAIL,
+  ADMIN_ORDER_REVIEW_REQUEST,
+  ADMIN_ORDER_REVIEW_SUCCESS,
+  ADMIN_ORDER_REVIEW_FAIL,
 } from './order.types';
 
 export const placeOrder = (order) => async (dispatch, getState) => {
@@ -140,6 +143,40 @@ export const getAllOrders = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_GET_ORDERS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const reviewOrder = (id, isApproved) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_ORDER_REVIEW_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `/api/orders/${id}/review`,
+      { isApproved },
+      config
+    );
+
+    dispatch({ type: ADMIN_ORDER_REVIEW_SUCCESS });
+    dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_ORDER_REVIEW_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
