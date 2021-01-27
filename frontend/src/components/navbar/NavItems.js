@@ -81,4 +81,31 @@ export const getNavItems = (props) => ({
       onClick: () => props.dispatch(props.logout()),
     },
   ],
+  admin: [
+    {
+      label: (props.user && props.user.name) || 'User',
+      icon: <AccountCircleIcon />,
+      showInNavbar: false,
+    },
+    {
+      label: 'Users',
+      icon: <DashboardIcon />,
+      type: 'button',
+      href: '/admin/users',
+    },
+    {
+      label: 'Orders',
+      icon: <CartIcon />,
+      type: 'button',
+      href: '/admin/orders',
+    },
+    {
+      label: 'Logout',
+      icon: <ExitToAppIcon />,
+      type: 'button',
+      buttonType: 'contained',
+      class: props.classes.signUpButton,
+      onClick: () => props.dispatch(props.logout()),
+    },
+  ],
 });

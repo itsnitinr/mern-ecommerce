@@ -39,7 +39,11 @@ export default function Navigation() {
   };
 
   const navItemsRaw = getNavItems({ user, dispatch, logout, classes });
-  const navItems = user ? navItemsRaw.auth : navItemsRaw.noAuth;
+  const navItems = user
+    ? user.isAdmin
+      ? navItemsRaw.admin
+      : navItemsRaw.auth
+    : navItemsRaw.noAuth;
   const navCommon = navItemsRaw.common;
 
   return (
