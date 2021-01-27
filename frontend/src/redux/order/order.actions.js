@@ -11,6 +11,9 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  ADMIN_GET_ORDERS_REQUEST,
+  ADMIN_GET_ORDERS_SUCCESS,
+  ADMIN_GET_ORDERS_FAIL,
 } from './order.types';
 
 export const placeOrder = (order) => async (dispatch, getState) => {
@@ -108,6 +111,35 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getAllOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ADMIN_GET_ORDERS_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/orders', config);
+
+    dispatch({ type: ADMIN_GET_ORDERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_GET_ORDERS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -14,6 +14,7 @@ import DashboardPage from './pages/dashboard/DashboardPage.component';
 import PlaceOrderPage from './pages/place-order/PlaceOrderPage.component';
 import OrderDetailsPage from './pages/order-details/OrderDetailsPage.component';
 import AdminPanelUsers from './pages/admin-panel-users/AdminPanelUsers.component';
+import AdminPanelOrders from './pages/admin-panel-orders/AdminPanelOrders.component';
 import { closeSnackbar } from './redux/alert/alert.actions';
 import store from './redux/store';
 import theme from './theme';
@@ -49,6 +50,7 @@ const App = () => {
                 component={ResetPasswordPage}
               />
               <Route path="/admin/users" component={AdminPanelUsers} />
+              <Route path="/admin/orders" component={AdminPanelOrders} />
             </Switch>
           </SnackbarProvider>
         </ThemeProvider>

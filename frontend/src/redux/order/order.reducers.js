@@ -9,6 +9,9 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  ADMIN_GET_ORDERS_REQUEST,
+  ADMIN_GET_ORDERS_SUCCESS,
+  ADMIN_GET_ORDERS_FAIL,
 } from './order.types';
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -49,6 +52,22 @@ export const orderDetailsReducer = (
     case ORDER_DETAILS_SUCCESS:
       return { loading: false, order: action.payload };
     case ORDER_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const orderListReducer = (
+  state = { loading: true, orders: [] },
+  action
+) => {
+  switch (action.type) {
+    case ADMIN_GET_ORDERS_REQUEST:
+      return { loading: true };
+    case ADMIN_GET_ORDERS_SUCCESS:
+      return { loading: false, orders: action.payload };
+    case ADMIN_GET_ORDERS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

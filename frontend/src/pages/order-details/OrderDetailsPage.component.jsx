@@ -21,16 +21,21 @@ import PageHeader from '../../components/page-header/PageHeader.component';
 import { getOrderDetails } from '../../redux/order/order.actions';
 import useStyles from './OrderDetails.styles';
 
-const OrderDetailsPage = () => {
+const OrderDetailsPage = ({ history }) => {
   const orderId = useParams().id;
 
+  const { user } = useSelector((state) => state.userLogin);
   const { order, loading } = useSelector((state) => state.orderDetails);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOrderDetails(orderId));
-  }, [dispatch, orderId]);
+    if (!user) {
+      history.push('/signin');
+    } else {
+      dispatch(getOrderDetails(orderId));
+    }
+  }, [dispatch, orderId, user, history]);
 
   const classes = useStyles();
 
@@ -200,14 +205,36 @@ const OrderDetailsPage = () => {
                     </TableRow>
                   </TableBody>
                 </Table>
-                <Button
-                  disabled={order.underReview || order.isPaid}
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                >
-                  Pay
-                </Button>
+                {user && user.isAdmin && !order.isPaid ? (
+                  <>
+                    <Button
+                      style={{ width: '50%', borderRadius: 0 }}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      Approve
+                    </Button>
+                    <Button
+                      style={{
+                        width: '50%',
+                        background: '#f44336',
+                        borderRadius: 0,
+                      }}
+                      variant="contained"
+                    >
+                      Reject
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    disabled={order.underReview || order.isPaid}
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                  >
+                    Pay
+                  </Button>
+                )}
               </TableContainer>
               <Typography
                 variant="h4"
