@@ -130,6 +130,15 @@ const orderSchema = new mongoose.Schema(
     reviewPassed: {
       type: Boolean,
     },
+    razorpayOrderId: {
+      type: String,
+    },
+    razorpayPaymentId: {
+      type: String,
+    },
+    razorpaySignature: {
+      type: String,
+    },
   },
   {
     timestamps: true,

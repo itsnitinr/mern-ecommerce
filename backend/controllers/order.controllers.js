@@ -1,5 +1,7 @@
+const crypto = require('crypto');
 const asyncHandler = require('express-async-handler');
 const Order = require('../models/Order.model');
+const razorpay = require('../config/razorpay');
 
 // @route   POST /api/orders
 // @desc    Place an order
@@ -30,7 +32,24 @@ const placeOrder = asyncHandler(async (req, res) => {
       totalPrice,
       shippingDetails,
     });
-    const createdOrder = await order.save();
+    let createdOrder = await order.save();
+
+    // Razorpay stuff
+    const razorpayOptions = {
+      amount: Math.round(totalPrice * 100),
+      currency: 'INR',
+      receipt: `Order: ${createdOrder._id}`,
+      payment_capture: 1,
+    };
+
+    try {
+      const response = await razorpay.orders.create(razorpayOptions);
+      createdOrder.razorpayOrderId = response.id;
+      createdOrder = await createdOrder.save();
+    } catch (err) {
+      console.log(err);
+    }
+
     res.status(201).json(createdOrder);
   }
 });
@@ -91,10 +110,42 @@ const reviewOrder = asyncHandler(async (req, res) => {
   res.json(updatedOrder);
 });
 
+// @route   POST /api/orders/:id/pay
+// @desc    Set order to paid
+// @access  Private
+const payOrder = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+  const { razorpay_payment_id, razorpay_signature } = req.body;
+
+  // Validate payment
+  const razorpayOrderId = order.razorpayOrderId;
+  const paymentId = razorpay_payment_id;
+  const shasum = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
+  shasum.update(`${razorpayOrderId}|${paymentId}`);
+  const digest = shasum.digest('hex');
+
+  if (digest === razorpay_signature) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.razorpayPaymentId = paymentId;
+    order.razorpaySignature = razorpay_signature;
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(401);
+    throw new Error('Invalid signature.');
+  }
+});
+
 module.exports = {
   placeOrder,
   getOrderById,
   getMyOrders,
   getAllOrders,
   reviewOrder,
+  payOrder,
 };

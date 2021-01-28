@@ -18,14 +18,34 @@ import {
 import { Check, Clear, CloudDownload } from '@material-ui/icons';
 
 import PageHeader from '../../components/page-header/PageHeader.component';
-import { getOrderDetails, reviewOrder } from '../../redux/order/order.actions';
+import {
+  getOrderDetails,
+  reviewOrder,
+  payOrder,
+} from '../../redux/order/order.actions';
+import { ORDER_PAY_RESET } from '../../redux/order/order.types';
 import useStyles from './OrderDetails.styles';
+
+function loadRazorpay() {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    document.body.appendChild(script);
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+  });
+}
 
 const OrderDetailsPage = ({ history }) => {
   const orderId = useParams().id;
 
   const { user } = useSelector((state) => state.userLogin);
   const { order, loading } = useSelector((state) => state.orderDetails);
+  const { success } = useSelector((state) => state.orderPay);
 
   const dispatch = useDispatch();
 
@@ -33,11 +53,47 @@ const OrderDetailsPage = ({ history }) => {
     if (!user) {
       history.push('/signin');
     } else {
+      if (success) {
+        dispatch({ type: ORDER_PAY_RESET });
+      }
       dispatch(getOrderDetails(orderId));
     }
-  }, [dispatch, orderId, user, history]);
+  }, [dispatch, orderId, user, history, success]);
 
   const classes = useStyles();
+
+  async function displayRazorpay() {
+    const res = await loadRazorpay();
+    if (!res) {
+      alert('Razorpay SDK failed to load. Are you online?');
+      return;
+    }
+
+    const options = {
+      key: 'rzp_test_tCLOmiV4RXNrMu',
+      amount: `${(order.totalPrice * 100).toString()}`,
+      currency: 'INR',
+      name: 'The Firm',
+      description: 'PCB Order Payment',
+      image: 'https://example.com/your_logo',
+      order_id: `${order.razorpayOrderId}`,
+      handler: function (response) {
+        dispatch(
+          payOrder(
+            orderId,
+            response.razorpay_payment_id,
+            response.razorpay_signature
+          )
+        );
+      },
+      prefill: {
+        name: user.name,
+        email: user.email,
+      },
+    };
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
 
   return (
     <>
@@ -180,11 +236,13 @@ const OrderDetailsPage = ({ history }) => {
                     <TableRow>
                       <TableCell scope="row">Paid</TableCell>
                       <TableCell>
-                        {order.isPaid ? (
-                          <>
+                        {order.isPaid || success ? (
+                          <div
+                            style={{ display: 'flex', alignItems: 'center' }}
+                          >
                             <Check className={classes.checkIcon} />
-                            {order.paidAt}
-                          </>
+                            {order.paidAt && order.paidAt.substring(0, 10)}
+                          </div>
                         ) : (
                           <Clear className={classes.clearIcon} />
                         )}
@@ -194,10 +252,13 @@ const OrderDetailsPage = ({ history }) => {
                       <TableCell scope="row">Dispatched</TableCell>
                       <TableCell>
                         {order.isDelivered ? (
-                          <>
+                          <div
+                            style={{ display: 'flex', alignItems: 'center' }}
+                          >
                             <Check className={classes.checkIcon} />
-                            {order.deliveredAt}
-                          </>
+                            {order.deliveredAt &&
+                              order.deliveredAt.substring(0, 10)}
+                          </div>
                         ) : (
                           <Clear className={classes.clearIcon} />
                         )}
@@ -231,9 +292,12 @@ const OrderDetailsPage = ({ history }) => {
                   user &&
                   !user.isAdmin && (
                     <Button
-                      disabled={order.underReview || order.isPaid}
+                      disabled={
+                        order.underReview || !order.reviewPassed || order.isPaid
+                      }
                       variant="contained"
                       color="primary"
+                      onClick={displayRazorpay}
                       fullWidth
                     >
                       Pay

@@ -17,6 +17,9 @@ import {
   ADMIN_ORDER_REVIEW_REQUEST,
   ADMIN_ORDER_REVIEW_SUCCESS,
   ADMIN_ORDER_REVIEW_FAIL,
+  ORDER_PAY_REQUEST,
+  ORDER_PAY_SUCCESS,
+  ORDER_PAY_FAIL,
 } from './order.types';
 
 export const placeOrder = (order) => async (dispatch, getState) => {
@@ -177,6 +180,42 @@ export const reviewOrder = (id, isApproved) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ADMIN_ORDER_REVIEW_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const payOrder = (id, razorpay_payment_id, razorpay_signature) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: ORDER_PAY_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    await axios.post(
+      `/api/orders/${id}/pay`,
+      { razorpay_payment_id, razorpay_signature },
+      config
+    );
+
+    dispatch({ type: ORDER_PAY_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: ORDER_PAY_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
