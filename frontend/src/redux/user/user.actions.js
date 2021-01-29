@@ -25,6 +25,9 @@ import {
   ADMIN_GET_USERS_REQUEST,
   ADMIN_GET_USERS_SUCCESS,
   ADMIN_GET_USERS_FAIL,
+  VERIFY_ACCOUNT_REQUEST,
+  VERIFY_ACCOUNT_SUCCESS,
+  VERIFY_ACCOUNT_FAIL,
 } from './user.types';
 
 import { MY_ORDERS_RESET } from '../order/order.types';
@@ -49,12 +52,10 @@ export const registerUser = (name, email, password) => async (dispatch) => {
 
     dispatch(
       enqueueSnackbar({
-        message: 'Welcome aboard!',
-        options: { variant: 'success' },
+        message: 'Please check your email to verify your account',
+        options: { variant: 'info' },
       })
     );
-
-    localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     const errorMsg =
       error.response && error.response.data.message
@@ -63,6 +64,40 @@ export const registerUser = (name, email, password) => async (dispatch) => {
 
     dispatch({
       type: REGISTER_FAIL,
+      payload: errorMsg,
+    });
+
+    dispatch(
+      enqueueSnackbar({
+        message: errorMsg,
+        options: { variant: 'error' },
+      })
+    );
+  }
+};
+
+export const verifyAccount = (verificationToken) => async (dispatch) => {
+  try {
+    dispatch({ type: VERIFY_ACCOUNT_REQUEST });
+
+    const { data } = await axios.put(`/api/users/verify/${verificationToken}`);
+
+    dispatch({ type: VERIFY_ACCOUNT_SUCCESS });
+
+    dispatch(
+      enqueueSnackbar({
+        message: data.message,
+        options: { variant: 'success' },
+      })
+    );
+  } catch (error) {
+    const errorMsg =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: VERIFY_ACCOUNT_FAIL,
       payload: errorMsg,
     });
 

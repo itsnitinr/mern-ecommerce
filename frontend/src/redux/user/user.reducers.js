@@ -15,6 +15,9 @@ import {
   ADMIN_GET_USERS_REQUEST,
   ADMIN_GET_USERS_SUCCESS,
   ADMIN_GET_USERS_FAIL,
+  VERIFY_ACCOUNT_REQUEST,
+  VERIFY_ACCOUNT_SUCCESS,
+  VERIFY_ACCOUNT_FAIL,
   LOGOUT,
 } from './user.types';
 
@@ -27,6 +30,19 @@ export const userRegisterReducer = (state = {}, action) => {
     case REGISTER_SUCCESS:
       return { loading: false, user: payload };
     case REGISTER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userVerifyReducer = (state = { loading: true }, action) => {
+  switch (action.type) {
+    case VERIFY_ACCOUNT_REQUEST:
+      return { loading: true };
+    case VERIFY_ACCOUNT_SUCCESS:
+      return { loading: false, success: true };
+    case VERIFY_ACCOUNT_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

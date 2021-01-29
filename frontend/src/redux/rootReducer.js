@@ -7,6 +7,7 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
   userListReducer,
+  userVerifyReducer,
 } from './user/user.reducers';
 
 import {
@@ -23,6 +24,7 @@ export default combineReducers({
   userLogin: userLoginReducer,
   userDetails: userDetailsReducer,
   userUpdate: userUpdateProfileReducer,
+  userVerify: userVerifyReducer,
   userList: userListReducer,
   orderCreate: orderCreateReducer,
   orderListMy: orderListMyReducer,

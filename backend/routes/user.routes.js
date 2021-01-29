@@ -3,6 +3,7 @@ const router = express.Router();
 
 const {
   registerUser,
+  verifyEmail,
   loginUser,
   getUserProfile,
   forgotPassword,
@@ -21,5 +22,6 @@ router.route('/profile').get(auth, getUserProfile).put(auth, updateUserProfile);
 
 router.put('/forgot-password', forgotPassword);
 router.put('/reset-password/:resetToken', resetPassword);
+router.put('/verify/:verificationToken', verifyEmail);
 
 module.exports = router;

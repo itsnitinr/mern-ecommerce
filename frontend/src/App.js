@@ -10,6 +10,7 @@ import SignupPage from './pages/sign-up/SignupPage.component';
 import SigninPage from './pages/sign-in/SigninPage.component';
 import ForgotPasswordPage from './pages/forgot-password/ForgotPassword.component';
 import ResetPasswordPage from './pages/reset-password/ResetPassword.component';
+import VerifyAccountPage from './pages/verify-account/VerifyAccountPage.component';
 import DashboardPage from './pages/dashboard/DashboardPage.component';
 import PlaceOrderPage from './pages/place-order/PlaceOrderPage.component';
 import OrderDetailsPage from './pages/order-details/OrderDetailsPage.component';
@@ -48,6 +49,10 @@ const App = () => {
               <Route
                 path="/reset-password/:resetToken"
                 component={ResetPasswordPage}
+              />
+              <Route
+                path="/verify/:verificationToken"
+                component={VerifyAccountPage}
               />
               <Route path="/admin/users" component={AdminPanelUsers} />
               <Route path="/admin/orders" component={AdminPanelOrders} />

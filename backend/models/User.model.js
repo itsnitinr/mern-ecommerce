@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
+  isVerified: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  verificationToken: {
+    type: String,
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
@@ -41,6 +49,20 @@ userSchema.pre('save', async function (next) {
 // Check entered password with hashed password in database
 userSchema.methods.matchPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
+};
+
+// Generate and hash email verification token
+userSchema.methods.getVerificationToken = function () {
+  // Create reset token
+  const verificationToken = crypto.randomBytes(20).toString('hex');
+
+  // Hash reset token
+  this.verificationToken = crypto
+    .createHash('sha256')
+    .update(verificationToken)
+    .digest('hex');
+
+  return verificationToken;
 };
 
 // Generate and hash reset password token

@@ -33,7 +33,8 @@ export default function SignUp({ history, location }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { loading, user } = useSelector((state) => state.userRegister);
+  const { loading } = useSelector((state) => state.userRegister);
+  const { user } = useSelector((state) => state.userLogin);
 
   const dispatch = useDispatch();
 
@@ -43,6 +44,7 @@ export default function SignUp({ history, location }) {
       console.log('Passwords dont match!');
     } else {
       dispatch(registerUser(name, email, password));
+      history.push('/');
     }
   };
 

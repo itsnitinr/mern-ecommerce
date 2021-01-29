@@ -20,6 +20,28 @@ const registerUser = asyncHandler(async (req, res) => {
   // Create new user
   const user = await User.create({ name, email, password });
   if (user) {
+    const verificationToken = user.getVerificationToken();
+    await user.save({ validateBeforeSave: false });
+
+    const verificationUrl = `${req.protocol}://${req.get(
+      'host'
+    )}/verify/${verificationToken}`;
+
+    const message = `Welcome to The Firm!. To verify your account, please click here: \n\n ${verificationUrl}`;
+
+    try {
+      sendEmail({
+        toEmail: user.email,
+        subject: 'Account Verification',
+        message,
+      });
+    } catch (err) {
+      user.verificationToken = undefined;
+      await user.save({ validateBeforeSave: false });
+      res.status(500);
+      throw new Error('Email could not be sent');
+    }
+
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -33,6 +55,35 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
+// @route   PUT /api/users/verify/:verificationToken
+// @desc    Verify user account
+// @access  Public
+const verifyEmail = asyncHandler(async (req, res) => {
+  // Get hashed token
+  const verificationToken = crypto
+    .createHash('sha256')
+    .update(req.params.verificationToken)
+    .digest('hex');
+
+  const user = await User.findOne({
+    verificationToken,
+  });
+
+  if (!user) {
+    res.status(400);
+    throw new Error('Invalid or expired token.');
+  }
+
+  // Set new password
+  user.isVerified = true;
+  user.verificationToken = undefined;
+  await user.save();
+
+  res.json({
+    message: 'Your account has been verified. Please log in to continue.',
+  });
+});
+
 // @route   POST /api/users/login
 // @desc    Logs in an user
 // @access  Public
@@ -42,6 +93,10 @@ const loginUser = asyncHandler(async (req, res) => {
   // Check if user exists and check password
   const user = await User.findOne({ email });
   if (user && (await user.matchPassword(password))) {
+    if (!user.isVerified) {
+      res.status(401);
+      throw new Error('Please verify your account before logging in');
+    }
     res.json({
       _id: user._id,
       name: user.name,
@@ -192,6 +247,7 @@ module.exports = {
   getUserProfile,
   forgotPassword,
   resetPassword,
+  verifyEmail,
   updateUserProfile,
   getAllUsers,
 };
