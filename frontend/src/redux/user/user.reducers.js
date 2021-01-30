@@ -18,6 +18,10 @@ import {
   VERIFY_ACCOUNT_REQUEST,
   VERIFY_ACCOUNT_SUCCESS,
   VERIFY_ACCOUNT_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_RESET,
   LOGOUT,
 } from './user.types';
 
@@ -102,6 +106,21 @@ export const userListReducer = (state = { users: [] }, action) => {
       return { loading: false, users: action.payload };
     case ADMIN_GET_USERS_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userUpdateReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case USER_UPDATE_REQUEST:
+      return { loading: true };
+    case USER_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+    case USER_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case USER_UPDATE_RESET:
+      return { user: {} };
     default:
       return state;
   }

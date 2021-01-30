@@ -15,6 +15,7 @@ import DashboardPage from './pages/dashboard/DashboardPage.component';
 import PlaceOrderPage from './pages/place-order/PlaceOrderPage.component';
 import OrderDetailsPage from './pages/order-details/OrderDetailsPage.component';
 import AdminPanelUsers from './pages/admin-panel-users/AdminPanelUsers.component';
+import EditUserPage from './pages/edit-user/EditUserPage.component';
 import AdminPanelOrders from './pages/admin-panel-orders/AdminPanelOrders.component';
 import { closeSnackbar } from './redux/alert/alert.actions';
 import store from './redux/store';
@@ -54,7 +55,8 @@ const App = () => {
                 path="/verify/:verificationToken"
                 component={VerifyAccountPage}
               />
-              <Route path="/admin/users" component={AdminPanelUsers} />
+              <Route exact path="/admin/users" component={AdminPanelUsers} />
+              <Route path="/admin/users/:id" component={EditUserPage} />
               <Route path="/admin/orders" component={AdminPanelOrders} />
             </Switch>
           </SnackbarProvider>

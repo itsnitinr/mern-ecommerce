@@ -10,6 +10,8 @@ const {
   resetPassword,
   updateUserProfile,
   getAllUsers,
+  getUserById,
+  updateUser,
 } = require('../controllers/user.controllers');
 
 const { auth, admin } = require('../middlewares/auth.middleware');
@@ -19,6 +21,8 @@ router.route('/').post(registerUser).get(auth, admin, getAllUsers);
 router.post('/login', loginUser);
 
 router.route('/profile').get(auth, getUserProfile).put(auth, updateUserProfile);
+
+router.route('/:id').get(getUserById).put(auth, admin, updateUser);
 
 router.put('/forgot-password', forgotPassword);
 router.put('/reset-password/:resetToken', resetPassword);

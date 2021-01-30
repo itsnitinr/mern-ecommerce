@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Container,
@@ -89,9 +90,11 @@ const AdminPanelUsers = ({ history }) => {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.isAdmin ? <Check /> : <Clear />}</TableCell>
                   <TableCell>
-                    <Button variant="contained" color="primary">
-                      Edit
-                    </Button>
+                    <Link to={`/admin/users/${user._id}`}>
+                      <Button variant="contained" color="primary">
+                        Edit
+                      </Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}

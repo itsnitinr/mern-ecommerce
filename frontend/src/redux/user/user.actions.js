@@ -28,6 +28,9 @@ import {
   VERIFY_ACCOUNT_REQUEST,
   VERIFY_ACCOUNT_SUCCESS,
   VERIFY_ACCOUNT_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
 } from './user.types';
 
 import { MY_ORDERS_RESET } from '../order/order.types';
@@ -344,5 +347,55 @@ export const getAllUsers = () => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message,
     });
+  }
+};
+
+export const updateUser = (updatedUser) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_UPDATE_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/users/${updatedUser._id}`,
+      updatedUser,
+      config
+    );
+
+    dispatch({ type: USER_UPDATE_SUCCESS });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+
+    dispatch(
+      enqueueSnackbar({
+        message: 'Successfully updated user!',
+        options: { variant: 'success' },
+      })
+    );
+  } catch (error) {
+    const errorMsg =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: USER_UPDATE_FAIL,
+      payload: errorMsg,
+    });
+
+    dispatch(
+      enqueueSnackbar({
+        message: errorMsg,
+        options: { variant: 'error' },
+      })
+    );
   }
 };
