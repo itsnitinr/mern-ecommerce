@@ -17,7 +17,7 @@ import { placeOrder } from '../../redux/order/order.actions';
 import PCBDetails from './PCBDetails.component';
 import GerberUpload from './GerberUpload.component';
 import ShippingDetails from './ShippingDetails.component';
-import OrderSuccess from './OrderSuccess.component';
+import OrderResult from './OrderResult.component';
 
 function getSteps() {
   return ['Enter PCB Details', 'Gerber File Upload', 'Enter Shipping Details'];
@@ -184,7 +184,7 @@ const PlaceOrderPage = ({ history }) => {
       </Stepper>
       <Container className={classes.contentContainer}>
         {activeStep === steps.length ? (
-          <OrderSuccess orderId={order && order._id} />
+          <OrderResult orderId={order && order._id} />
         ) : (
           <Grid container className={classes.root}>
             {getStepContent(activeStep)}

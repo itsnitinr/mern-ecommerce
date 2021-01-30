@@ -68,7 +68,7 @@ const GerberUpload = ({ file, setFile }) => {
             component="span"
             startIcon={<CloudUploadIcon />}
           >
-            Upload
+            Upload Gerber ZIP File
           </Button>
         </label>
       </Grid>

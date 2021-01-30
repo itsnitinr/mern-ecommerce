@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const asyncHandler = require('express-async-handler');
 const Order = require('../models/Order.model');
 const razorpay = require('../config/razorpay');
+const sendEmail = require('../utils/sendEmail.utils');
 
 // @route   POST /api/orders
 // @desc    Place an order
@@ -46,6 +47,26 @@ const placeOrder = asyncHandler(async (req, res) => {
       const response = await razorpay.orders.create(razorpayOptions);
       createdOrder.razorpayOrderId = response.id;
       createdOrder = await createdOrder.save();
+      const populatedOrder = await Order.populate(createdOrder, {
+        path: 'user',
+        select: 'name email',
+      });
+
+      // Send email to user and admin
+      const userMessage = `Hey ${populatedOrder.user.name}, thank you for placing you order! Your order ID is ${createdOrder._id}. Please wait for our team to review your requirements and gerber file. You can track the status on your dashboard. Once it's approved, we'll send you an email notifying the same and enable the payment portal.`;
+      const adminMessage = `New order with ID ${createdOrder._id} has been placed. Please check admin dashboard for more details.`;
+
+      sendEmail({
+        toEmail: populatedOrder.user.email,
+        subject: `Order #${createdOrder._id} successfully placed`,
+        message: userMessage,
+      });
+
+      sendEmail({
+        toEmail: 'admin@example.com',
+        subject: `New Order: Order #${createdOrder._id}`,
+        message: adminMessage,
+      });
     } catch (err) {
       console.log(err);
     }
