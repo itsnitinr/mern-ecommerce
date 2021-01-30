@@ -113,7 +113,7 @@ const AdminPanelOrders = ({ history }) => {
                   </TableCell>
                   <TableCell>{order.isPaid ? <Check /> : <Clear />}</TableCell>
                   <TableCell>
-                    {order.isDelivered ? <Check /> : <Clear />}
+                    {order.isDispatched ? <Check /> : <Clear />}
                   </TableCell>
                   <TableCell>
                     <Link to={`/order/${order._id}`}>

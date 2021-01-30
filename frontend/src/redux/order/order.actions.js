@@ -20,6 +20,9 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
+  ORDER_DISPATCH_REQUEST,
+  ORDER_DISPATCH_SUCCESS,
+  ORDER_DISPATCH_FAIL,
 } from './order.types';
 
 export const placeOrder = (order) => async (dispatch, getState) => {
@@ -216,6 +219,42 @@ export const payOrder = (id, razorpay_payment_id, razorpay_signature) => async (
   } catch (error) {
     dispatch({
       type: ORDER_PAY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const dispatchOrder = (id, logisticsPartner, trackingId) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: ORDER_DISPATCH_REQUEST });
+
+    const {
+      userLogin: { user },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+    await axios.post(
+      `/api/orders/${id}/dispatch`,
+      { logisticsPartner, trackingId },
+      config
+    );
+
+    dispatch({ type: ORDER_DISPATCH_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: ORDER_DISPATCH_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

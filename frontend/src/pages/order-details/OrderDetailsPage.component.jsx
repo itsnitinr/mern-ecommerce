@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
@@ -14,6 +14,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  TextField,
 } from '@material-ui/core';
 import { Check, Clear, CloudDownload } from '@material-ui/icons';
 
@@ -22,8 +23,12 @@ import {
   getOrderDetails,
   reviewOrder,
   payOrder,
+  dispatchOrder,
 } from '../../redux/order/order.actions';
-import { ORDER_PAY_RESET } from '../../redux/order/order.types';
+import {
+  ORDER_PAY_RESET,
+  ORDER_DISPATCH_RESET,
+} from '../../redux/order/order.types';
 import useStyles from './OrderDetails.styles';
 
 function loadRazorpay() {
@@ -46,6 +51,9 @@ const OrderDetailsPage = ({ history }) => {
   const { user } = useSelector((state) => state.userLogin);
   const { order, loading } = useSelector((state) => state.orderDetails);
   const { success } = useSelector((state) => state.orderPay);
+  const { success: dispatchSuccess } = useSelector(
+    (state) => state.orderDispatch
+  );
 
   const dispatch = useDispatch();
 
@@ -56,9 +64,12 @@ const OrderDetailsPage = ({ history }) => {
       if (success) {
         dispatch({ type: ORDER_PAY_RESET });
       }
+      if (dispatchSuccess) {
+        dispatch({ type: ORDER_DISPATCH_RESET });
+      }
       dispatch(getOrderDetails(orderId));
     }
-  }, [dispatch, orderId, user, history, success]);
+  }, [dispatch, orderId, user, history, success, dispatchSuccess]);
 
   const classes = useStyles();
 
@@ -94,6 +105,14 @@ const OrderDetailsPage = ({ history }) => {
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   }
+
+  const [logisticsPartner, setLogisticsPartner] = useState('');
+  const [trackingId, setTrackingId] = useState('');
+
+  const onDispatchSubmit = (e) => {
+    e.preventDefault();
+    dispatch(dispatchOrder(orderId, logisticsPartner, trackingId));
+  };
 
   return (
     <>
@@ -251,19 +270,31 @@ const OrderDetailsPage = ({ history }) => {
                     <TableRow>
                       <TableCell scope="row">Dispatched</TableCell>
                       <TableCell>
-                        {order.isDelivered ? (
+                        {order.isDispatched ? (
                           <div
                             style={{ display: 'flex', alignItems: 'center' }}
                           >
                             <Check className={classes.checkIcon} />
-                            {order.deliveredAt &&
-                              order.deliveredAt.substring(0, 10)}
+                            {order.dispatchedAt &&
+                              order.dispatchedAt.substring(0, 10)}
                           </div>
                         ) : (
                           <Clear className={classes.clearIcon} />
                         )}
                       </TableCell>
                     </TableRow>
+                    {order.logisticsPartner && (
+                      <TableRow>
+                        <TableCell scope="row">Logistics Partner</TableCell>
+                        <TableCell>{order.logisticsPartner}</TableCell>
+                      </TableRow>
+                    )}
+                    {order.trackingId && (
+                      <TableRow>
+                        <TableCell scope="row">Tracking ID</TableCell>
+                        <TableCell>{order.trackingId}</TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
                 {user && user.isAdmin && !order.isPaid && order.underReview ? (
@@ -288,13 +319,43 @@ const OrderDetailsPage = ({ history }) => {
                       Reject
                     </Button>
                   </>
+                ) : user &&
+                  user.isAdmin &&
+                  order.reviewPassed &&
+                  order.isPaid &&
+                  !order.isDispatched ? (
+                  <form onSubmit={onDispatchSubmit}>
+                    <TextField
+                      variant="outlined"
+                      color="secondary"
+                      value={logisticsPartner}
+                      onChange={(e) => setLogisticsPartner(e.target.value)}
+                      label="Logistics Partner"
+                      fullWidth
+                    />
+                    <TextField
+                      variant="outlined"
+                      color="secondary"
+                      value={trackingId}
+                      onChange={(e) => setTrackingId(e.target.value)}
+                      label="Tracking ID"
+                      fullWidth
+                    />
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      type="submit"
+                      fullWidth
+                    >
+                      Mark as Dispatched
+                    </Button>
+                  </form>
                 ) : (
                   user &&
-                  !user.isAdmin && (
+                  !user.isAdmin &&
+                  !order.isPaid && (
                     <Button
-                      disabled={
-                        order.underReview || !order.reviewPassed || order.isPaid
-                      }
+                      disabled={order.underReview || !order.reviewPassed}
                       variant="contained"
                       color="primary"
                       onClick={displayRazorpay}

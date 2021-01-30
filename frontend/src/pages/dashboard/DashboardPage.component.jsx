@@ -179,7 +179,7 @@ const DashboardPage = ({ history }) => {
                           )}
                         </TableCell>
                         <TableCell>
-                          {order.isDelivered ? (
+                          {order.isDispatched ? (
                             <Check className={classes.checkIcon} />
                           ) : (
                             <Clear className={classes.clearIcon} />

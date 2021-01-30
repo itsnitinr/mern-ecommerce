@@ -113,14 +113,14 @@ const orderSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isDelivered: {
+    isDispatched: {
       type: Boolean,
       default: false,
     },
     paidAt: {
       type: Date,
     },
-    deliveredAt: {
+    dispatchedAt: {
       type: Date,
     },
     underReview: {
@@ -137,6 +137,12 @@ const orderSchema = new mongoose.Schema(
       type: String,
     },
     razorpaySignature: {
+      type: String,
+    },
+    logisticsPartner: {
+      type: String,
+    },
+    trackingId: {
       type: String,
     },
   },

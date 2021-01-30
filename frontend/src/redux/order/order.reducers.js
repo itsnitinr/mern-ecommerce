@@ -16,6 +16,10 @@ import {
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
   ORDER_PAY_RESET,
+  ORDER_DISPATCH_REQUEST,
+  ORDER_DISPATCH_SUCCESS,
+  ORDER_DISPATCH_FAIL,
+  ORDER_DISPATCH_RESET,
 } from './order.types';
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -87,6 +91,21 @@ export const orderPayReducer = (state = {}, action) => {
     case ORDER_PAY_FAIL:
       return { loading: false, error: action.payload };
     case ORDER_PAY_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const orderDispatchReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_DISPATCH_REQUEST:
+      return { loading: true };
+    case ORDER_DISPATCH_SUCCESS:
+      return { loading: false, success: true };
+    case ORDER_DISPATCH_FAIL:
+      return { loading: false, error: action.payload };
+    case ORDER_DISPATCH_RESET:
       return {};
     default:
       return state;

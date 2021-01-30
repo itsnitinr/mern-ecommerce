@@ -141,6 +141,28 @@ const payOrder = asyncHandler(async (req, res) => {
   }
 });
 
+// @route   POST /api/orders/:id/dispatch
+// @desc    Mark order as dispatched
+// @access  Admin
+const dispatchOrder = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+
+  const { logisticsPartner, trackingId } = req.body;
+
+  // Update order status
+  order.isDispatched = true;
+  order.dispatchedAt = Date.now();
+  order.logisticsPartner = logisticsPartner;
+  order.trackingId = trackingId;
+
+  const updatedOrder = await order.save();
+  res.json(updatedOrder);
+});
+
 module.exports = {
   placeOrder,
   getOrderById,
@@ -148,4 +170,5 @@ module.exports = {
   getAllOrders,
   reviewOrder,
   payOrder,
+  dispatchOrder,
 };
