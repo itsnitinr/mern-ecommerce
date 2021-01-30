@@ -332,6 +332,7 @@ const OrderDetailsPage = ({ history }) => {
                       onChange={(e) => setLogisticsPartner(e.target.value)}
                       label="Logistics Partner"
                       fullWidth
+                      required
                     />
                     <TextField
                       variant="outlined"
@@ -340,12 +341,14 @@ const OrderDetailsPage = ({ history }) => {
                       onChange={(e) => setTrackingId(e.target.value)}
                       label="Tracking ID"
                       fullWidth
+                      required
                     />
                     <Button
                       variant="contained"
                       color="secondary"
                       type="submit"
                       fullWidth
+                      required
                     >
                       Mark as Dispatched
                     </Button>

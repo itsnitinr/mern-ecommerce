@@ -128,6 +128,21 @@ const reviewOrder = asyncHandler(async (req, res) => {
     path: 'user',
     select: 'name email',
   });
+
+  // Send email to user
+  const successMsg = `Congratulations! Your order ${updatedOrder._id} has been approved. You can now visit you dashboard and view your order details to make your payment of ₹${updatedOrder.totalPrice}.`;
+  const failureMsg = `Uh oh! Your order ${updatedOrder._id} has been rejected after thorough review from our team. Please check the specifications you requested and the gerber file.`;
+
+  try {
+    sendEmail({
+      toEmail: updatedOrder.user.email,
+      subject: isApproved ? 'Order review approved' : 'Order review failed',
+      message: isApproved ? successMsg : failureMsg,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
   res.json(updatedOrder);
 });
 
@@ -155,6 +170,18 @@ const payOrder = asyncHandler(async (req, res) => {
     order.razorpayPaymentId = paymentId;
     order.razorpaySignature = razorpay_signature;
     const updatedOrder = await order.save();
+
+    //Send email to admin
+    try {
+      sendEmail({
+        toEmail: 'admin@example.com',
+        subject: `Payment received for order ${updatedOrder._id}`,
+        message: `You have received ₹${updatedOrder.totalPrice} for order ID ${updatedOrder._id}`,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
     res.json(updatedOrder);
   } else {
     res.status(401);
@@ -181,6 +208,22 @@ const dispatchOrder = asyncHandler(async (req, res) => {
   order.trackingId = trackingId;
 
   const updatedOrder = await order.save();
+  const populatedOrder = await Order.populate(updatedOrder, {
+    path: 'user',
+    select: 'name email',
+  });
+
+  // Send email to user
+  try {
+    sendEmail({
+      toEmail: populatedOrder.user.email,
+      subject: 'Your order has been dispatched',
+      message: `Your order with ID of ${updatedOrder._id} has been dispatched via ${logisticsPartner}. The tracking ID for your package is ${trackingId}.`,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
   res.json(updatedOrder);
 });
 
