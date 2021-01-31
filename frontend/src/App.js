@@ -8,6 +8,7 @@ import Notifier from './components/notifier/Notifier.component';
 import LandingPage from './pages/landing/LandingPage.component';
 import SignupPage from './pages/sign-up/SignupPage.component';
 import SigninPage from './pages/sign-in/SigninPage.component';
+import GuidelinesPage from './pages/guidelines/GuidelinesPage.component';
 import ForgotPasswordPage from './pages/forgot-password/ForgotPassword.component';
 import ResetPasswordPage from './pages/reset-password/ResetPassword.component';
 import VerifyAccountPage from './pages/verify-account/VerifyAccountPage.component';
@@ -43,6 +44,7 @@ const App = () => {
               <Route exact path="/" component={LandingPage} />
               <Route path="/signup" component={SignupPage} />
               <Route path="/signin" component={SigninPage} />
+              <Route path="/guidelines" component={GuidelinesPage} />
               <Route path="/dashboard" component={DashboardPage} />
               <Route exact path="/order" component={PlaceOrderPage} />
               <Route path="/order/:id" component={OrderDetailsPage} />
