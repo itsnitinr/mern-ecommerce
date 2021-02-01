@@ -152,6 +152,41 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 };
 
+export const googleOAuth = ({ token }) => async (dispatch) => {
+  try {
+    dispatch({ type: LOGIN_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.post('/api/users/google', { token }, config);
+
+    dispatch({ type: LOGIN_SUCCESS, payload: data });
+
+    localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    const errorMsg =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: LOGIN_FAIL,
+      payload: errorMsg,
+    });
+
+    dispatch(
+      enqueueSnackbar({
+        message: errorMsg,
+        options: { variant: 'error' },
+      })
+    );
+  }
+};
+
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: LOGOUT });

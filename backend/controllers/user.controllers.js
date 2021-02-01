@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const asyncHandler = require('express-async-handler');
+const googleClient = require('../config/oauth');
 const generateJWT = require('../utils/generateJWT.utils');
 const sendEmail = require('../utils/sendEmail.utils');
 const User = require('../models/User.model');
@@ -108,6 +109,36 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error('Invalid email or password');
   }
+});
+
+// @route   POST /api/users/google
+// @desc    Google OAuth Login / Signup
+// @access  Public
+const googleOAuth = asyncHandler(async (req, res) => {
+  const ticket = await googleClient.verifyIdToken({
+    audience: process.env.GOOGLE_OAUTH_CLIENT_ID,
+    idToken: req.body.token,
+  });
+
+  const oauthUser = ticket.getPayload();
+  const { name, email } = oauthUser;
+
+  let user = await User.findOne({ email });
+  if (!user) {
+    user = await User.create({
+      name,
+      email,
+      isVerified: true,
+    });
+  }
+
+  res.json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: generateJWT(user._id),
+  });
 });
 
 // @route   GET /api/users/profile
@@ -287,4 +318,5 @@ module.exports = {
   getAllUsers,
   getUserById,
   updateUser,
+  googleOAuth,
 };

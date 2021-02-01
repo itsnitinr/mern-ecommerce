@@ -13,6 +13,8 @@ import Container from '@material-ui/core/Container';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import useStyles from './SigninPage.sytles';
 
+import GoogleOAuthButton from '../../components/google-oauth-button/GoogleOAuthButton.component';
+
 import { loginUser } from '../../redux/user/user.actions';
 
 function Copyright() {
@@ -96,6 +98,7 @@ export default function SignIn({ history, location }) {
             >
               Sign In
             </Button>
+            <GoogleOAuthButton />
             <Grid container>
               <Grid item xs>
                 <Link to="/forgot-password" className={classes.link}>

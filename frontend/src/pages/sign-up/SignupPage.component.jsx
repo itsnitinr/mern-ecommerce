@@ -13,6 +13,8 @@ import Container from '@material-ui/core/Container';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import useStyles from './SignupPage.styles';
 
+import GoogleOAuthButton from '../../components/google-oauth-button/GoogleOAuthButton.component';
+
 import { registerUser } from '../../redux/user/user.actions';
 
 function Copyright() {
@@ -58,7 +60,7 @@ export default function SignUp({ history, location }) {
 
   return (
     <>
-      {loading && <LinearProgress color="secondary" />}
+      {loading && <LinearProgress />}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -135,6 +137,7 @@ export default function SignUp({ history, location }) {
             >
               Sign Up
             </Button>
+            <GoogleOAuthButton />
             <Grid container justify="flex-end">
               <Grid item>
                 <Link to="/signin" className={classes.link}>

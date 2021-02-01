@@ -12,6 +12,7 @@ const {
   getAllUsers,
   getUserById,
   updateUser,
+  googleOAuth,
 } = require('../controllers/user.controllers');
 
 const { auth, admin } = require('../middlewares/auth.middleware');
@@ -19,6 +20,7 @@ const { auth, admin } = require('../middlewares/auth.middleware');
 router.route('/').post(registerUser).get(auth, admin, getAllUsers);
 
 router.post('/login', loginUser);
+router.post('/google', googleOAuth);
 
 router.route('/profile').get(auth, getUserProfile).put(auth, updateUserProfile);
 
