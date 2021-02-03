@@ -260,9 +260,12 @@ const PCBDetails = ({ details, onChange, price }) => {
                 <TableCell>
                   <b>
                     ₹{' '}
-                    {(price.orderPrice || 0) +
-                      (price.taxPrice || 0) +
-                      (price.shippingPrice || 0)}
+                    {Math.round(
+                      ((price.orderPrice || 0) +
+                        (price.taxPrice || 0) +
+                        (price.shippingPrice || 0)) *
+                        100
+                    ) / 100}
                   </b>
                 </TableCell>
               </TableRow>

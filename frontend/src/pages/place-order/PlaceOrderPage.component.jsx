@@ -74,11 +74,16 @@ const PlaceOrderPage = ({ history }) => {
 
   if (details.height && details.width && details.quantity) {
     orderPrice =
-      (((details.height / 10) * details.width) / 10) * 1.5 * details.quantity;
+      Math.round(
+        (((details.height / 10) * details.width) / 10) *
+          1.5 *
+          details.quantity *
+          100
+      ) / 100;
     if (details.color !== 'green' && details.color) {
       orderPrice += 100;
     }
-    taxPrice = 0.18 * orderPrice;
+    taxPrice = Math.round(0.18 * orderPrice * 100) / 100;
     shippingPrice = details.quantity > 50 ? 0 : 100;
   }
 
