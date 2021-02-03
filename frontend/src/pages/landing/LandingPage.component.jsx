@@ -62,7 +62,7 @@ const LandingPage = () => {
           </div>
         </Container>
       </section>
-      <section className={classes.featuresSection}>
+      {/* <section className={classes.featuresSection}>
         <div className={classes.featuresContent}>
           <Typography
             variant="h3"
@@ -104,7 +104,7 @@ const LandingPage = () => {
             </Grid>
           </Grid>
         </div>
-      </section>
+      </section> */}
       <section className={classes.testimonialsContainer}>
         <Typography
           variant="h2"
