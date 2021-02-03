@@ -168,6 +168,9 @@ const PlaceOrderPage = ({ history }) => {
     if (!user) {
       history.push('/signin');
     }
+    if (user && user.isAdmin) {
+      history.push('/');
+    }
   }, [history, user]);
 
   const classes = useStyles();
