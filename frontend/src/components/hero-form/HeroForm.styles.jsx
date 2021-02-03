@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     opacity: 0.9,
     [theme.breakpoints.down('md')]: {
       position: 'static',
+      maxHeight: '100%',
       top: 0,
       left: 0,
       transform: 'translate(0, -10px)',
