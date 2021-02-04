@@ -1,11 +1,12 @@
-import { useState } from 'react';
 import axios from 'axios';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  LinearProgress,
   Grid,
   Typography,
   makeStyles,
   Button,
+  CircularProgress,
 } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
@@ -46,13 +47,18 @@ const GerberUpload = ({ file, setFile }) => {
 
   return (
     <>
-      {loading && <LinearProgress />}
       <Grid item lg={12} sm={12} xs={12} className={classes.text}>
         <Typography variant="h4">Gerber File Upload</Typography>
-        <Typography variant="h6" color="secondary">
+        <Typography variant="h6" gutterBottom color="secondary">
           Upload the gerber file in ZIP format. Only one file is allowed. You
           can view your gerber file once you upload the file.
         </Typography>
+        <Link target="_blank" to="/guidelines">
+          <Typography>
+            Click here to check the guidelines to see if the board meets our
+            capabilities
+          </Typography>
+        </Link>
       </Grid>
       <Grid item lg={12} sm={12} xs={12}>
         <input
@@ -72,6 +78,7 @@ const GerberUpload = ({ file, setFile }) => {
           </Button>
         </label>
       </Grid>
+      {loading && <CircularProgress color="secondary" />}
       {file && (
         <Grid item lg={12} sm={12} xs={12}>
           <iframe
@@ -79,6 +86,10 @@ const GerberUpload = ({ file, setFile }) => {
             className={classes.iframe}
             src={`https://tracespace.io/view/?boardUrl=${file}`}
           ></iframe>
+          <Typography variant="body1">
+            <b>Note: </b>The end product might not be same as the above render.
+            It's just for visualization of the board.
+          </Typography>
         </Grid>
       )}
     </>
