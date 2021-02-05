@@ -17,8 +17,8 @@ const HeroForm = () => {
 
   const [height, setHeight] = useState('');
   const [width, setWidth] = useState('');
-  const [layers, setLayers] = useState('');
-  const [thickness, setThickness] = useState('');
+  const [layers, setLayers] = useState(2);
+  const [thickness, setThickness] = useState(1.6);
 
   return (
     <div className={classes.heroForm}>
@@ -79,6 +79,7 @@ const HeroForm = () => {
               value={thickness}
               onChange={(e) => setThickness(e.target.value)}
             >
+              <MenuItem value={0.2}>0.2</MenuItem>
               <MenuItem value={0.4}>0.4</MenuItem>
               <MenuItem value={0.6}>0.6</MenuItem>
               <MenuItem value={0.8}>0.8</MenuItem>
@@ -88,6 +89,12 @@ const HeroForm = () => {
               <MenuItem value={1.6}>1.6</MenuItem>
               <MenuItem value={1.8}>1.8</MenuItem>
               <MenuItem value={2.0}>2.0</MenuItem>
+              <MenuItem value={2.2}>2.2</MenuItem>
+              <MenuItem value={2.4}>2.4</MenuItem>
+              <MenuItem value={2.6}>2.6</MenuItem>
+              <MenuItem value={2.8}>2.8</MenuItem>
+              <MenuItem value={3.0}>3.0</MenuItem>
+              <MenuItem value={3.2}>3.2</MenuItem>
             </Select>
           </FormControl>
         </Grid>
