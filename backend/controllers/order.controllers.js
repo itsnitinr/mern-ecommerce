@@ -79,10 +79,16 @@ const placeOrder = asyncHandler(async (req, res) => {
 // @desc    Get order details by ID
 // @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id).populate(
-    'user',
-    'name email'
-  );
+  const order = await Order.findById(req.params.id).populate([
+    {
+      path: 'user',
+      select: 'name email',
+    },
+    {
+      path: 'reviewedBy',
+      select: 'name',
+    },
+  ]);
 
   // Check if order exists
   if (order) {
@@ -120,17 +126,49 @@ const reviewOrder = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Order not found');
   }
-  const { isApproved } = req.body;
+  const { isApproved, adjustedPrice, adminId } = req.body;
   order.underReview = false;
   order.reviewPassed = isApproved;
+  order.reviewedBy = adminId;
+
+  if (adjustedPrice !== order.orderPrice) {
+    order.isAdjusted = true;
+    order.adjustedPrice = adjustedPrice;
+    order.adjustedTax = Math.round(adjustedPrice * 0.18 * 100) / 100;
+    order.adjustedTotal =
+      parseInt(adjustedPrice) +
+      parseInt(order.adjustedTax) +
+      parseInt(order.shippingPrice);
+  }
+
+  const razorpayOptions = {
+    amount: Math.round(order.adjustedTotal * 100),
+    currency: 'INR',
+    receipt: `Adjusted Order: ${order._id}`,
+    payment_capture: 1,
+  };
+
+  try {
+    const response = await razorpay.orders.create(razorpayOptions);
+    order.razorpayOrderId = response.id;
+  } catch (error) {
+    console.log(error);
+  }
+
   let updatedOrder = await order.save();
-  updatedOrder = await Order.populate(updatedOrder, {
-    path: 'user',
-    select: 'name email',
-  });
+  updatedOrder = await Order.populate(updatedOrder, [
+    {
+      path: 'user',
+      select: 'name email',
+    },
+    {
+      path: 'reviewedBy',
+      select: 'name',
+    },
+  ]);
 
   // Send email to user
-  const successMsg = `Congratulations! Your order ${updatedOrder._id} has been approved. You can now visit you dashboard and view your order details to make your payment of ₹${updatedOrder.totalPrice}.`;
+  const successMsg = `Congratulations! Your order ${updatedOrder._id} has been approved. You can now visit you dashboard and view your order details to make the payment.`;
   const failureMsg = `Uh oh! Your order ${updatedOrder._id} has been rejected after thorough review from our team. Please check the specifications you requested and the gerber file.`;
 
   try {

@@ -151,13 +151,16 @@ const DashboardPage = ({ history }) => {
                       <TableCell>
                         <b>Dispatched</b>
                       </TableCell>
+                      <TableCell>
+                        <b>Actions</b>
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {orders.map((order) => (
                       <TableRow key={order._id}>
                         <TableCell component="th" scope="row">
-                          <Link to={`/order/${order._id}`}>{order._id}</Link>
+                          {order._id.substring(order._id.length - 7)}
                         </TableCell>
                         <TableCell>{order.pcbDetails.quantity}</TableCell>
                         <TableCell>
@@ -184,6 +187,13 @@ const DashboardPage = ({ history }) => {
                           ) : (
                             <Clear className={classes.clearIcon} />
                           )}
+                        </TableCell>
+                        <TableCell>
+                          <Link to={`/order/${order._id}`}>
+                            <Button variant="contained" color="primary">
+                              View Order
+                            </Button>
+                          </Link>
                         </TableCell>
                       </TableRow>
                     ))}

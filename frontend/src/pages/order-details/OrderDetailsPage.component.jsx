@@ -68,8 +68,17 @@ const OrderDetailsPage = ({ history }) => {
         dispatch({ type: ORDER_DISPATCH_RESET });
       }
       dispatch(getOrderDetails(orderId));
+      setAdjustedPrice(order.orderPrice);
     }
-  }, [dispatch, orderId, user, history, success, dispatchSuccess]);
+  }, [
+    dispatch,
+    order.orderPrice,
+    orderId,
+    user,
+    history,
+    success,
+    dispatchSuccess,
+  ]);
 
   const classes = useStyles();
 
@@ -82,7 +91,6 @@ const OrderDetailsPage = ({ history }) => {
 
     const options = {
       key: 'rzp_test_tCLOmiV4RXNrMu',
-      amount: `${(order.totalPrice * 100).toString()}`,
       currency: 'INR',
       name: 'The Firm',
       description: 'PCB Order Payment',
@@ -106,6 +114,7 @@ const OrderDetailsPage = ({ history }) => {
     paymentObject.open();
   }
 
+  const [adjustedPrice, setAdjustedPrice] = useState('');
   const [logisticsPartner, setLogisticsPartner] = useState('');
   const [trackingId, setTrackingId] = useState('');
 
@@ -252,6 +261,12 @@ const OrderDetailsPage = ({ history }) => {
                           : 'Failed'}
                       </TableCell>
                     </TableRow>
+                    {user && user.isAdmin && !order.underReview && (
+                      <TableRow>
+                        <TableCell scope="row">Reviewed By</TableCell>
+                        <TableCell>{order.reviewedBy.name}</TableCell>
+                      </TableRow>
+                    )}
                     <TableRow>
                       <TableCell scope="row">Paid</TableCell>
                       <TableCell>
@@ -299,11 +314,24 @@ const OrderDetailsPage = ({ history }) => {
                 </Table>
                 {user && user.isAdmin && !order.isPaid && order.underReview ? (
                   <>
+                    <TextField
+                      variant="outlined"
+                      color="secondary"
+                      value={adjustedPrice}
+                      onChange={(e) => setAdjustedPrice(e.target.value)}
+                      label="Adjusted Price"
+                      fullWidth
+                      required
+                    />
                     <Button
                       style={{ width: '50%', borderRadius: 0 }}
                       variant="contained"
                       color="secondary"
-                      onClick={() => dispatch(reviewOrder(order._id, true))}
+                      onClick={() =>
+                        dispatch(
+                          reviewOrder(order._id, true, adjustedPrice, user._id)
+                        )
+                      }
                     >
                       Approve
                     </Button>
@@ -314,7 +342,11 @@ const OrderDetailsPage = ({ history }) => {
                         borderRadius: 0,
                       }}
                       variant="contained"
-                      onClick={() => dispatch(reviewOrder(order._id, false))}
+                      onClick={() =>
+                        dispatch(
+                          reviewOrder(order._id, false, adjustedPrice, user._id)
+                        )
+                      }
                     >
                       Reject
                     </Button>
@@ -391,25 +423,55 @@ const OrderDetailsPage = ({ history }) => {
                   </TableHead>
                   <TableBody>
                     <TableRow>
-                      <TableCell scope="row">PCB Cost</TableCell>
+                      <TableCell scope="row">Estimated PCB Cost</TableCell>
                       <TableCell>₹ {order.orderPrice}</TableCell>
                     </TableRow>
+                    {order.isAdjusted && (
+                      <TableRow>
+                        <TableCell scope="row">
+                          <b>Adjusted PCB Cost</b>
+                        </TableCell>
+                        <TableCell>
+                          <b>₹ {order.adjustedPrice}</b>
+                        </TableCell>
+                      </TableRow>
+                    )}
                     <TableRow>
                       <TableCell scope="row">Tax</TableCell>
                       <TableCell>₹ {order.taxPrice}</TableCell>
                     </TableRow>
+                    {order.isAdjusted && (
+                      <TableRow>
+                        <TableCell scope="row">
+                          <b>Adjusted Tax</b>
+                        </TableCell>
+                        <TableCell>
+                          <b>₹ {order.adjustedTax}</b>
+                        </TableCell>
+                      </TableRow>
+                    )}
                     <TableRow>
                       <TableCell scope="row">Shipping</TableCell>
                       <TableCell>₹ {order.shippingPrice}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell scope="row">
-                        <b>Total Cost</b>
+                        <b>Estimated Total Cost</b>
                       </TableCell>
                       <TableCell>
                         <b>₹ {order.totalPrice}</b>
                       </TableCell>
                     </TableRow>
+                    {order.isAdjusted && (
+                      <TableRow>
+                        <TableCell scope="row">
+                          <b>Adjusted Total Cost</b>
+                        </TableCell>
+                        <TableCell>
+                          <b>₹ {order.adjustedTotal}</b>
+                        </TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </TableContainer>

@@ -155,6 +155,22 @@ const orderSchema = new mongoose.Schema(
     reviewPassed: {
       type: Boolean,
     },
+    reviewedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    isAdjusted: {
+      type: Boolean,
+    },
+    adjustedPrice: {
+      type: Number,
+    },
+    adjustedTax: {
+      type: Number,
+    },
+    adjustedTotal: {
+      type: Number,
+    },
     razorpayOrderId: {
       type: String,
     },

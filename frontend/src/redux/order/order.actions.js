@@ -157,7 +157,10 @@ export const getAllOrders = () => async (dispatch, getState) => {
   }
 };
 
-export const reviewOrder = (id, isApproved) => async (dispatch, getState) => {
+export const reviewOrder = (id, isApproved, adjustedPrice, adminId) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({ type: ADMIN_ORDER_REVIEW_REQUEST });
 
@@ -174,7 +177,7 @@ export const reviewOrder = (id, isApproved) => async (dispatch, getState) => {
 
     const { data } = await axios.post(
       `/api/orders/${id}/review`,
-      { isApproved },
+      { isApproved, adjustedPrice, adminId },
       config
     );
 

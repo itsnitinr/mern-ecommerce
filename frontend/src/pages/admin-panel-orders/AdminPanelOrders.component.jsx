@@ -99,7 +99,9 @@ const AdminPanelOrders = ({ history }) => {
                   : orders
                 ).map((order) => (
                   <TableRow key={order._id}>
-                    <TableCell>{order._id}</TableCell>
+                    <TableCell>
+                      {order._id.substring(order._id.length - 7)}
+                    </TableCell>
                     <TableCell>{order.user.name}</TableCell>
                     <TableCell>{order.user.email}</TableCell>
                     <TableCell>{order.createdAt.substring(0, 10)}</TableCell>
