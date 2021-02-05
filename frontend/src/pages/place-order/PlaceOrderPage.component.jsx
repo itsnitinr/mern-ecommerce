@@ -49,14 +49,14 @@ const PlaceOrderPage = ({ history }) => {
     height: query.get('height') || '',
     width: query.get('width') || '',
     quantity: '',
-    layers: query.get('layers') || '',
-    thickness: query.get('thickness') || '',
-    color: '',
-    surfaceFinish: '',
-    copperWeight: '',
-    goldFingers: '',
-    flyingProbeTest: '',
-    castellatedHoles: '',
+    layers: query.get('layers') || 2,
+    thickness: query.get('thickness') || 1.6,
+    color: 'Green',
+    surfaceFinish: 'HASL',
+    copperWeight: 35,
+    goldFingers: false,
+    flyingProbeTest: false,
+    castellatedHoles: false,
     remarks: '',
   });
 
@@ -80,7 +80,7 @@ const PlaceOrderPage = ({ history }) => {
           details.quantity *
           100
       ) / 100;
-    if (details.color !== 'green' && details.color) {
+    if (details.color !== 'Green' && details.color) {
       orderPrice += 100;
     }
     taxPrice = Math.round(0.18 * orderPrice * 100) / 100;
@@ -89,6 +89,24 @@ const PlaceOrderPage = ({ history }) => {
 
   const onChange = (e) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
+  };
+
+  const onHeightChange = (e) => {
+    // Max: 304.8 for single layer, 457.2 for double layer
+    const maxHeight = details.layers === 2 ? 457.2 : 304.8;
+    setDetails({
+      ...details,
+      height: Math.min(parseInt(e.target.value), maxHeight),
+    });
+  };
+
+  const onWidthChange = (e) => {
+    // Max: 1219.2 for single layer, 457.2 for double layer
+    const maxWidth = details.layers === 2 ? 457.2 : 1219.2;
+    setDetails({
+      ...details,
+      width: Math.min(parseInt(e.target.value), maxWidth),
+    });
   };
 
   const onShippingChange = (e) => {
@@ -135,6 +153,8 @@ const PlaceOrderPage = ({ history }) => {
             details={details}
             onChange={onChange}
             price={{ orderPrice, taxPrice, shippingPrice }}
+            onHeightChange={onHeightChange}
+            onWidthChange={onWidthChange}
           />
         );
       case 1:
@@ -153,16 +173,13 @@ const PlaceOrderPage = ({ history }) => {
 
   const pcbDetailsCheck = () => {
     if (
-      details.height !== '' &&
-      details.width !== '' &&
+      details.height > 0 &&
+      details.width > 0 &&
       details.layers !== '' &&
       details.thickness !== '' &&
-      details.quantity !== '' &&
+      details.quantity > 0 &&
       details.color !== '' &&
       details.surfaceFinish !== '' &&
-      details.goldFingers !== '' &&
-      details.flyingProbeTest !== '' &&
-      details.castellatedHoles !== '' &&
       details.copperWeight !== ''
     )
       return false;

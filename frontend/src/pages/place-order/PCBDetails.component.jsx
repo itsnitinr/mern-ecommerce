@@ -22,7 +22,13 @@ const useStyles = makeStyles({
   },
 });
 
-const PCBDetails = ({ details, onChange, price }) => {
+const PCBDetails = ({
+  details,
+  onChange,
+  price,
+  onHeightChange,
+  onWidthChange,
+}) => {
   const classes = useStyles();
 
   return (
@@ -38,8 +44,9 @@ const PCBDetails = ({ details, onChange, price }) => {
                 variant="outlined"
                 color="secondary"
                 name="height"
+                InputProps={{ inputProps: { min: 1 } }}
                 value={details.height}
-                onChange={onChange}
+                onChange={onHeightChange}
                 required
               />
             </Grid>
@@ -51,8 +58,9 @@ const PCBDetails = ({ details, onChange, price }) => {
                 variant="outlined"
                 color="secondary"
                 name="width"
+                InputProps={{ inputProps: { min: 1 } }}
                 value={details.width}
-                onChange={onChange}
+                onChange={onWidthChange}
                 required
               />
             </Grid>
@@ -64,6 +72,7 @@ const PCBDetails = ({ details, onChange, price }) => {
                 variant="outlined"
                 color="secondary"
                 name="quantity"
+                InputProps={{ inputProps: { min: 1 } }}
                 value={details.quantity}
                 onChange={onChange}
                 required
@@ -96,6 +105,7 @@ const PCBDetails = ({ details, onChange, price }) => {
                   value={details.thickness}
                   onChange={onChange}
                 >
+                  <MenuItem value={0.2}>0.2</MenuItem>
                   <MenuItem value={0.4}>0.4</MenuItem>
                   <MenuItem value={0.6}>0.6</MenuItem>
                   <MenuItem value={0.8}>0.8</MenuItem>
@@ -105,6 +115,12 @@ const PCBDetails = ({ details, onChange, price }) => {
                   <MenuItem value={1.6}>1.6</MenuItem>
                   <MenuItem value={1.8}>1.8</MenuItem>
                   <MenuItem value={2.0}>2.0</MenuItem>
+                  <MenuItem value={2.2}>2.2</MenuItem>
+                  <MenuItem value={2.4}>2.4</MenuItem>
+                  <MenuItem value={2.6}>2.6</MenuItem>
+                  <MenuItem value={2.8}>2.8</MenuItem>
+                  <MenuItem value={3.0}>3.0</MenuItem>
+                  <MenuItem value={3.2}>3.2</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -119,12 +135,13 @@ const PCBDetails = ({ details, onChange, price }) => {
                   value={details.color}
                   onChange={onChange}
                 >
-                  <MenuItem value="green">Green</MenuItem>
-                  <MenuItem value="red">Red</MenuItem>
-                  <MenuItem value="yellow">Yellow</MenuItem>
-                  <MenuItem value="blue">Blue</MenuItem>
-                  <MenuItem value="white">White</MenuItem>
-                  <MenuItem value="black">Black</MenuItem>
+                  <MenuItem value="Green">Green</MenuItem>
+                  <MenuItem value="Red">Red</MenuItem>
+                  <MenuItem value="Yellow">Yellow</MenuItem>
+                  <MenuItem value="Blue">Blue</MenuItem>
+                  <MenuItem value="White">White</MenuItem>
+                  <MenuItem value="Black">Black</MenuItem>
+                  <MenuItem value="No Solder Mask">No Solder Mask</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -140,7 +157,9 @@ const PCBDetails = ({ details, onChange, price }) => {
                   onChange={onChange}
                 >
                   <MenuItem value="HASL">HASL</MenuItem>
-                  <MenuItem value="ENIG-RoHs">ENIG-RoHs</MenuItem>
+                  <MenuItem value="No Surface Finish">
+                    No Surface Finish
+                  </MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -155,13 +174,13 @@ const PCBDetails = ({ details, onChange, price }) => {
                   value={details.copperWeight}
                   onChange={onChange}
                 >
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={35}>35 µm</MenuItem>
+                  <MenuItem value={70}>70 µm</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
             <Grid item sm={4} xs={6}>
-              <FormControl variant="outlined" fullWidth required>
+              <FormControl variant="outlined" fullWidth>
                 <InputLabel id="gfLabel">Gold Fingers</InputLabel>
                 <Select
                   labelId="gfLabel"
@@ -177,7 +196,7 @@ const PCBDetails = ({ details, onChange, price }) => {
               </FormControl>
             </Grid>
             <Grid item sm={4} xs={6}>
-              <FormControl variant="outlined" fullWidth required>
+              <FormControl variant="outlined" fullWidth>
                 <InputLabel id="fptLabel">Flying Probe Test</InputLabel>
                 <Select
                   labelId="fptLabel"
@@ -193,7 +212,7 @@ const PCBDetails = ({ details, onChange, price }) => {
               </FormControl>
             </Grid>
             <Grid item sm={4} xs={6}>
-              <FormControl variant="outlined" fullWidth required>
+              <FormControl variant="outlined" fullWidth>
                 <InputLabel id="chLabel">Castellated Holes</InputLabel>
                 <Select
                   labelId="chLabel"
@@ -255,7 +274,7 @@ const PCBDetails = ({ details, onChange, price }) => {
               </TableRow>
               <TableRow>
                 <TableCell scope="row">
-                  <b>Total Cost</b>
+                  <b>Estimated Total Cost</b>
                 </TableCell>
                 <TableCell>
                   <b>

@@ -39,7 +39,11 @@ const HeroForm = () => {
             variant="outlined"
             color="secondary"
             value={height}
-            onChange={(e) => setHeight(e.target.value)}
+            onChange={(e) =>
+              setHeight(
+                Math.min(parseInt(e.target.value), layers === 2 ? 457.2 : 304.8)
+              )
+            }
           />
         </Grid>
         <Grid item sm={6} xs={12}>
@@ -51,7 +55,14 @@ const HeroForm = () => {
             variant="outlined"
             color="secondary"
             value={width}
-            onChange={(e) => setWidth(e.target.value)}
+            onChange={(e) =>
+              setWidth(
+                Math.min(
+                  parseInt(e.target.value),
+                  layers === 2 ? 457.2 : 1219.2
+                )
+              )
+            }
           />
         </Grid>
         <Grid item sm={6} xs={12}>

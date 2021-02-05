@@ -43,9 +43,9 @@ const DashboardPage = ({ history }) => {
     if (!user) {
       history.push('/signin');
     } else {
+      dispatch(getMyOrders());
       if (!userDetails.name) {
         dispatch(getUserDetails('profile'));
-        dispatch(getMyOrders());
       } else {
         setName(userDetails.name);
         setEmail(userDetails.email);

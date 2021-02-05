@@ -197,7 +197,7 @@ const OrderDetailsPage = ({ history }) => {
                   </TableRow>
                   <TableRow>
                     <TableCell>Copper Weight</TableCell>
-                    <TableCell>{order.pcbDetails.copperWeight}</TableCell>
+                    <TableCell>{order.pcbDetails.copperWeight} µm</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Gold Fingers</TableCell>
