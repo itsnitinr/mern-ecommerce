@@ -115,23 +115,45 @@ const orderSchema = new mongoose.Schema(
     shippingDetails: {
       addressLine1: {
         type: String,
-        required: [true, 'Please provide address line 1'],
+        required: [true, 'Please provide shipping address line 1'],
       },
       addressLine2: {
         type: String,
-        required: [true, 'Please provide address line 2'],
+        required: [true, 'Please provide shipping address line 2'],
       },
       city: {
         type: String,
-        required: [true, 'Please provide the city'],
+        required: [true, 'Please provide the shipping city'],
       },
       state: {
         type: String,
-        required: [true, 'Please provide the state'],
+        required: [true, 'Please provide the shipping state'],
       },
       pincode: {
+        type: Number,
+        required: [true, 'Please provide the shipping pincode'],
+      },
+    },
+    billingDetails: {
+      addressLine1: {
         type: String,
-        required: [true, 'Please provide the pincode'],
+        required: [true, 'Please provide billing address line 1'],
+      },
+      addressLine2: {
+        type: String,
+        required: [true, 'Please provide billing address line 2'],
+      },
+      city: {
+        type: String,
+        required: [true, 'Please provide the billing city'],
+      },
+      state: {
+        type: String,
+        required: [true, 'Please provide the billing state'],
+      },
+      pincode: {
+        type: Number,
+        required: [true, 'Please provide the billing pincode'],
       },
     },
     isPaid: {

@@ -5,8 +5,11 @@ import {
   Grid,
   TextField,
   Typography,
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
 } from '@material-ui/core';
-import { ShoppingCart } from '@material-ui/icons';
+import { Receipt } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ShippingDetails = ({ details, onChange }) => {
+const BillingDetails = ({ details, onChange, sameAddress, setSameAddress }) => {
   const classes = useStyles();
 
   return (
@@ -35,10 +38,10 @@ const ShippingDetails = ({ details, onChange }) => {
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <ShoppingCart />
+            <Receipt />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Shipping Address
+            Billing Address
           </Typography>
           <form className={classes.form}>
             <Grid container spacing={2}>
@@ -89,6 +92,7 @@ const ShippingDetails = ({ details, onChange }) => {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
+                  type="number"
                   required
                   fullWidth
                   name="pincode"
@@ -96,6 +100,19 @@ const ShippingDetails = ({ details, onChange }) => {
                   value={details.pincode}
                   onChange={onChange}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={sameAddress}
+                        onChange={(e) => setSameAddress(e.target.checked)}
+                      />
+                    }
+                    label="Shipping address same as billing address?"
+                  />
+                </FormGroup>
               </Grid>
             </Grid>
           </form>
@@ -105,4 +122,4 @@ const ShippingDetails = ({ details, onChange }) => {
   );
 };
 
-export default ShippingDetails;
+export default BillingDetails;

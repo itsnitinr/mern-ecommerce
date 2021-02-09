@@ -16,11 +16,17 @@ import { placeOrder } from '../../redux/order/order.actions';
 
 import PCBDetails from './PCBDetails.component';
 import GerberUpload from './GerberUpload.component';
+import BillingDetails from './BillingDetails.component';
 import ShippingDetails from './ShippingDetails.component';
 import OrderResult from './OrderResult.component';
 
 function getSteps() {
-  return ['Enter PCB Details', 'Gerber File Upload', 'Enter Shipping Details'];
+  return [
+    'PCB Details',
+    'Gerber File Upload',
+    'Billing Details',
+    'Shipping Details',
+  ];
 }
 
 const PlaceOrderPage = ({ history }) => {
@@ -70,6 +76,16 @@ const PlaceOrderPage = ({ history }) => {
     pincode: '',
   });
 
+  const [billingDetails, setBillingDetails] = useState({
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    pincode: '',
+  });
+
+  const [sameAddress, setSameAddress] = useState(false);
+
   let orderPrice, taxPrice, shippingPrice;
 
   if (details.height && details.width && details.quantity) {
@@ -113,6 +129,10 @@ const PlaceOrderPage = ({ history }) => {
     setShippingDetails({ ...shippingDetails, [e.target.name]: e.target.value });
   };
 
+  const onBillingChange = (e) => {
+    setBillingDetails({ ...billingDetails, [e.target.name]: e.target.value });
+  };
+
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
@@ -137,12 +157,13 @@ const PlaceOrderPage = ({ history }) => {
       orderPrice,
       taxPrice,
       shippingPrice,
+      billingDetails,
       totalPrice: orderPrice + taxPrice + shippingPrice,
       gerberFileUrl: file,
       shippingDetails,
     };
     dispatch(placeOrder(orderDetails));
-    setActiveStep(3);
+    setActiveStep(4);
   };
 
   function getStepContent(stepIndex) {
@@ -160,6 +181,15 @@ const PlaceOrderPage = ({ history }) => {
       case 1:
         return <GerberUpload file={file} setFile={setFile} />;
       case 2:
+        return (
+          <BillingDetails
+            details={billingDetails}
+            onChange={onBillingChange}
+            sameAddress={sameAddress}
+            setSameAddress={setSameAddress}
+          />
+        );
+      case 3:
         return (
           <ShippingDetails
             details={shippingDetails}
@@ -193,7 +223,19 @@ const PlaceOrderPage = ({ history }) => {
     if (user && user.isAdmin) {
       history.push('/');
     }
-  }, [history, user]);
+    if (sameAddress) {
+      setShippingDetails(billingDetails);
+    }
+    if (!sameAddress) {
+      setShippingDetails({
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        pincode: '',
+      });
+    }
+  }, [history, user, sameAddress, billingDetails]);
 
   const classes = useStyles();
 
@@ -221,7 +263,7 @@ const PlaceOrderPage = ({ history }) => {
             >
               Back
             </Button>
-            {activeStep < 2 && (
+            {activeStep < 3 && (
               <Button
                 variant="contained"
                 color="secondary"
@@ -229,13 +271,19 @@ const PlaceOrderPage = ({ history }) => {
                 onClick={handleNext}
                 disabled={
                   (activeStep === 0 && pcbDetailsCheck()) ||
-                  (activeStep === 1 && !file)
+                  (activeStep === 1 && !file) ||
+                  (activeStep === 2 &&
+                    (!billingDetails.addressLine1 ||
+                      !billingDetails.addressLine2 ||
+                      !billingDetails.city ||
+                      !billingDetails.state ||
+                      !billingDetails.pincode))
                 }
               >
                 Next
               </Button>
             )}
-            {activeStep === 2 && (
+            {activeStep === 3 && (
               <Button
                 variant="contained"
                 color="secondary"

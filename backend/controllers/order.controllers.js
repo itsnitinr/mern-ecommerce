@@ -17,6 +17,7 @@ const placeOrder = asyncHandler(async (req, res) => {
     shippingPrice,
     totalPrice,
     shippingDetails,
+    billingDetails,
   } = req.body;
 
   if (!pcbDetails) {
@@ -32,6 +33,7 @@ const placeOrder = asyncHandler(async (req, res) => {
       shippingPrice,
       totalPrice,
       shippingDetails,
+      billingDetails,
     });
     let createdOrder = await order.save();
 

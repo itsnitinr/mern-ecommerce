@@ -139,7 +139,14 @@ const OrderDetailsPage = ({ history }) => {
                 <b>{order.user.name}</b>
               </Typography>
               <Typography>{order.user.email}</Typography>
+              <Typography>
+                <b>Billing Address: </b>
+                {order.billingDetails.addressLine1},{' '}
+                {order.billingDetails.addressLine2}, {order.billingDetails.city}
+                , {order.billingDetails.state}, {order.billingDetails.pincode}
+              </Typography>
               <Typography gutterBottom className={classes.address}>
+                <b>Shipping Address: </b>
                 {order.shippingDetails.addressLine1},{' '}
                 {order.shippingDetails.addressLine2},{' '}
                 {order.shippingDetails.city}, {order.shippingDetails.state},{' '}
@@ -423,43 +430,58 @@ const OrderDetailsPage = ({ history }) => {
                   </TableHead>
                   <TableBody>
                     <TableRow>
-                      <TableCell scope="row">Estimated PCB Cost</TableCell>
-                      <TableCell>₹ {order.orderPrice}</TableCell>
+                      <TableCell scope="row">
+                        {!order.underReview ? 'PCB Cost' : 'Estimated PCB Cost'}
+                      </TableCell>
+                      <TableCell>
+                        ₹{' '}
+                        {order.isAdjusted ? (
+                          <>
+                            <s>{order.orderPrice}</s>
+                            <b> {order.adjustedPrice}</b>
+                          </>
+                        ) : (
+                          order.orderPrice
+                        )}
+                      </TableCell>
                     </TableRow>
-                    {order.isAdjusted && (
-                      <TableRow>
-                        <TableCell scope="row">
-                          <b>Adjusted PCB Cost</b>
-                        </TableCell>
-                        <TableCell>
-                          <b>₹ {order.adjustedPrice}</b>
-                        </TableCell>
-                      </TableRow>
-                    )}
                     <TableRow>
-                      <TableCell scope="row">Tax</TableCell>
-                      <TableCell>₹ {order.taxPrice}</TableCell>
+                      <TableCell scope="row">
+                        {!order.underReview ? 'Tax' : 'Estimated Tax'}
+                      </TableCell>
+                      <TableCell>
+                        ₹{' '}
+                        {order.isAdjusted ? (
+                          <>
+                            <s>{order.taxPrice}</s>
+                            <b> {order.adjustedTax}</b>
+                          </>
+                        ) : (
+                          order.taxPrice
+                        )}
+                      </TableCell>
                     </TableRow>
-                    {order.isAdjusted && (
-                      <TableRow>
-                        <TableCell scope="row">
-                          <b>Adjusted Tax</b>
-                        </TableCell>
-                        <TableCell>
-                          <b>₹ {order.adjustedTax}</b>
-                        </TableCell>
-                      </TableRow>
-                    )}
                     <TableRow>
                       <TableCell scope="row">Shipping</TableCell>
                       <TableCell>₹ {order.shippingPrice}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell scope="row">
-                        <b>Estimated Total Cost</b>
+                        <b>
+                          {!order.underReview && !order.isAdjusted
+                            ? 'Total Cost'
+                            : 'Estimated Total Cost'}
+                        </b>
                       </TableCell>
                       <TableCell>
-                        <b>₹ {order.totalPrice}</b>
+                        <b>
+                          ₹{' '}
+                          {order.isAdjusted ? (
+                            <s>{order.totalPrice}</s>
+                          ) : (
+                            order.totalPrice
+                          )}
+                        </b>
                       </TableCell>
                     </TableRow>
                     {order.isAdjusted && (

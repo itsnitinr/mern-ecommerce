@@ -12,6 +12,12 @@ body {
   overflow-y: scroll !important;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .slick-prev:before,
 .slick-next:before {
   color: #54be73 !important;
