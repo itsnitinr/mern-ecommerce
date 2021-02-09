@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 
 import Navbar from './components/navbar/Navbar.component';
+import Footer from './components/footer/Footer.component';
 import Notifier from './components/notifier/Notifier.component';
 import LandingPage from './pages/landing/LandingPage.component';
 import SignupPage from './pages/sign-up/SignupPage.component';
@@ -61,6 +62,7 @@ const App = () => {
               <Route path="/admin/users/:id" component={EditUserPage} />
               <Route path="/admin/orders" component={AdminPanelOrders} />
             </Switch>
+            <Footer />
           </SnackbarProvider>
         </ThemeProvider>
       </BrowserRouter>

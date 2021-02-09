@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '4rem',
   },
   testimonialsContainer: {
-    padding: '0 0 3rem 0', // 3rem 0 with services
+    padding: '0 0 1rem 0', // 3rem 0 with services
   },
 }));
 

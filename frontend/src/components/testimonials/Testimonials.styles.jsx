@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   wrapper: {
     overflow: 'initial',
     width: '70vw',
-    margin: '3rem auto',
+    margin: '3rem auto 0 auto',
     [theme.breakpoints.down('md')]: {
       width: '90vw',
       overflow: 'hidden',
