@@ -8,8 +8,7 @@
 
 body {
   padding-right: 0 !important;
-  overflow: hidden !important;
-  overflow-y: scroll !important;
+  overflow-x: hidden !important;
 }
 
 input::-webkit-outer-spin-button,

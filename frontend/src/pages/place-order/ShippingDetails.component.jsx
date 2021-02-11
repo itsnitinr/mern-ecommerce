@@ -5,8 +5,13 @@ import {
   Grid,
   TextField,
   Typography,
+  InputLabel,
+  Select,
+  FormControl,
+  MenuItem,
 } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
+import regionData from '../../utils/region';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,37 +70,68 @@ const ShippingDetails = ({ details, onChange }) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="city"
-                  label="City"
-                  value={details.city}
-                  onChange={onChange}
-                />
+                <FormControl variant="outlined" fullWidth required>
+                  <InputLabel id="stateLabel">State</InputLabel>
+                  <Select
+                    labelId="stateLabel"
+                    label="State"
+                    color="secondary"
+                    name="state"
+                    value={details.state}
+                    onChange={onChange}
+                  >
+                    {regionData.map((state) => (
+                      <MenuItem value={state.state} key={state.state}>
+                        {state.state}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl variant="outlined" fullWidth required>
+                  <InputLabel id="cityLabel">City / Town</InputLabel>
+                  <Select
+                    labelId="cityLabel"
+                    label="City / Town"
+                    color="secondary"
+                    name="city"
+                    value={details.city}
+                    onChange={onChange}
+                    disabled={!details.state}
+                  >
+                    {details.state
+                      ? regionData
+                          .find(({ state }) => details.state === state)
+                          .regions.map((region) => (
+                            <MenuItem value={region} key={region}>
+                              {region}
+                            </MenuItem>
+                          ))
+                      : []}
+                  </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  type="number"
                   variant="outlined"
                   required
                   fullWidth
-                  name="state"
-                  label="State"
-                  value={details.state}
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
+                  InputProps={{ inputProps: { max: 999999 } }}
                   name="pincode"
                   label="Pincode"
                   value={details.pincode}
                   onChange={onChange}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography align="center" color="primary">
+                  <b>
+                    Currently, PCBs are manufactured and shipped within India
+                    only.
+                  </b>
+                </Typography>
               </Grid>
             </Grid>
           </form>
