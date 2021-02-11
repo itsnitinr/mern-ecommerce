@@ -247,13 +247,15 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    if (
-      (await user.matchPassword(req.body.currentPassword)) &&
-      req.body.password
-    ) {
-      user.password = req.body.password;
-    } else {
-      throw new Error('Please recheck your current password');
+    if (req.body.currentPassword && req.body.password) {
+      if (
+        (await user.matchPassword(req.body.currentPassword)) &&
+        req.body.password
+      ) {
+        user.password = req.body.password;
+      } else {
+        throw new Error('Please recheck your current and new password');
+      }
     }
     const updatedUser = await user.save();
     res.json({
