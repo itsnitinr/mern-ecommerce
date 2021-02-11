@@ -48,7 +48,11 @@ import {
   getUserDetails,
   updateUserProfile,
 } from '../../redux/user/user.actions';
-import { getMyOrders } from '../../redux/order/order.actions';
+import {
+  getMyOrders,
+  saveBillingDetails,
+  saveShippingDetails,
+} from '../../redux/order/order.actions';
 
 const DashboardPage = ({ history }) => {
   const { user } = useSelector((state) => state.userLogin);
@@ -57,6 +61,9 @@ const DashboardPage = ({ history }) => {
   const { loading: orderLoading, orders } = useSelector(
     (state) => state.orderListMy
   );
+
+  const billingAddress = useSelector((state) => state.billingAddress);
+  const shippingAddress = useSelector((state) => state.shippingAddress);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -67,9 +74,6 @@ const DashboardPage = ({ history }) => {
   const [profileDialogOpen, setProfileDialogOpen] = useState(false);
   const [billingDialogOpen, setBillingDialogOpen] = useState(false);
   const [shippingDialogOpen, setShippingDialogOpen] = useState(false);
-
-  const billingAddress = JSON.parse(localStorage.getItem('billingAddress'));
-  const shippingAddress = JSON.parse(localStorage.getItem('shippingAddress'));
 
   const [shippingDetails, setShippingDetails] = useState({
     addressLine1: '',
@@ -97,12 +101,12 @@ const DashboardPage = ({ history }) => {
 
   const onBillingSubmit = (e) => {
     setBillingDialogOpen(false);
-    localStorage.setItem('billingAddress', JSON.stringify(billingDetails));
+    dispatch(saveBillingDetails(billingDetails));
   };
 
   const onShippingSubmit = (e) => {
     setShippingDialogOpen(false);
-    localStorage.setItem('shippingAddress', JSON.stringify(shippingDetails));
+    dispatch(saveShippingDetails(shippingDetails));
   };
 
   const dispatch = useDispatch();
@@ -378,7 +382,7 @@ const DashboardPage = ({ history }) => {
                     subheader="View & update your billing address"
                   />
                   <CardContent>
-                    {billingAddress ? (
+                    {billingAddress.addressLine1 ? (
                       <Table>
                         <TableRow>
                           <TableCell>
@@ -538,7 +542,7 @@ const DashboardPage = ({ history }) => {
                     subheader="View & update your shipping address"
                   />
                   <CardContent>
-                    {shippingAddress ? (
+                    {shippingAddress.addressLine1 ? (
                       <Table>
                         <TableRow>
                           <TableCell>

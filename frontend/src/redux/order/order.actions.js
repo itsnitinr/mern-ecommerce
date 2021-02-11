@@ -23,6 +23,8 @@ import {
   ORDER_DISPATCH_REQUEST,
   ORDER_DISPATCH_SUCCESS,
   ORDER_DISPATCH_FAIL,
+  SAVE_BILLING_ADDRESS,
+  SAVE_SHIPPING_ADDRESS,
 } from './order.types';
 
 export const placeOrder = (order) => async (dispatch, getState) => {
@@ -264,4 +266,14 @@ export const dispatchOrder = (id, logisticsPartner, trackingId) => async (
           : error.message,
     });
   }
+};
+
+export const saveBillingDetails = (data) => (dispatch) => {
+  dispatch({ type: SAVE_BILLING_ADDRESS, payload: data });
+  localStorage.setItem('billingAddress', JSON.stringify(data));
+};
+
+export const saveShippingDetails = (data) => (dispatch) => {
+  dispatch({ type: SAVE_SHIPPING_ADDRESS, payload: data });
+  localStorage.setItem('shippingAddress', JSON.stringify(data));
 };

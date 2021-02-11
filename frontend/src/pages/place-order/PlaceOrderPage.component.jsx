@@ -34,6 +34,9 @@ const PlaceOrderPage = ({ history }) => {
 
   const { order } = useSelector((state) => state.orderCreate);
 
+  const billingAddress = useSelector((state) => state.billingAddress);
+  const shippingAddress = useSelector((state) => state.shippingAddress);
+
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
@@ -69,19 +72,19 @@ const PlaceOrderPage = ({ history }) => {
   const [file, setFile] = useState('');
 
   const [shippingDetails, setShippingDetails] = useState({
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    pincode: '',
+    addressLine1: shippingAddress.addressLine1 || '',
+    addressLine2: shippingAddress.addressLine2 || '',
+    city: shippingAddress.city || '',
+    state: shippingAddress.state || '',
+    pincode: shippingAddress.pincode || '',
   });
 
   const [billingDetails, setBillingDetails] = useState({
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    pincode: '',
+    addressLine1: billingAddress.addressLine1 || '',
+    addressLine2: billingAddress.addressLine2 || '',
+    city: billingAddress.city || '',
+    state: billingAddress.state || '',
+    pincode: billingAddress.pincode || '',
   });
 
   const [sameAddress, setSameAddress] = useState(false);
@@ -228,14 +231,14 @@ const PlaceOrderPage = ({ history }) => {
     }
     if (!sameAddress) {
       setShippingDetails({
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        state: '',
-        pincode: '',
+        addressLine1: shippingAddress.addressLine1 || '',
+        addressLine2: shippingAddress.addressLine2 || '',
+        city: shippingAddress.city || '',
+        state: shippingAddress.state || '',
+        pincode: shippingAddress.pincode || '',
       });
     }
-  }, [history, user, sameAddress, billingDetails]);
+  }, [history, user, sameAddress, billingDetails, shippingAddress]);
 
   const classes = useStyles();
 

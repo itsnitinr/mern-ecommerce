@@ -20,6 +20,8 @@ import {
   ORDER_DISPATCH_SUCCESS,
   ORDER_DISPATCH_FAIL,
   ORDER_DISPATCH_RESET,
+  SAVE_SHIPPING_ADDRESS,
+  SAVE_BILLING_ADDRESS,
 } from './order.types';
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -107,6 +109,24 @@ export const orderDispatchReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case ORDER_DISPATCH_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const billingAddressReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SAVE_BILLING_ADDRESS:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const shippingAddressReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SAVE_SHIPPING_ADDRESS:
+      return action.payload;
     default:
       return state;
   }
