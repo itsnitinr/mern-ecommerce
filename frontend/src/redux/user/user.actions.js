@@ -329,6 +329,7 @@ export const updateUserProfile = (formData) => async (dispatch, getState) => {
     const { data } = await axios.put(`/api/users/profile`, formData, config);
 
     dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 
     dispatch(
       enqueueSnackbar({

@@ -15,10 +15,34 @@ import {
   TableContainer,
   TableRow,
   TableCell,
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Avatar,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@material-ui/core';
-import { Check, Clear } from '@material-ui/icons';
+import {
+  Check,
+  Clear,
+  AccountCircle,
+  Receipt,
+  ShoppingCart,
+} from '@material-ui/icons';
 import PageHeader from '../../components/page-header/PageHeader.component';
 import useStyles from './Dashboard.styles';
+
+import regionData from '../../utils/region';
 
 import {
   getUserDetails,
@@ -29,6 +53,7 @@ import { getMyOrders } from '../../redux/order/order.actions';
 const DashboardPage = ({ history }) => {
   const { user } = useSelector((state) => state.userLogin);
   const { loading, userDetails } = useSelector((state) => state.userDetails);
+
   const { loading: orderLoading, orders } = useSelector(
     (state) => state.orderListMy
   );
@@ -36,6 +61,49 @@ const DashboardPage = ({ history }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+
+  const [changePassword, setChangePassword] = useState(false);
+  const [profileDialogOpen, setProfileDialogOpen] = useState(false);
+  const [billingDialogOpen, setBillingDialogOpen] = useState(false);
+  const [shippingDialogOpen, setShippingDialogOpen] = useState(false);
+
+  const billingAddress = JSON.parse(localStorage.getItem('billingAddress'));
+  const shippingAddress = JSON.parse(localStorage.getItem('shippingAddress'));
+
+  const [shippingDetails, setShippingDetails] = useState({
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    pincode: '',
+  });
+
+  const [billingDetails, setBillingDetails] = useState({
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    pincode: '',
+  });
+
+  const onShippingChange = (e) => {
+    setShippingDetails({ ...shippingDetails, [e.target.name]: e.target.value });
+  };
+
+  const onBillingChange = (e) => {
+    setBillingDetails({ ...billingDetails, [e.target.name]: e.target.value });
+  };
+
+  const onBillingSubmit = (e) => {
+    setBillingDialogOpen(false);
+    localStorage.setItem('billingAddress', JSON.stringify(billingDetails));
+  };
+
+  const onShippingSubmit = (e) => {
+    setShippingDialogOpen(false);
+    localStorage.setItem('shippingAddress', JSON.stringify(shippingDetails));
+  };
 
   const dispatch = useDispatch();
 
@@ -55,7 +123,16 @@ const DashboardPage = ({ history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserProfile({ id: user._id, name, email, password }));
+    setProfileDialogOpen(false);
+    dispatch(
+      updateUserProfile({
+        id: user._id,
+        name,
+        email,
+        currentPassword,
+        password,
+      })
+    );
   };
 
   const classes = useStyles();
@@ -66,67 +143,14 @@ const DashboardPage = ({ history }) => {
       <PageHeader title="Dashboard" subtitle="Manage Profile & Orders" />
       <Container>
         <Grid container spacing={5}>
-          <Grid item md={3} sm={4} xs={12}>
-            <Typography variant="h5" gutterBottom>
-              Manage Profile
-            </Typography>
-            <div className={classes.cardContainer}>
-              <div className={classes.cardTop}>
-                <Typography>Profile Info</Typography>
-              </div>
-              <div>
-                <form
-                  className={classes.cardContent}
-                  onSubmit={(e) => onSubmit(e)}
-                >
-                  <TextField
-                    required
-                    fullWidth
-                    label="Name"
-                    variant="outlined"
-                    color="secondary"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  <TextField
-                    required
-                    fullWidth
-                    label="Email"
-                    variant="outlined"
-                    color="secondary"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <TextField
-                    fullWidth
-                    label="Password"
-                    variant="outlined"
-                    color="secondary"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="secondary"
-                    fullWidth
-                  >
-                    Update Profile
-                  </Button>
-                </form>
-              </div>
-            </div>
-          </Grid>
-          <Grid item md={9} sm={8} xs={12}>
-            <Typography variant="h5" gutterBottom>
+          <Grid item xs={12}>
+            <Typography className={classes.heading} variant="h5" gutterBottom>
               Manage Orders
             </Typography>
             <TableContainer component={Paper}>
               {orderLoading ? (
                 <LinearProgress />
-              ) : (
+              ) : orders.length > 0 ? (
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -166,7 +190,12 @@ const DashboardPage = ({ history }) => {
                         <TableCell>
                           {order.createdAt.substring(0, 10)}
                         </TableCell>
-                        <TableCell>₹ {order.totalPrice}</TableCell>
+                        <TableCell>
+                          ₹{' '}
+                          {order.isAdjusted
+                            ? order.adjustedTotal
+                            : order.totalPrice}
+                        </TableCell>
                         <TableCell>
                           {order.underReview
                             ? 'Under Review'
@@ -199,8 +228,465 @@ const DashboardPage = ({ history }) => {
                     ))}
                   </TableBody>
                 </Table>
+              ) : (
+                <Typography variant="h6" style={{ padding: '1rem' }}>
+                  You haven't placed any orders yet
+                </Typography>
               )}
             </TableContainer>
+          </Grid>
+          <Grid item sm={4} xs={12}>
+            <Typography className={classes.heading} variant="h5" gutterBottom>
+              Manage Profile
+            </Typography>
+            <Card>
+              <CardHeader
+                avatar={
+                  <Avatar className={classes.avatar}>
+                    <AccountCircle />
+                  </Avatar>
+                }
+                title="Profile Info"
+                subheader="Update your name, email & password"
+              />
+              <CardContent>
+                <Table>
+                  <TableRow>
+                    <TableCell>
+                      <b>Name</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>{userDetails.name}</b>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      <b>Email Address</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>{userDetails.email}</b>
+                    </TableCell>
+                  </TableRow>
+                </Table>
+              </CardContent>
+              <CardActions>
+                <Button
+                  onClick={() => setProfileDialogOpen(true)}
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                >
+                  Update Profile
+                </Button>
+              </CardActions>
+            </Card>
+            <Dialog
+              open={profileDialogOpen}
+              onClose={() => setProfileDialogOpen(false)}
+            >
+              <DialogTitle>Update Profile</DialogTitle>
+              <DialogContent>
+                <form
+                  className={classes.cardContent}
+                  onSubmit={(e) => onSubmit(e)}
+                >
+                  <TextField
+                    required
+                    fullWidth
+                    label="Name"
+                    variant="outlined"
+                    color="secondary"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <TextField
+                    required
+                    fullWidth
+                    label="Email"
+                    variant="outlined"
+                    color="secondary"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={changePassword}
+                          onChange={(e) => setChangePassword(e.target.checked)}
+                        />
+                      }
+                      label="Update password?"
+                    />
+                  </FormGroup>
+                  {changePassword && (
+                    <>
+                      <TextField
+                        fullWidth
+                        label="Current Password"
+                        variant="outlined"
+                        color="secondary"
+                        type="password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                      />
+                      <TextField
+                        fullWidth
+                        label="New Password"
+                        variant="outlined"
+                        color="secondary"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </>
+                  )}
+                </form>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={() => setProfileDialogOpen(false)}
+                  color="secondary"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={(e) => onSubmit(e)}
+                  variant="contained"
+                  color="secondary"
+                >
+                  Submit
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+          <Grid item sm={8} xs={12}>
+            <Typography className={classes.heading} variant="h5" gutterBottom>
+              Manage Addresses
+            </Typography>
+            <Grid container spacing={3}>
+              <Grid item sm={6} xs={12}>
+                <Card>
+                  <CardHeader
+                    avatar={
+                      <Avatar className={classes.avatar}>
+                        <Receipt />
+                      </Avatar>
+                    }
+                    title="Billing Info"
+                    subheader="View & update your billing address"
+                  />
+                  <CardContent>
+                    {billingAddress ? (
+                      <Table>
+                        <TableRow>
+                          <TableCell>
+                            <b>Address Line 1</b>
+                          </TableCell>
+                          <TableCell>{billingAddress.addressLine1}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>Address Line 2</b>
+                          </TableCell>
+                          <TableCell>{billingAddress.addressLine2}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>City</b>
+                          </TableCell>
+                          <TableCell>{billingAddress.city}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>State</b>
+                          </TableCell>
+                          <TableCell>{billingAddress.state}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>Pincode</b>
+                          </TableCell>
+                          <TableCell>{billingAddress.pincode}</TableCell>
+                        </TableRow>
+                      </Table>
+                    ) : (
+                      <Typography>
+                        You don't have a saved billing address. Add an address
+                        by pressing on the button given below for faster
+                        checkout.
+                      </Typography>
+                    )}
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      onClick={() => setBillingDialogOpen(true)}
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      Update Billing Address
+                    </Button>
+                  </CardActions>
+                </Card>
+                <Dialog
+                  open={billingDialogOpen}
+                  onClose={() => setBillingDialogOpen(false)}
+                >
+                  <DialogTitle>Update Billing Address</DialogTitle>
+                  <DialogContent>
+                    <form className={classes.cardContent}>
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        label="Address Line 1"
+                        name="addressLine1"
+                        value={billingDetails.addressLine1}
+                        onChange={onBillingChange}
+                      />
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        label="Address Line 2"
+                        name="addressLine2"
+                        value={billingDetails.addressLine2}
+                        onChange={onBillingChange}
+                      />
+                      <FormControl variant="outlined" fullWidth required>
+                        <InputLabel id="stateLabel">State</InputLabel>
+                        <Select
+                          labelId="stateLabel"
+                          label="State"
+                          color="secondary"
+                          name="state"
+                          value={billingDetails.state}
+                          onChange={onBillingChange}
+                        >
+                          {regionData.map((state) => (
+                            <MenuItem value={state.state} key={state.state}>
+                              {state.state}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <FormControl variant="outlined" fullWidth required>
+                        <InputLabel id="cityLabel">City / Town</InputLabel>
+                        <Select
+                          labelId="cityLabel"
+                          label="City / Town"
+                          color="secondary"
+                          name="city"
+                          value={billingDetails.city}
+                          onChange={onBillingChange}
+                          disabled={!billingDetails.state}
+                        >
+                          {billingDetails.state
+                            ? regionData
+                                .find(
+                                  ({ state }) => billingDetails.state === state
+                                )
+                                .regions.map((region) => (
+                                  <MenuItem value={region} key={region}>
+                                    {region}
+                                  </MenuItem>
+                                ))
+                            : []}
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        variant="outlined"
+                        type="number"
+                        required
+                        fullWidth
+                        InputProps={{ inputProps: { max: 999999 } }}
+                        name="pincode"
+                        label="Pincode"
+                        value={billingDetails.pincode}
+                        onChange={onBillingChange}
+                      />
+                    </form>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={() => setBillingDialogOpen(false)}
+                      color="secondary"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={(e) => onBillingSubmit(e)}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      Submit
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </Grid>
+              <Grid item sm={6} xs={12}>
+                <Card>
+                  <CardHeader
+                    avatar={
+                      <Avatar className={classes.avatar}>
+                        <ShoppingCart />
+                      </Avatar>
+                    }
+                    title="Shipping Info"
+                    subheader="View & update your shipping address"
+                  />
+                  <CardContent>
+                    {shippingAddress ? (
+                      <Table>
+                        <TableRow>
+                          <TableCell>
+                            <b>Address Line 1</b>
+                          </TableCell>
+                          <TableCell>{shippingAddress.addressLine1}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>Address Line 2</b>
+                          </TableCell>
+                          <TableCell>{shippingAddress.addressLine2}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>City</b>
+                          </TableCell>
+                          <TableCell>{shippingAddress.city}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>State</b>
+                          </TableCell>
+                          <TableCell>{shippingAddress.state}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>Pincode</b>
+                          </TableCell>
+                          <TableCell>{shippingAddress.pincode}</TableCell>
+                        </TableRow>
+                      </Table>
+                    ) : (
+                      <Typography>
+                        You don't have a saved billing address. Add an address
+                        by pressing on the button given below for faster
+                        checkout.
+                      </Typography>
+                    )}
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      onClick={(e) => setShippingDialogOpen(true)}
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      Update Shipping Address
+                    </Button>
+                  </CardActions>
+                </Card>
+                <Dialog
+                  open={shippingDialogOpen}
+                  onClose={() => setShippingDialogOpen(false)}
+                >
+                  <DialogTitle>Update Shipping Address</DialogTitle>
+                  <DialogContent>
+                    <form className={classes.cardContent}>
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        label="Address Line 1"
+                        name="addressLine1"
+                        value={shippingDetails.addressLine1}
+                        onChange={onShippingChange}
+                      />
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        label="Address Line 2"
+                        name="addressLine2"
+                        value={shippingDetails.addressLine2}
+                        onChange={onShippingChange}
+                      />
+                      <FormControl variant="outlined" fullWidth required>
+                        <InputLabel id="stateLabel">State</InputLabel>
+                        <Select
+                          labelId="stateLabel"
+                          label="State"
+                          color="secondary"
+                          name="state"
+                          value={shippingDetails.state}
+                          onChange={onShippingChange}
+                        >
+                          {regionData.map((state) => (
+                            <MenuItem value={state.state} key={state.state}>
+                              {state.state}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                      <FormControl variant="outlined" fullWidth required>
+                        <InputLabel id="cityLabel">City / Town</InputLabel>
+                        <Select
+                          labelId="cityLabel"
+                          label="City / Town"
+                          color="secondary"
+                          name="city"
+                          value={shippingDetails.city}
+                          onChange={onShippingChange}
+                          disabled={!shippingDetails.state}
+                        >
+                          {shippingDetails.state
+                            ? regionData
+                                .find(
+                                  ({ state }) => shippingDetails.state === state
+                                )
+                                .regions.map((region) => (
+                                  <MenuItem value={region} key={region}>
+                                    {region}
+                                  </MenuItem>
+                                ))
+                            : []}
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        variant="outlined"
+                        type="number"
+                        required
+                        fullWidth
+                        InputProps={{ inputProps: { max: 999999 } }}
+                        name="pincode"
+                        label="Pincode"
+                        value={shippingDetails.pincode}
+                        onChange={onShippingChange}
+                      />
+                    </form>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={() => setShippingDialogOpen(false)}
+                      color="secondary"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={(e) => onShippingSubmit(e)}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      Submit
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Container>

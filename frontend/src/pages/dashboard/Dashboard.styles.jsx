@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   cardContent: {
-    padding: '2rem 1rem 0.5rem 1rem',
     '& > *': {
       marginBottom: '1.5rem',
     },
@@ -26,6 +25,14 @@ const useStyles = makeStyles((theme) => ({
   },
   clearIcon: {
     fill: theme.palette.error.main,
+  },
+  heading: {
+    borderBottom: '5px solid #54be73',
+    marginBottom: '2rem',
+    width: '225px',
+  },
+  avatar: {
+    background: theme.palette.primary.main,
   },
 }));
 
