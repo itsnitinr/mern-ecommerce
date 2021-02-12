@@ -1,4 +1,4 @@
-export default [
+const regionData = [
   {
     state: 'Andaman and Nicobar Islands',
     shortCode: 'AN',
@@ -1381,3 +1381,5 @@ export default [
     ],
   },
 ];
+
+export default regionData;

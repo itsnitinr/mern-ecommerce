@@ -1,15 +1,15 @@
-import { Typography, Container, Button, Grid } from '@material-ui/core';
+import { Typography, Container, Button } from '@material-ui/core';
 import HeroCarousel from '../../components/hero-carousel/HeroCarousel.component';
 import HeroForm from '../../components/hero-form/HeroForm.component';
-import FeatureCard from '../../components/feature-card/FeatureCard.component';
+// import FeatureCard from '../../components/feature-card/FeatureCard.component';
 import Testimonials from '../../components/testimonials/Testimonials.component';
 import useStyles from './LandingPage.styles';
 
 import aboutImage from '../../assets/bg1.jpg';
-import printerImage from '../../assets/3d-printer.svg';
-import microcontrollerImage from '../../assets/microcontroller.svg';
-import pcbImage from '../../assets/pcb.svg';
-import productImage from '../../assets/product.svg';
+// import printerImage from '../../assets/3d-printer.svg';
+// import microcontrollerImage from '../../assets/microcontroller.svg';
+// import pcbImage from '../../assets/pcb.svg';
+// import productImage from '../../assets/product.svg';
 
 const LandingPage = () => {
   const classes = useStyles();
