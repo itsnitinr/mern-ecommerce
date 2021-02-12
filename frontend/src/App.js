@@ -7,6 +7,7 @@ import Navbar from './components/navbar/Navbar.component';
 import Footer from './components/footer/Footer.component';
 import Notifier from './components/notifier/Notifier.component';
 import LandingPage from './pages/landing/LandingPage.component';
+import AboutPage from './pages/about/AboutPage.component';
 import SignupPage from './pages/sign-up/SignupPage.component';
 import SigninPage from './pages/sign-in/SigninPage.component';
 import GuidelinesPage from './pages/guidelines/GuidelinesPage.component';
@@ -43,6 +44,7 @@ const App = () => {
             <Navbar />
             <Switch>
               <Route exact path="/" component={LandingPage} />
+              <Route path="/about" component={AboutPage} />
               <Route path="/signup" component={SignupPage} />
               <Route path="/signin" component={SigninPage} />
               <Route path="/guidelines" component={GuidelinesPage} />
