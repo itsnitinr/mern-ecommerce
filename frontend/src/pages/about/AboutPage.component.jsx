@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Grid, Typography, Button } from '@material-ui/core';
 import {
   Mail,
@@ -55,13 +56,15 @@ const AboutPage = () => {
             Product Developments based on electronics, embedded and IoT
             solutions.
           </Typography>
-          <Button
-            variant="contained"
-            className={classes.greenButton}
-            color="secondary"
-          >
-            Place Order
-          </Button>
+          <Link to="/order">
+            <Button
+              variant="contained"
+              className={classes.greenButton}
+              color="secondary"
+            >
+              Place Order
+            </Button>
+          </Link>
         </div>
       </Container>
       <section className={classes.contactBanner}>
@@ -70,7 +73,7 @@ const AboutPage = () => {
         </Typography>
         <Container className={classes.innerBanner}>
           <Grid container justify="center" spacing={5}>
-            <Grid item sm={6} xs={12}>
+            <Grid item md={4} sm={6} xs={12}>
               <Typography
                 className={classes.aboutHeading}
                 align="center"
@@ -85,7 +88,7 @@ const AboutPage = () => {
                 </Typography>
               </a>
             </Grid>
-            <Grid item sm={6} xs={12}>
+            <Grid item md={4} sm={6} xs={12}>
               <Typography
                 className={classes.aboutHeading}
                 align="center"
@@ -100,7 +103,7 @@ const AboutPage = () => {
                 </Typography>
               </a>
             </Grid>
-            <Grid item sm={12} xs={12}>
+            <Grid item md={4} sm={12} xs={12}>
               <Typography
                 className={classes.aboutHeading}
                 align="center"
