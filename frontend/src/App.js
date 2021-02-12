@@ -2,6 +2,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ThemeProvider, Button } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
+import SimpleReactLightbox from 'simple-react-lightbox';
 
 import Navbar from './components/navbar/Navbar.component';
 import Footer from './components/footer/Footer.component';
@@ -11,6 +12,7 @@ import AboutPage from './pages/about/AboutPage.component';
 import SignupPage from './pages/sign-up/SignupPage.component';
 import SigninPage from './pages/sign-in/SigninPage.component';
 import GuidelinesPage from './pages/guidelines/GuidelinesPage.component';
+import GalleryPage from './pages/gallery/GalleryPage.component';
 import ForgotPasswordPage from './pages/forgot-password/ForgotPassword.component';
 import ResetPasswordPage from './pages/reset-password/ResetPassword.component';
 import VerifyAccountPage from './pages/verify-account/VerifyAccountPage.component';
@@ -42,28 +44,31 @@ const App = () => {
           >
             <Notifier />
             <Navbar />
-            <Switch>
-              <Route exact path="/" component={LandingPage} />
-              <Route path="/about" component={AboutPage} />
-              <Route path="/signup" component={SignupPage} />
-              <Route path="/signin" component={SigninPage} />
-              <Route path="/guidelines" component={GuidelinesPage} />
-              <Route path="/dashboard" component={DashboardPage} />
-              <Route exact path="/order" component={PlaceOrderPage} />
-              <Route path="/order/:id" component={OrderDetailsPage} />
-              <Route path="/forgot-password" component={ForgotPasswordPage} />
-              <Route
-                path="/reset-password/:resetToken"
-                component={ResetPasswordPage}
-              />
-              <Route
-                path="/verify/:verificationToken"
-                component={VerifyAccountPage}
-              />
-              <Route exact path="/admin/users" component={AdminPanelUsers} />
-              <Route path="/admin/users/:id" component={EditUserPage} />
-              <Route path="/admin/orders" component={AdminPanelOrders} />
-            </Switch>
+            <SimpleReactLightbox>
+              <Switch>
+                <Route exact path="/" component={LandingPage} />
+                <Route path="/about" component={AboutPage} />
+                <Route path="/gallery" component={GalleryPage} />
+                <Route path="/signup" component={SignupPage} />
+                <Route path="/signin" component={SigninPage} />
+                <Route path="/guidelines" component={GuidelinesPage} />
+                <Route path="/dashboard" component={DashboardPage} />
+                <Route exact path="/order" component={PlaceOrderPage} />
+                <Route path="/order/:id" component={OrderDetailsPage} />
+                <Route path="/forgot-password" component={ForgotPasswordPage} />
+                <Route
+                  path="/reset-password/:resetToken"
+                  component={ResetPasswordPage}
+                />
+                <Route
+                  path="/verify/:verificationToken"
+                  component={VerifyAccountPage}
+                />
+                <Route exact path="/admin/users" component={AdminPanelUsers} />
+                <Route path="/admin/users/:id" component={EditUserPage} />
+                <Route path="/admin/orders" component={AdminPanelOrders} />
+              </Switch>
+            </SimpleReactLightbox>
             <Footer />
           </SnackbarProvider>
         </ThemeProvider>
