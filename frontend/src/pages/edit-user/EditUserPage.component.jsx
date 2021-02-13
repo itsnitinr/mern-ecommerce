@@ -36,8 +36,10 @@ export default function EditUserPage({ match, history }) {
     dispatch(updateUser({ _id: userId, name, email, isAdmin }));
   };
 
+  const superAdmins = process.env.REACT_APP_SUPER_ADMIN_IDS.split(', ');
+
   useEffect(() => {
-    if (!user || !user.isAdmin) {
+    if (!user || !superAdmins.find((superAdmin) => superAdmin === user._id)) {
       history.push('/signin');
     }
     if (success) {
@@ -52,7 +54,7 @@ export default function EditUserPage({ match, history }) {
         setIsAdmin(userDetails.isAdmin);
       }
     }
-  }, [history, user, userDetails, userId, dispatch, success]);
+  }, [history, user, userDetails, userId, dispatch, success, superAdmins]);
 
   return (
     <>

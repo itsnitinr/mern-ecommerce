@@ -39,13 +39,15 @@ const AdminPanelUsers = ({ history }) => {
     setPage(0);
   };
 
+  const superAdmins = process.env.REACT_APP_SUPER_ADMIN_IDS.split(', ');
+
   useEffect(() => {
-    if (user && user.isAdmin) {
+    if (user && superAdmins.find((superAdmin) => superAdmin === user._id)) {
       dispatch(getAllUsers());
     } else {
       history.push('/signin');
     }
-  }, [dispatch, history, user]);
+  }, [dispatch, history, user, superAdmins]);
 
   return (
     <>
