@@ -1,4 +1,5 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Switch, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider, Button } from '@material-ui/core';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
@@ -26,6 +27,16 @@ import { closeSnackbar } from './redux/alert/alert.actions';
 import store from './redux/store';
 import theme from './theme';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 const App = () => {
   const snackbarDimissButton = () => (
     <Button onClick={() => store.dispatch(closeSnackbar())}>dismiss me</Button>
@@ -36,6 +47,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
+        <ScrollToTop />
         <ThemeProvider theme={theme}>
           <SnackbarProvider
             maxSnack={1}

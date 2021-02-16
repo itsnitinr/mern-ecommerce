@@ -1,4 +1,5 @@
 import { Typography, Container, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import HeroCarousel from '../../components/hero-carousel/HeroCarousel.component';
 import HeroForm from '../../components/hero-form/HeroForm.component';
 // import FeatureCard from '../../components/feature-card/FeatureCard.component';
@@ -52,13 +53,15 @@ const LandingPage = () => {
               Product Developments based on electronics, embedded and IoT
               solutions.
             </Typography>
-            <Button
-              variant="contained"
-              className={classes.greenButton}
-              color="secondary"
-            >
-              Know More
-            </Button>
+            <Link to="/about">
+              <Button
+                variant="contained"
+                className={classes.greenButton}
+                color="secondary"
+              >
+                Know More
+              </Button>
+            </Link>
           </div>
         </Container>
       </section>
