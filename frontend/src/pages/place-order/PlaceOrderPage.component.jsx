@@ -161,7 +161,8 @@ const PlaceOrderPage = ({ history }) => {
       taxPrice,
       shippingPrice,
       billingDetails,
-      totalPrice: orderPrice + taxPrice + shippingPrice,
+      totalPrice:
+        Math.round((orderPrice + taxPrice + shippingPrice) * 100) / 100,
       gerberFileUrl: file,
       shippingDetails,
     };
