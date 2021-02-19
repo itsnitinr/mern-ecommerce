@@ -7,7 +7,11 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: '#54be73',
+      contrastText: '#fff',
     },
+  },
+  shape: {
+    borderRadius: 0,
   },
 });
 

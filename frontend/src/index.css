@@ -9,6 +9,7 @@
 body {
   padding-right: 0 !important;
   overflow-x: hidden !important;
+  overflow-y: scroll !important;
 }
 
 input::-webkit-outer-spin-button,
