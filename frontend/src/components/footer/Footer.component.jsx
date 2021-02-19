@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Grid, Typography } from '@material-ui/core';
 import {
   Mail,
@@ -14,8 +14,13 @@ import useStyles from './Footer.styles';
 const Footer = () => {
   const classes = useStyles();
 
+  let match = useRouteMatch(['/signin', '/signup']);
+
   return (
-    <footer className={classes.footerContainer}>
+    <footer
+      className={classes.footerContainer}
+      style={match && { display: 'none' }}
+    >
       <Container>
         <Grid container spacing={4} justify="center">
           <Grid item md={4}>

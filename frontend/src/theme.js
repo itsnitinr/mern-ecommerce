@@ -9,6 +9,9 @@ const theme = createMuiTheme({
       main: '#54be73',
       contrastText: '#fff',
     },
+    background: {
+      default: '#fff',
+    },
   },
   shape: {
     borderRadius: 0,
