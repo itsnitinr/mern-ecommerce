@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     left: '75%',
     transform: 'translate(-50%, -50%)',
     padding: '2rem',
-    border: '4px solid #54be73',
     opacity: 0.9,
+    boxShadow: '4px 8px 8px rgba(0, 0, 0, 0.3)',
     [theme.breakpoints.down('md')]: {
       position: 'static',
       maxHeight: '100%',
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
       width: '100vw',
       opacity: 1,
       background: '#eee',
-      border: 'none',
+      boxShadow: 'none',
     },
   },
 }));
