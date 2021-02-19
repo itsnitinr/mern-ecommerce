@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Alert } from '@material-ui/lab';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   text: {
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
   input: {
     display: 'none',
@@ -53,12 +54,6 @@ const GerberUpload = ({ file, setFile }) => {
           Upload the gerber file in ZIP format. Only one file is allowed. You
           can view your gerber file once you upload the file.
         </Typography>
-        <Link target="_blank" to="/guidelines">
-          <Typography>
-            Click here to check the guidelines to see if the board meets our
-            capabilities
-          </Typography>
-        </Link>
       </Grid>
       <Grid item lg={12} sm={12} xs={12}>
         <input
@@ -78,7 +73,14 @@ const GerberUpload = ({ file, setFile }) => {
           </Button>
         </label>
       </Grid>
-      {loading && <CircularProgress color="secondary" />}
+      {loading && (
+        <div style={{ height: '50px', width: '50px', margin: '2rem auto' }}>
+          <CircularProgress
+            style={{ height: '100%', width: '100%' }}
+            color="secondary"
+          />
+        </div>
+      )}
       {file && (
         <Grid item lg={12} sm={12} xs={12}>
           <iframe
@@ -92,6 +94,18 @@ const GerberUpload = ({ file, setFile }) => {
           </Typography>
         </Grid>
       )}
+      <Grid item lg={12}>
+        <Alert
+          severity="info"
+          color="info"
+          style={{ margin: '1.5rem 0 0.5rem 0' }}
+        >
+          <Link target="_blank" to="/guidelines">
+            Click here
+          </Link>{' '}
+          to check the guidelines to see if the board meets our capabilities
+        </Alert>
+      </Grid>
     </>
   );
 };

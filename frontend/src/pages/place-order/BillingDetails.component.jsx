@@ -13,7 +13,8 @@ import {
   FormControl,
   Select,
 } from '@material-ui/core';
-import { Receipt } from '@material-ui/icons';
+import { Receipt, ShoppingCart } from '@material-ui/icons';
+import { Alert } from '@material-ui/lab';
 import regionData from '../../utils/region';
 
 const useStyles = makeStyles((theme) => ({
@@ -141,14 +142,16 @@ const BillingDetails = ({ details, onChange, sameAddress, setSameAddress }) => {
                   />
                 </FormGroup>
               </Grid>
-              <Grid item xs={12}>
+              <Alert
+                style={{ margin: '1rem 0.5rem' }}
+                icon={<ShoppingCart />}
+                severity="success"
+              >
                 <Typography align="center" color="primary">
-                  <b>
-                    Currently, PCBs are manufactured and shipped within India
-                    only.
-                  </b>
+                  Currently, PCBs are manufactured and shipped within{' '}
+                  <b>India only.</b>
                 </Typography>
-              </Grid>
+              </Alert>
             </Grid>
           </form>
         </div>
