@@ -42,12 +42,13 @@ const AdminPanelUsers = ({ history }) => {
   const superAdmins = process.env.REACT_APP_SUPER_ADMIN_IDS.split(', ');
 
   useEffect(() => {
+    // eslint-disable-next-line
     if (user && superAdmins.find((superAdmin) => superAdmin === user._id)) {
       dispatch(getAllUsers());
     } else {
       history.push('/signin');
     }
-  }, [dispatch, history, user, superAdmins]);
+  }, [dispatch, history, user]);
 
   return (
     <>

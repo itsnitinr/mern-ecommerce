@@ -39,6 +39,7 @@ export default function EditUserPage({ match, history }) {
   const superAdmins = process.env.REACT_APP_SUPER_ADMIN_IDS.split(', ');
 
   useEffect(() => {
+    // eslint-disable-next-line
     if (!user || !superAdmins.find((superAdmin) => superAdmin === user._id)) {
       history.push('/signin');
     }
@@ -54,7 +55,7 @@ export default function EditUserPage({ match, history }) {
         setIsAdmin(userDetails.isAdmin);
       }
     }
-  }, [history, user, userDetails, userId, dispatch, success, superAdmins]);
+  }, [history, user, userDetails, userId, dispatch, success]);
 
   return (
     <>
