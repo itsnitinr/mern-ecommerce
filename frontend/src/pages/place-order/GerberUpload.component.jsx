@@ -100,7 +100,7 @@ const GerberUpload = ({ file, setFile }) => {
           color="info"
           style={{ margin: '1.5rem 0 0.5rem 0' }}
         >
-          <Link target="_blank" to="/guidelines">
+          <Link style={{ color: 'blue' }} target="_blank" to="/guidelines">
             Click here
           </Link>{' '}
           to check the guidelines to see if the board meets our capabilities
