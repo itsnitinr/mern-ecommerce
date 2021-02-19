@@ -132,27 +132,41 @@ const OrderDetailsPage = ({ history }) => {
         <Container>
           <Grid container>
             <Grid item sm={8} xs={12}>
-              <Typography variant="h4" gutterBottom color="secondary">
+              <Typography className={classes.heading} variant="h5" gutterBottom>
                 User Details
               </Typography>
-              <Typography>
-                <b>{order.user.name}</b>
-              </Typography>
-              <Typography>{order.user.email}</Typography>
-              <Typography>
-                <b>Billing Address: </b>
-                {order.billingDetails.addressLine1},{' '}
-                {order.billingDetails.addressLine2}, {order.billingDetails.city}
-                , {order.billingDetails.state}, {order.billingDetails.pincode}
-              </Typography>
-              <Typography gutterBottom className={classes.address}>
-                <b>Shipping Address: </b>
-                {order.shippingDetails.addressLine1},{' '}
-                {order.shippingDetails.addressLine2},{' '}
-                {order.shippingDetails.city}, {order.shippingDetails.state},{' '}
-                {order.shippingDetails.pincode}
-              </Typography>
-              <Typography variant="h4" color="secondary">
+              <TableContainer className={classes.tableContainer}>
+                <Table>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>{order.user.name}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Email Address</TableCell>
+                    <TableCell>{order.user.email}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Billing Address</TableCell>
+                    <TableCell>
+                      {order.billingDetails.addressLine1},{' '}
+                      {order.billingDetails.addressLine2},{' '}
+                      {order.billingDetails.city}, {order.billingDetails.state},{' '}
+                      {order.billingDetails.pincode}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Shipping Address</TableCell>
+                    <TableCell>
+                      {order.shippingDetails.addressLine1},{' '}
+                      {order.shippingDetails.addressLine2},{' '}
+                      {order.shippingDetails.city},{' '}
+                      {order.shippingDetails.state},{' '}
+                      {order.shippingDetails.pincode}
+                    </TableCell>
+                  </TableRow>
+                </Table>
+              </TableContainer>
+              <Typography className={classes.heading} variant="h5" gutterBottom>
                 Order Details
               </Typography>
               <Table className={classes.tableContainer}>
@@ -188,7 +202,7 @@ const OrderDetailsPage = ({ history }) => {
                   <TableRow>
                     <TableCell>Dimensions</TableCell>
                     <TableCell>
-                      X: {order.pcbDetails.dimensions.x} mm, Y:{' '}
+                      Width: {order.pcbDetails.dimensions.x} mm, Length:{' '}
                       {order.pcbDetails.dimensions.y} mm
                     </TableCell>
                   </TableRow>
@@ -242,10 +256,13 @@ const OrderDetailsPage = ({ history }) => {
               )}
             </Grid>
             <Grid item sm={4} xs={12}>
-              <Typography variant="h4" gutterBottom color="secondary">
-                Tracking
+              <Typography className={classes.heading} variant="h5" gutterBottom>
+                Order Tracking
               </Typography>
-              <TableContainer component={Card}>
+              <TableContainer
+                component={Card}
+                style={{ marginBottom: '1.5rem' }}
+              >
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -346,6 +363,7 @@ const OrderDetailsPage = ({ history }) => {
                       style={{
                         width: '50%',
                         background: '#f44336',
+                        color: 'white',
                         borderRadius: 0,
                       }}
                       variant="contained"
@@ -408,12 +426,7 @@ const OrderDetailsPage = ({ history }) => {
                   )
                 )}
               </TableContainer>
-              <Typography
-                variant="h4"
-                className={classes.cost}
-                gutterBottom
-                color="secondary"
-              >
+              <Typography className={classes.heading} variant="h5" gutterBottom>
                 Cost Breakdown
               </Typography>
               <TableContainer component={Card}>

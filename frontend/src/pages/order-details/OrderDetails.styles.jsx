@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       width: '100%',
     },
+    marginBottom: '1.5rem',
   },
   address: {
     marginBottom: '1.5rem',
@@ -21,6 +22,11 @@ const useStyles = makeStyles((theme) => ({
   },
   clearIcon: {
     fill: theme.palette.error.main,
+  },
+  heading: {
+    borderBottom: '5px solid #54be73',
+    marginBottom: '1.25rem',
+    width: '200px',
   },
 }));
 
