@@ -30,14 +30,17 @@ const useStyles = makeStyles((theme) => ({
     },
     marginBottom: '0.25rem',
   },
-  aboutText: {
-    color: 'white',
-    fontSize: '1.1rem',
+  contactContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+    [theme.breakpoints.down('xs')]: {
+      alignItems: 'center',
+    },
   },
   contact: {
-    color: 'white',
     display: 'flex',
-    justifyContent: 'center',
+    color: 'white',
     marginBottom: '0.5rem',
     width: '80%',
     margin: '0 auto',
@@ -47,18 +50,31 @@ const useStyles = makeStyles((theme) => ({
   },
   contactText: {
     color: 'white',
-    marginLeft: '0.5rem',
-    fontSize: '1.1rem',
+    marginLeft: '1rem',
+    textAlign: 'left',
+    fontSize: '1rem',
     '&:hover': {
-      color: theme.palette.secondary.main,
+      color: '#eee',
     },
   },
   socialIcon: {
     margin: '0 0.5rem',
     color: 'white',
-    '&:hover': {
-      color: theme.palette.secondary.main,
-    },
+  },
+  socialLink: {
+    color: '#fff',
+    fontFamily: 'Roboto, sans-serif',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    textAlign: 'left',
+    marginBottom: '0.75rem',
+  },
+  socialContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 }));
 
