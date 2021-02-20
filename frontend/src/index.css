@@ -29,8 +29,8 @@ a {
 }
 
 .MuiToggleButton-root {
-  border: 1px solid #54be73 !important;
-  color: #54be73 !important;
+  border: 1px solid grey !important;
+  color: black !important;
   text-transform: none !important;
   margin: 5px !important;
   padding: 5px 10px !important;
