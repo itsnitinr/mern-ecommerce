@@ -147,7 +147,7 @@ const AdminPanelOrders = ({ history }) => {
               </AccordionDetails>
             </Accordion>
             <TableContainer>
-              <TableContainer>
+              <Table>
                 <TableHead>
                   <TableRow>
                     <TableCell>
@@ -253,7 +253,7 @@ const AdminPanelOrders = ({ history }) => {
                     />
                   </TableRow>
                 </TableFooter>
-              </TableContainer>
+              </Table>
             </TableContainer>
           </>
         )}
