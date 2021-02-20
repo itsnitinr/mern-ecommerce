@@ -14,12 +14,28 @@ import {
   TableFooter,
   TablePagination,
   TableContainer,
+  makeStyles,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@material-ui/core';
-import { Check, Clear } from '@material-ui/icons';
+import { Check, Clear, ExpandMore } from '@material-ui/icons';
 import PageHeader from '../../components/page-header/PageHeader.component';
 import TablePaginationActions from '../../components/table-pagination/TablePagination.component';
 
 import { getAllOrders } from '../../redux/order/order.actions';
+
+const useStyles = makeStyles((theme) => ({
+  check: {
+    color: theme.palette.success.main,
+  },
+  cross: {
+    color: theme.palette.error.main,
+  },
+  accordionDetails: {
+    padding: 0,
+  },
+}));
 
 const AdminPanelOrders = ({ history }) => {
   const { orders, loading } = useSelector((state) => state.orderList);
@@ -47,115 +63,199 @@ const AdminPanelOrders = ({ history }) => {
     }
   }, [dispatch, history, user]);
 
+  const classes = useStyles();
+
   return (
     <>
       <PageHeader title="Admin Panel" subtitle="Orders" />
       <Container>
-        <Typography variant="h4" color="secondary">
+        <Typography gutterBottom variant="h4" color="secondary">
           Manage Orders
         </Typography>
         {loading ? (
           <LinearProgress />
         ) : (
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <b>ID</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Name</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Email</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Placed On</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Total Cost</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Review</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Paid</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Dispatched</b>
-                  </TableCell>
-                  <TableCell>
-                    <b>Actions</b>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {(rowsPerPage > 0
-                  ? orders.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage
-                    )
-                  : orders
-                ).map((order) => (
-                  <TableRow key={order._id}>
+          <>
+            <Accordion elevation={0}>
+              <AccordionSummary
+                style={{ padding: 0 }}
+                expandIcon={<ExpandMore />}
+              >
+                <Typography variant="h6">Order Statistics</Typography>
+              </AccordionSummary>
+              <AccordionDetails className={classes.accordionDetails}>
+                <TableContainer>
+                  <Table>
+                    <TableRow>
+                      <TableCell>Total Orders</TableCell>
+                      <TableCell>{orders.length}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Yet To Review</TableCell>
+                      <TableCell>
+                        {orders.filter((order) => order.underReview).length}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Yet To Be Paid</TableCell>
+                      <TableCell>
+                        {
+                          orders.filter(
+                            (order) => !order.isPaid && order.reviewPassed
+                          ).length
+                        }
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Yet To Dispatch</TableCell>
+                      <TableCell>
+                        {
+                          orders.filter(
+                            (order) =>
+                              !order.isDispatched &&
+                              order.isPaid &&
+                              order.reviewPassed
+                          ).length
+                        }
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Completed Orders</TableCell>
+                      <TableCell>
+                        {
+                          orders.filter(
+                            (order) =>
+                              order.isDispatched &&
+                              order.isPaid &&
+                              order.reviewPassed
+                          ).length
+                        }
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Rejected Orders</TableCell>
+                      <TableCell>
+                        {
+                          orders.filter(
+                            (order) => !order.underReview && !order.reviewPassed
+                          ).length
+                        }
+                      </TableCell>
+                    </TableRow>
+                  </Table>
+                </TableContainer>
+              </AccordionDetails>
+            </Accordion>
+            <TableContainer>
+              <TableContainer>
+                <TableHead>
+                  <TableRow>
                     <TableCell>
-                      {order._id.substring(order._id.length - 7)}
+                      <b>ID</b>
                     </TableCell>
-                    <TableCell>{order.user.name}</TableCell>
-                    <TableCell>{order.user.email}</TableCell>
-                    <TableCell>{order.createdAt.substring(0, 10)}</TableCell>
-                    <TableCell>₹ {order.totalPrice}</TableCell>
                     <TableCell>
-                      {order.underReview ? (
-                        'Pending'
-                      ) : order.reviewPassed ? (
-                        <Check />
-                      ) : (
-                        <Clear />
-                      )}
+                      <b>Name</b>
                     </TableCell>
                     <TableCell>
-                      {order.isPaid ? <Check /> : <Clear />}
+                      <b>Email</b>
                     </TableCell>
                     <TableCell>
-                      {order.isDispatched ? <Check /> : <Clear />}
+                      <b>Placed On</b>
                     </TableCell>
                     <TableCell>
-                      <Link to={`/order/${order._id}`}>
-                        <Button variant="contained" color="primary">
-                          View Order
-                        </Button>
-                      </Link>
+                      <b>Total Cost</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>Review</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>Paid</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>Dispatched</b>
+                    </TableCell>
+                    <TableCell>
+                      <b>Actions</b>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[
-                      5,
-                      10,
-                      25,
-                      { label: 'All', value: -1 },
-                    ]}
-                    colSpan={3}
-                    count={orders.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                      inputProps: { 'aria-label': 'rows per page' },
-                      native: true,
-                    }}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {(rowsPerPage > 0
+                    ? orders.slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                    : orders
+                  ).map((order) => (
+                    <TableRow key={order._id}>
+                      <TableCell>
+                        {order._id.substring(order._id.length - 7)}
+                      </TableCell>
+                      <TableCell>{order.user.name}</TableCell>
+                      <TableCell>{order.user.email}</TableCell>
+                      <TableCell>{order.createdAt.substring(0, 10)}</TableCell>
+                      <TableCell>
+                        ₹ {order.adjustedTotal || order.totalPrice}
+                      </TableCell>
+                      <TableCell>
+                        {order.underReview ? (
+                          'Pending'
+                        ) : order.reviewPassed ? (
+                          <Check className={classes.check} />
+                        ) : (
+                          <Clear className={classes.cross} />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {order.isPaid ? (
+                          <Check className={classes.check} />
+                        ) : (
+                          <Clear className={classes.cross} />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {order.isDispatched ? (
+                          <Check className={classes.check} />
+                        ) : (
+                          <Clear className={classes.cross} />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Link to={`/order/${order._id}`}>
+                          <Button variant="contained" color="primary">
+                            View Order
+                          </Button>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[
+                        5,
+                        10,
+                        25,
+                        { label: 'All', value: -1 },
+                      ]}
+                      colSpan={3}
+                      count={orders.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      SelectProps={{
+                        inputProps: { 'aria-label': 'rows per page' },
+                        native: true,
+                      }}
+                      onChangePage={handleChangePage}
+                      onChangeRowsPerPage={handleChangeRowsPerPage}
+                      ActionsComponent={TablePaginationActions}
+                    />
+                  </TableRow>
+                </TableFooter>
+              </TableContainer>
+            </TableContainer>
+          </>
         )}
       </Container>
     </>
