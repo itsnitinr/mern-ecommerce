@@ -145,7 +145,7 @@ const BillingDetails = ({ details, onChange, sameAddress, setSameAddress }) => {
               <Alert
                 style={{ margin: '1rem 0.5rem' }}
                 icon={<ShoppingCart />}
-                severity="success"
+                severity="info"
               >
                 <Typography align="center" color="primary">
                   Currently, PCBs are manufactured and shipped within{' '}
