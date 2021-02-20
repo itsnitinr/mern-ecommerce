@@ -19,7 +19,12 @@ import { registerUser } from '../../redux/user/user.actions';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography
+      style={{ paddingBottom: '1.5rem' }}
+      variant="body2"
+      color="textSecondary"
+      align="center"
+    >
       {'Copyright © '}
       <a href="http://thefirm.dev/">The Firm</a> {new Date().getFullYear()}
       {'.'}
@@ -137,7 +142,6 @@ export default function SignUp({ history, location }) {
             >
               Sign Up
             </Button>
-            <GoogleOAuthButton />
             <Grid container justify="flex-end">
               <Grid item>
                 <Link to="/signin" className={classes.link}>
@@ -145,6 +149,10 @@ export default function SignUp({ history, location }) {
                 </Link>
               </Grid>
             </Grid>
+            <div className={classes.separator}>
+              <Typography>&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;</Typography>
+            </div>
+            <GoogleOAuthButton />
           </form>
         </div>
         <Box mt={5}>

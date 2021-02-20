@@ -21,6 +21,15 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: 'none',
   },
+  separator: {
+    textAlign: 'center',
+    height: '1em',
+    borderBottom: '2px solid black',
+    margin: '1em 0',
+    '&:first-line': {
+      backgroundColor: 'white',
+    },
+  },
 }));
 
 export default useStyles;
