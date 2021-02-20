@@ -1,13 +1,16 @@
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import HomeIcon from '@material-ui/icons/Home';
-import InfoIcon from '@material-ui/icons/Info';
-import BuildIcon from '@material-ui/icons/Build';
-import PhotoIcon from '@material-ui/icons/Photo';
-import CartIcon from '@material-ui/icons/AddShoppingCart';
+import {
+  AiOutlineHome,
+  AiOutlineInfoCircle,
+  AiOutlineUnlock,
+  AiOutlineUserAdd,
+  AiOutlineUser,
+  AiOutlineShoppingCart,
+  AiOutlineLogout,
+  AiOutlineUsergroupDelete,
+} from 'react-icons/ai';
+import { VscCircuitBoard } from 'react-icons/vsc';
+import { HiOutlinePhotograph } from 'react-icons/hi';
+import { RiDashboardLine } from 'react-icons/ri';
 
 export const getNavItems = (props) => ({
   common: [
@@ -15,25 +18,25 @@ export const getNavItems = (props) => ({
       label: 'Home',
       href: '/',
       type: 'button',
-      icon: <HomeIcon />,
+      icon: <AiOutlineHome fontSize={28} />,
     },
     {
       label: 'About',
       href: '/about',
       type: 'button',
-      icon: <InfoIcon />,
+      icon: <AiOutlineInfoCircle fontSize={28} />,
     },
     {
       label: 'Guidelines',
       href: '/guidelines',
       type: 'button',
-      icon: <BuildIcon />,
+      icon: <VscCircuitBoard fontSize={28} />,
     },
     {
       label: 'Gallery',
       href: '/gallery',
       type: 'button',
-      icon: <PhotoIcon />,
+      icon: <HiOutlinePhotograph fontSize={28} />,
     },
   ],
   noAuth: [
@@ -43,13 +46,13 @@ export const getNavItems = (props) => ({
       type: 'button',
       buttonType: 'outlined',
       class: props.classes.signInButton,
-      icon: <LockOpenIcon />,
+      icon: <AiOutlineUnlock fontSize={28} />,
     },
     {
       label: 'Sign Up',
       href: '/signup',
       type: 'button',
-      icon: <PersonAddIcon />,
+      icon: <AiOutlineUserAdd fontSize={28} />,
       buttonType: 'contained',
       class: props.classes.signUpButton,
     },
@@ -57,24 +60,24 @@ export const getNavItems = (props) => ({
   auth: [
     {
       label: (props.user && props.user.name) || 'User',
-      icon: <AccountCircleIcon />,
+      icon: <AiOutlineUser fontSize={28} />,
       showInNavbar: false,
     },
     {
       label: 'Dashboard',
-      icon: <DashboardIcon />,
+      icon: <RiDashboardLine fontSize={28} />,
       type: 'button',
       href: '/dashboard',
     },
     {
       label: 'Place Order',
-      icon: <CartIcon />,
+      icon: <AiOutlineShoppingCart fontSize={28} />,
       type: 'button',
       href: '/order',
     },
     {
       label: 'Logout',
-      icon: <ExitToAppIcon />,
+      icon: <AiOutlineLogout fontSize={28} />,
       type: 'button',
       buttonType: 'contained',
       class: props.classes.signUpButton,
@@ -84,24 +87,24 @@ export const getNavItems = (props) => ({
   admin: [
     {
       label: (props.user && props.user.name) || 'User',
-      icon: <AccountCircleIcon />,
+      icon: <AiOutlineUser fontSize={28} />,
       showInNavbar: false,
     },
     {
       label: 'Users',
-      icon: <DashboardIcon />,
+      icon: <AiOutlineUsergroupDelete fontSize={28} />,
       type: 'button',
       href: '/admin/users',
     },
     {
       label: 'Orders',
-      icon: <CartIcon />,
+      icon: <AiOutlineShoppingCart fontSize={28} />,
       type: 'button',
       href: '/admin/orders',
     },
     {
       label: 'Logout',
-      icon: <ExitToAppIcon />,
+      icon: <AiOutlineLogout fontSize={28} />,
       type: 'button',
       buttonType: 'contained',
       class: props.classes.signUpButton,
