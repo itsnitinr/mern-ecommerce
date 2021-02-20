@@ -27,3 +27,21 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.MuiToggleButton-root {
+  border: 1px solid #54be73 !important;
+  color: #54be73 !important;
+  text-transform: none !important;
+  margin: 5px !important;
+  padding: 5px 10px !important;
+}
+
+.MuiToggleButton-root.Mui-selected {
+  background: #54be73 !important;
+  color: white !important;
+}
+
+.MuiToggleButtonGroup-root {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}

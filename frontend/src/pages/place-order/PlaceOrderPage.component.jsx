@@ -110,6 +110,10 @@ const PlaceOrderPage = ({ history }) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   };
 
+  const onButtonChange = (e) => {
+    setDetails({ ...details, [e.currentTarget.name]: e.currentTarget.value });
+  };
+
   const onHeightChange = (e) => {
     // Max: 304.8 for single layer, 457.2 for double layer
     const maxHeight = details.layers === 2 ? 457.2 : 304.8;
@@ -177,6 +181,7 @@ const PlaceOrderPage = ({ history }) => {
           <PCBDetails
             details={details}
             onChange={onChange}
+            onButtonChange={onButtonChange}
             price={{ orderPrice, taxPrice, shippingPrice }}
             onHeightChange={onHeightChange}
             onWidthChange={onWidthChange}
