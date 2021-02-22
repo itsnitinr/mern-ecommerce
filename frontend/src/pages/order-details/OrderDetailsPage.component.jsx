@@ -68,11 +68,15 @@ const OrderDetailsPage = ({ history }) => {
         dispatch({ type: ORDER_DISPATCH_RESET });
       }
       dispatch(getOrderDetails(orderId));
+      if (order.user && order.user._id !== user._id && !user.isAdmin) {
+        history.push('/');
+      }
       setAdjustedPrice(order.orderPrice);
     }
   }, [
     dispatch,
     order.orderPrice,
+    order.user && order.user._id,
     orderId,
     user,
     history,
@@ -132,40 +136,6 @@ const OrderDetailsPage = ({ history }) => {
         <Container>
           <Grid container>
             <Grid item sm={8} xs={12}>
-              <Typography className={classes.heading} variant="h5" gutterBottom>
-                User Details
-              </Typography>
-              <TableContainer className={classes.tableContainer}>
-                <Table>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>{order.user.name}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Email Address</TableCell>
-                    <TableCell>{order.user.email}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Billing Address</TableCell>
-                    <TableCell>
-                      {order.billingDetails.addressLine1},{' '}
-                      {order.billingDetails.addressLine2},{' '}
-                      {order.billingDetails.city}, {order.billingDetails.state},{' '}
-                      {order.billingDetails.pincode}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Shipping Address</TableCell>
-                    <TableCell>
-                      {order.shippingDetails.addressLine1},{' '}
-                      {order.shippingDetails.addressLine2},{' '}
-                      {order.shippingDetails.city},{' '}
-                      {order.shippingDetails.state},{' '}
-                      {order.shippingDetails.pincode}
-                    </TableCell>
-                  </TableRow>
-                </Table>
-              </TableContainer>
               <Typography className={classes.heading} variant="h5" gutterBottom>
                 Order Details
               </Typography>
@@ -429,7 +399,10 @@ const OrderDetailsPage = ({ history }) => {
               <Typography className={classes.heading} variant="h5" gutterBottom>
                 Cost Breakdown
               </Typography>
-              <TableContainer component={Card}>
+              <TableContainer
+                style={{ marginBottom: '1.5rem' }}
+                component={Card}
+              >
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -508,6 +481,43 @@ const OrderDetailsPage = ({ history }) => {
                       </TableRow>
                     )}
                   </TableBody>
+                </Table>
+              </TableContainer>
+              <Typography className={classes.heading} variant="h5" gutterBottom>
+                User Details
+              </Typography>
+              <TableContainer
+                component={Card}
+                className={classes.tableContainer}
+              >
+                <Table>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>{order.user.name}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Email Address</TableCell>
+                    <TableCell>{order.user.email}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Billing Address</TableCell>
+                    <TableCell>
+                      {order.billingDetails.addressLine1},{' '}
+                      {order.billingDetails.addressLine2},{' '}
+                      {order.billingDetails.city}, {order.billingDetails.state},{' '}
+                      {order.billingDetails.pincode}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Shipping Address</TableCell>
+                    <TableCell>
+                      {order.shippingDetails.addressLine1},{' '}
+                      {order.shippingDetails.addressLine2},{' '}
+                      {order.shippingDetails.city},{' '}
+                      {order.shippingDetails.state},{' '}
+                      {order.shippingDetails.pincode}
+                    </TableCell>
+                  </TableRow>
                 </Table>
               </TableContainer>
             </Grid>
