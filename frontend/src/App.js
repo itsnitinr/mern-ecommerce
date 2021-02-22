@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Switch, Route, useLocation } from 'react-router-dom';
-import { ThemeProvider, Button } from '@material-ui/core';
+import { ThemeProvider, IconButton } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 import { Provider } from 'react-redux';
 import { SnackbarProvider } from 'notistack';
 import SimpleReactLightbox from 'simple-react-lightbox';
@@ -39,7 +40,9 @@ function ScrollToTop() {
 
 const App = () => {
   const snackbarDimissButton = () => (
-    <Button onClick={() => store.dispatch(closeSnackbar())}>dismiss me</Button>
+    <IconButton onClick={() => store.dispatch(closeSnackbar())}>
+      <Close style={{ color: 'white' }} />
+    </IconButton>
   );
 
   const snackbarPosition = () => ({ vertical: 'bottom', horizontal: 'right' });
