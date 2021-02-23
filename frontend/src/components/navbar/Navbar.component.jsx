@@ -7,9 +7,19 @@ import {
   Container,
   Typography,
   Button,
-  InputBase,
   IconButton,
+  Menu,
+  MenuItem,
 } from '@material-ui/core';
+import {
+  AiOutlineUnlock,
+  AiOutlineUserAdd,
+  AiOutlineLogout,
+  AiOutlineUsergroupDelete,
+  AiOutlineShoppingCart,
+} from 'react-icons/ai';
+import { RiDashboardLine } from 'react-icons/ri';
+import { FaUserCircle } from 'react-icons/fa';
 import { ReactComponent as Logo } from '../../assets/firmLogo.svg';
 import MenuIcon from '@material-ui/icons/Menu';
 import SideDrawer from '../sidebar/Sidebar.component';
@@ -48,19 +58,10 @@ export default function Navigation() {
 
   return (
     <>
-      <AppBar color="inherit" elevation={0} position="static">
-        <Container maxWidth={false} disableGutters>
-          <Toolbar className={classes.searchMobileRoot} disableGutters>
-            <InputBase
-              className={classes.searchMobileInput}
-              placeholder="Search for courses..."
-            />
-          </Toolbar>
-        </Container>
-      </AppBar>
       <AppBar
         color="inherit"
         elevation={0}
+        position="sticky"
         style={{ borderBottom: '1px ridge rgba(0,0,0,.05)' }}
       >
         <Container maxWidth={false}>
@@ -81,6 +82,9 @@ export default function Navigation() {
                 classes={classes}
                 navItems={navItems}
                 navCommon={navCommon}
+                user={user}
+                dispatch={dispatch}
+                logout={logout}
               />
               <IconButton
                 color="inherit"
@@ -103,54 +107,153 @@ export default function Navigation() {
   );
 }
 
-const NavMenu = ({ classes, navItems, navCommon }) => (
-  <div className={classes.navMenu}>
-    {navCommon.map((item, key) => (
-      <Button
-        variant={item.buttonType}
-        className={item.class}
-        onClick={item.onClick}
-        to={item.href}
-        component={Link}
-        key={key}
-        disableTouchRipple
-        disableRipple
-        disableFocusRipple
+const NavMenu = ({ classes, navItems, navCommon, user, dispatch, logout }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div className={classes.navMenu}>
+      {navCommon.map((item, key) => (
+        <Button
+          variant={item.buttonType}
+          className={item.class}
+          onClick={item.onClick}
+          to={item.href}
+          component={Link}
+          key={key}
+          disableTouchRipple
+          disableRipple
+          disableFocusRipple
+        >
+          {item.label}
+        </Button>
+      ))}
+      {navItems
+        .filter((item) => item.showInNavbar !== false)
+        .map((item, key) => {
+          let menuItem;
+          switch (item.type) {
+            case 'button':
+              menuItem = (
+                <Button
+                  variant={item.buttonType}
+                  className={item.class}
+                  onClick={item.onClick}
+                  to={item.href}
+                  component={Link}
+                  disableTouchRipple
+                  disableRipple
+                  disableFocusRipple
+                >
+                  {item.label}
+                </Button>
+              );
+              break;
+            default:
+              menuItem = (
+                <Typography variant={item.textVariant}>{item.label}</Typography>
+              );
+          }
+          return (
+            <div className={classes.navItem} key={key}>
+              {menuItem}
+            </div>
+          );
+        })}
+      <IconButton onClick={handleMenu}>
+        <FaUserCircle color="black" />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={open}
+        onClose={handleClose}
       >
-        {item.label}
-      </Button>
-    ))}
-    {navItems
-      .filter((item) => item.showInNavbar !== false)
-      .map((item, key) => {
-        let menuItem;
-        switch (item.type) {
-          case 'button':
-            menuItem = (
+        {!user ? (
+          <>
+            <Link to="/signup">
+              <MenuItem onClick={handleClose}>
+                <Button
+                  fullWidth
+                  disableRipple
+                  disableTouchRipple
+                  disableFocusRipple
+                  startIcon={<AiOutlineUserAdd />}
+                >
+                  Sign Up
+                </Button>
+              </MenuItem>
+            </Link>
+            <Link to="/signin">
+              <MenuItem onClick={handleClose}>
+                <Button
+                  fullWidth
+                  disableRipple
+                  disableTouchRipple
+                  disableFocusRipple
+                  startIcon={<AiOutlineUnlock />}
+                >
+                  Login
+                </Button>
+              </MenuItem>
+            </Link>
+          </>
+        ) : user.isAdmin ? (
+          <MenuItem onClick={handleClose}>
+            <Button
+              fullWidth
+              disableRipple
+              disableTouchRipple
+              disableFocusRipple
+              startIcon={<AiOutlineLogout />}
+              onClick={() => dispatch(logout())}
+            >
+              Logout
+            </Button>
+          </MenuItem>
+        ) : (
+          <>
+            <Link to="/dashboard">
+              <MenuItem onClick={handleClose}>
+                <Button
+                  fullWidth
+                  disableRipple
+                  disableTouchRipple
+                  disableFocusRipple
+                  startIcon={<RiDashboardLine />}
+                >
+                  Account
+                </Button>
+              </MenuItem>
+            </Link>
+            <MenuItem onClick={handleClose}>
               <Button
-                variant={item.buttonType}
-                className={item.class}
-                onClick={item.onClick}
-                to={item.href}
-                component={Link}
-                disableTouchRipple
+                fullWidth
                 disableRipple
+                disableTouchRipple
                 disableFocusRipple
+                startIcon={<AiOutlineLogout />}
+                onClick={() => dispatch(logout())}
               >
-                {item.label}
+                Logout
               </Button>
-            );
-            break;
-          default:
-            menuItem = (
-              <Typography variant={item.textVariant}>{item.label}</Typography>
-            );
-        }
-        return (
-          <div className={classes.navItem} key={key}>
-            {menuItem}
-          </div>
-        );
-      })}
-  </div>
-);
+            </MenuItem>
+          </>
+        )}
+      </Menu>
+    </div>
+  );
+};

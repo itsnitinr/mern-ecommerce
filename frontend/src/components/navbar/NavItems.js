@@ -47,6 +47,7 @@ export const getNavItems = (props) => ({
       buttonType: 'outlined',
       class: props.classes.signInButton,
       icon: <AiOutlineUnlock fontSize={28} />,
+      showInNavbar: false,
     },
     {
       label: 'Sign Up',
@@ -55,6 +56,7 @@ export const getNavItems = (props) => ({
       icon: <AiOutlineUserAdd fontSize={28} />,
       buttonType: 'contained',
       class: props.classes.signUpButton,
+      showInNavbar: false,
     },
   ],
   auth: [
@@ -68,6 +70,7 @@ export const getNavItems = (props) => ({
       icon: <RiDashboardLine fontSize={28} />,
       type: 'button',
       href: '/dashboard',
+      showInNavbar: false,
     },
     {
       label: 'Place Order',
@@ -82,6 +85,7 @@ export const getNavItems = (props) => ({
       buttonType: 'contained',
       class: props.classes.signUpButton,
       onClick: () => props.dispatch(props.logout()),
+      showInNavbar: false,
     },
   ],
   admin: [
@@ -109,6 +113,7 @@ export const getNavItems = (props) => ({
       buttonType: 'contained',
       class: props.classes.signUpButton,
       onClick: () => props.dispatch(props.logout()),
+      showInNavbar: false,
     },
   ],
 });
