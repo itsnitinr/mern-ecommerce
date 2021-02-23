@@ -44,8 +44,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '0.5rem',
     width: '80%',
     margin: '0 auto',
-    [theme.breakpoints.down('xs')]: {
-      width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+      marginBottom: '0.75rem',
     },
   },
   contactText: {
@@ -55,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1rem',
     '&:hover': {
       color: '#eee',
+    },
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
     },
   },
   socialIcon: {

@@ -7,8 +7,8 @@ import {
   AiOutlineTwitter,
   AiOutlineInstagram,
   AiOutlineLinkedin,
+  AiTwotoneBank,
 } from 'react-icons/ai';
-import { BsMap } from 'react-icons/bs';
 import { ReactComponent as Logo } from '../../assets/firmLogo.svg';
 import useStyles from './Footer.styles';
 
@@ -24,10 +24,10 @@ const Footer = () => {
     >
       <Container>
         <Grid container spacing={4} justify="center">
-          <Grid item md={3}>
+          <Grid item md={3} sm={12}>
             <Logo />
           </Grid>
-          <Grid item md={3}>
+          <Grid item md={3} sm={6}>
             <Typography className={classes.footerHead} variant="h5">
               Pages
             </Typography>
@@ -44,7 +44,7 @@ const Footer = () => {
               </Link>
             </div>
           </Grid>
-          <Grid item md={3}>
+          <Grid item md={3} sm={6}>
             <Typography className={classes.footerHead} variant="h5">
               Contact Us
             </Typography>
@@ -52,67 +52,84 @@ const Footer = () => {
             <div className={classes.contactContainer}>
               <div className={classes.contact}>
                 <AiOutlineMail fontSize={28} />{' '}
-                <a
-                  href="mailto:thefirm.dev@gmail.com"
-                  className={classes.contactText}
-                >
-                  <Typography>thefirm.dev@gmail.com</Typography>
+                <a href="mailto:thefirm.dev@gmail.com">
+                  <Typography className={classes.contactText}>
+                    thefirm.dev@gmail.com
+                  </Typography>
                 </a>
               </div>
               <div className={classes.contact}>
                 <AiOutlinePhone fontSize={28} />{' '}
-                <a href="phone:7411475974" className={classes.contactText}>
-                  <Typography>+91 74114 75974</Typography>
+                <a href="phone:7411475974">
+                  <Typography className={classes.contactText}>
+                    +91 74114 75974
+                  </Typography>
                 </a>
               </div>
               <div className={classes.contact}>
-                <BsMap fontSize={64} />
+                <AiTwotoneBank fontSize={64} />
                 <Typography className={classes.contactText}>
                   No.408, 4th Floor B Block DSATM Kanakpura Road, Bengaluru, KA
                 </Typography>
               </div>
             </div>
           </Grid>
-          <Grid item md={3}>
+          <Grid item md={3} sm={12}>
             <Typography className={classes.footerHead} variant="h5">
               Social Media
             </Typography>
             <hr className={classes.hr} />
             <div className={classes.socialContainer}>
-              <a href="https://www.thefirm.dev/" className={classes.socialLink}>
-                <AiOutlineFacebook
-                  className={classes.socialIcon}
-                  fontSize={28}
-                />{' '}
-                Facebook
-              </a>
-              <a
-                href="https://www.instagram.com/thefirm.dev/?hl=en"
-                className={classes.socialLink}
-              >
-                <AiOutlineInstagram
-                  className={classes.socialIcon}
-                  fontSize={28}
-                />{' '}
-                Instagram
-              </a>
-              <a href="https://www.thefirm.dev/" className={classes.socialLink}>
-                <AiOutlineLinkedin
-                  className={classes.socialIcon}
-                  fontSize={28}
-                />{' '}
-                LinkedIn
-              </a>
-              <a
-                href="https://twitter.com/ThefirmD"
-                className={classes.socialLink}
-              >
-                <AiOutlineTwitter
-                  className={classes.socialIcon}
-                  fontSize={28}
-                />{' '}
-                Twitter
-              </a>
+              <div>
+                <div style={{ textAlign: 'left' }}>
+                  <a
+                    href="https://www.thefirm.dev/"
+                    className={classes.socialLink}
+                  >
+                    <AiOutlineFacebook
+                      className={classes.socialIcon}
+                      fontSize={28}
+                    />{' '}
+                    Facebook
+                  </a>
+                </div>
+                <div style={{ textAlign: 'left' }}>
+                  <a
+                    href="https://www.instagram.com/thefirm.dev/?hl=en"
+                    className={classes.socialLink}
+                  >
+                    <AiOutlineInstagram
+                      className={classes.socialIcon}
+                      fontSize={28}
+                    />{' '}
+                    Instagram
+                  </a>
+                </div>
+                <div style={{ textAlign: 'left' }}>
+                  <a
+                    href="https://www.thefirm.dev/"
+                    className={classes.socialLink}
+                  >
+                    <AiOutlineLinkedin
+                      className={classes.socialIcon}
+                      fontSize={28}
+                    />{' '}
+                    LinkedIn
+                  </a>
+                </div>
+                <div>
+                  <a
+                    href="https://twitter.com/ThefirmD"
+                    className={classes.socialLink}
+                  >
+                    <AiOutlineTwitter
+                      className={classes.socialIcon}
+                      fontSize={28}
+                    />{' '}
+                    Twitter
+                  </a>
+                </div>
+              </div>
             </div>
           </Grid>
         </Grid>
