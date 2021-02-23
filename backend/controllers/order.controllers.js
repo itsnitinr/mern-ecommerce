@@ -210,13 +210,26 @@ const payOrder = asyncHandler(async (req, res) => {
     order.razorpayPaymentId = paymentId;
     order.razorpaySignature = razorpay_signature;
     const updatedOrder = await order.save();
+    const populatedOrder = await Order.populate(updatedOrder, {
+      path: 'user',
+      select: 'name email',
+    });
 
     //Send email to admin
     try {
       sendEmail({
         toEmail: 'admin@example.com',
         subject: `Payment received for order ${updatedOrder._id}`,
-        message: `You have received ₹${updatedOrder.totalPrice} for order ID ${updatedOrder._id}`,
+        message: `You have received ₹${
+          updatedOrder.adjustedTotal || updatedOrder.totalPrice
+        } for order ID ${updatedOrder._id}`,
+      });
+      sendEmail({
+        toEmail: populatedOrder.user.email,
+        subject: `Payment successful for order ${updatedOrder._id}`,
+        message: `You have successfully paid ₹${
+          updatedOrder.adjustedTotal || updatedOrder.totalPrice
+        } for order ID ${updatedOrder._id}`,
       });
     } catch (error) {
       console.log(error);
