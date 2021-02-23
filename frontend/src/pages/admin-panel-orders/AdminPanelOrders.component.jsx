@@ -26,14 +26,20 @@ import TablePaginationActions from '../../components/table-pagination/TablePagin
 import { getAllOrders } from '../../redux/order/order.actions';
 
 const useStyles = makeStyles((theme) => ({
-  check: {
-    color: theme.palette.success.main,
-  },
-  cross: {
-    color: theme.palette.error.main,
-  },
   accordionDetails: {
     padding: 0,
+  },
+  completed: {
+    background: '#a5d6a7',
+  },
+  rejected: {
+    background: '#ef9a9a',
+  },
+  paid: {
+    background: '#81d4fa',
+  },
+  yetToPay: {
+    background: '#ffcc80',
   },
 }));
 
@@ -64,6 +70,18 @@ const AdminPanelOrders = ({ history }) => {
   }, [dispatch, history, user]);
 
   const classes = useStyles();
+
+  function getTableClassName(order, classes) {
+    if (!order.isPaid && order.reviewPassed) {
+      return classes.yetToPay;
+    } else if (!order.isDispatched && order.isPaid && order.reviewPassed) {
+      return classes.paid;
+    } else if (order.isDispatched && order.isPaid && order.reviewPassed) {
+      return classes.completed;
+    } else if (!order.underReview && !order.reviewPassed) {
+      return classes.rejected;
+    }
+  }
 
   return (
     <>
@@ -96,7 +114,7 @@ const AdminPanelOrders = ({ history }) => {
                         {orders.filter((order) => order.underReview).length}
                       </TableCell>
                     </TableRow>
-                    <TableRow>
+                    <TableRow className={classes.yetToPay}>
                       <TableCell>Yet To Be Paid</TableCell>
                       <TableCell>
                         {
@@ -106,7 +124,7 @@ const AdminPanelOrders = ({ history }) => {
                         }
                       </TableCell>
                     </TableRow>
-                    <TableRow>
+                    <TableRow className={classes.paid}>
                       <TableCell>Yet To Dispatch</TableCell>
                       <TableCell>
                         {
@@ -119,7 +137,7 @@ const AdminPanelOrders = ({ history }) => {
                         }
                       </TableCell>
                     </TableRow>
-                    <TableRow>
+                    <TableRow className={classes.completed}>
                       <TableCell>Completed Orders</TableCell>
                       <TableCell>
                         {
@@ -132,7 +150,7 @@ const AdminPanelOrders = ({ history }) => {
                         }
                       </TableCell>
                     </TableRow>
-                    <TableRow>
+                    <TableRow className={classes.rejected}>
                       <TableCell>Rejected Orders</TableCell>
                       <TableCell>
                         {
@@ -187,7 +205,10 @@ const AdminPanelOrders = ({ history }) => {
                       )
                     : orders
                   ).map((order) => (
-                    <TableRow key={order._id}>
+                    <TableRow
+                      className={getTableClassName(order, classes)}
+                      key={order._id}
+                    >
                       <TableCell>
                         {order._id.substring(order._id.length - 7)}
                       </TableCell>
@@ -201,24 +222,16 @@ const AdminPanelOrders = ({ history }) => {
                         {order.underReview ? (
                           'Pending'
                         ) : order.reviewPassed ? (
-                          <Check className={classes.check} />
+                          <Check />
                         ) : (
-                          <Clear className={classes.cross} />
+                          <Clear />
                         )}
                       </TableCell>
                       <TableCell>
-                        {order.isPaid ? (
-                          <Check className={classes.check} />
-                        ) : (
-                          <Clear className={classes.cross} />
-                        )}
+                        {order.isPaid ? <Check /> : <Clear />}
                       </TableCell>
                       <TableCell>
-                        {order.isDispatched ? (
-                          <Check className={classes.check} />
-                        ) : (
-                          <Clear className={classes.cross} />
-                        )}
+                        {order.isDispatched ? <Check /> : <Clear />}
                       </TableCell>
                       <TableCell>
                         <Link to={`/order/${order._id}`}>
