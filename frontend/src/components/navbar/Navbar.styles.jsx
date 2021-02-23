@@ -54,9 +54,9 @@ export default makeStyles((theme) => ({
   },
   signUpButton: {
     backgroundColor: theme.palette.secondary.main,
-    color: '#fff',
+    color: '#fff !important',
     '&:hover': {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: `${theme.palette.secondary.main} !important`,
     },
   },
 }));

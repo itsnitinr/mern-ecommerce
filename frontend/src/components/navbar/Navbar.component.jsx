@@ -113,6 +113,9 @@ const NavMenu = ({ classes, navItems, navCommon }) => (
         to={item.href}
         component={Link}
         key={key}
+        disableTouchRipple
+        disableRipple
+        disableFocusRipple
       >
         {item.label}
       </Button>
@@ -130,6 +133,9 @@ const NavMenu = ({ classes, navItems, navCommon }) => (
                 onClick={item.onClick}
                 to={item.href}
                 component={Link}
+                disableTouchRipple
+                disableRipple
+                disableFocusRipple
               >
                 {item.label}
               </Button>

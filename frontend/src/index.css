@@ -45,3 +45,8 @@ a {
   display: flex !important;
   flex-wrap: wrap !important;
 }
+
+.MuiToolbar-root .MuiButton-root:hover {
+  color: #54be73;
+  background: white;
+}
