@@ -43,7 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
     try {
       sendEmail({
         toEmail: user.email,
-        subject: 'Account Verification',
+        subject: 'PCB Cupid - Account Verification',
         html,
       });
     } catch (err) {
@@ -187,13 +187,20 @@ const forgotPassword = asyncHandler(async (req, res) => {
     'host'
   )}/reset-password/${resetToken}`;
 
-  const message = `You are receiving this email because you (or someone else) has requested the reset of your password. Please make a PUT request to: \n\n ${resetUrl}`;
+  const htmlTemplate = await readHTML(
+    path.join(__dirname, '..', 'config', 'emails', 'reset-password.html')
+  );
+  const handlebarsTemplate = handlebars.compile(htmlTemplate);
+  const replacements = {
+    resetUrl,
+  };
+  const html = handlebarsTemplate(replacements);
 
   try {
     sendEmail({
       toEmail: user.email,
-      subject: 'Password reset',
-      message,
+      subject: 'PCB Cupid - Password reset',
+      html,
     });
   } catch (err) {
     user.resetPasswordToken = undefined;

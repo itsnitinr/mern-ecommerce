@@ -24,10 +24,10 @@ router.post('/google', googleOAuth);
 
 router.route('/profile').get(auth, getUserProfile).put(auth, updateUserProfile);
 
-router.route('/:id').get(getUserById).put(auth, admin, updateUser);
-
 router.put('/forgot-password', forgotPassword);
 router.put('/reset-password/:resetToken', resetPassword);
 router.put('/verify/:verificationToken', verifyEmail);
+
+router.route('/:id').get(getUserById).put(auth, admin, updateUser);
 
 module.exports = router;
