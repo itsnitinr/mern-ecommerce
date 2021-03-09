@@ -58,7 +58,22 @@ const placeOrder = asyncHandler(async (req, res) => {
       });
 
       // Send email to user and admin
-      const adminMessage = `New order with ID ${createdOrder._id} has been placed. Please check admin dashboard for more details.`;
+      const adminTemplate = await readHTML(
+        path.join(__dirname, '..', 'config', 'emails', 'new-order.html')
+      );
+      const adminHandlebarsTemplate = handlebars.compile(adminTemplate);
+      const adminReplacements = {
+        orderId: createdOrder._id,
+        estimatedTotal: createdOrder.totalPrice,
+        name: populatedOrder.user.name,
+        email: populatedOrder.user.email,
+        addressLine1: createdOrder.shippingDetails.addressLine1,
+        addressLine2: createdOrder.shippingDetails.addressLine2,
+        city: createdOrder.shippingDetails.city,
+        state: createdOrder.shippingDetails.state,
+        pincode: createdOrder.shippingDetails.pincode,
+      };
+      const adminHTML = adminHandlebarsTemplate(adminReplacements);
 
       const htmlTemplate = await readHTML(
         path.join(__dirname, '..', 'config', 'emails', 'under-review.html')
@@ -79,7 +94,7 @@ const placeOrder = asyncHandler(async (req, res) => {
       sendEmail({
         toEmail: 'admin@example.com',
         subject: `New Order: Order #${createdOrder._id}`,
-        message: adminMessage,
+        html: adminHTML,
       });
     } catch (err) {
       console.log(err);
