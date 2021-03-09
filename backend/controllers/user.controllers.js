@@ -32,14 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
     )}/verify/${verificationToken}`;
 
     const htmlTemplate = await readHTML(
-      path.join(
-        __dirname,
-        '..',
-        'config',
-        'emails',
-        'verify-email',
-        'verify-email.html'
-      )
+      path.join(__dirname, '..', 'config', 'emails', 'verify-email.html')
     );
     const handlebarsTemplate = handlebars.compile(htmlTemplate);
     const replacements = {
