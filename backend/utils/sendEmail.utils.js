@@ -14,6 +14,7 @@ const sendEmail = async (options) => {
     from: 'The Firm',
     to: options.toEmail,
     subject: options.subject,
+    message: options.message,
     html: options.html,
   });
 

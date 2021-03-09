@@ -1,8 +1,11 @@
+const path = require('path');
 const crypto = require('crypto');
+const handlebars = require('handlebars');
 const asyncHandler = require('express-async-handler');
 const Order = require('../models/Order.model');
 const razorpay = require('../config/razorpay');
 const sendEmail = require('../utils/sendEmail.utils');
+const readHTML = require('../utils/readHTML.utils');
 
 // @route   POST /api/orders
 // @desc    Place an order
@@ -55,13 +58,22 @@ const placeOrder = asyncHandler(async (req, res) => {
       });
 
       // Send email to user and admin
-      const userMessage = `Hey ${populatedOrder.user.name}, thank you for placing you order! Your order ID is ${createdOrder._id}. Please wait for our team to review your requirements and gerber file. You can track the status on your dashboard. Once it's approved, we'll send you an email notifying the same and enable the payment portal.`;
       const adminMessage = `New order with ID ${createdOrder._id} has been placed. Please check admin dashboard for more details.`;
+
+      const htmlTemplate = await readHTML(
+        path.join(__dirname, '..', 'config', 'emails', 'under-review.html')
+      );
+      const handlebarsTemplate = handlebars.compile(htmlTemplate);
+      const replacements = {
+        orderId: createdOrder._id,
+        estimatedPrice: createdOrder.totalPrice,
+      };
+      const html = handlebarsTemplate(replacements);
 
       sendEmail({
         toEmail: populatedOrder.user.email,
-        subject: `Order #${createdOrder._id} successfully placed`,
-        message: userMessage,
+        subject: `PCB Cupid - Order #${createdOrder._id} under review`,
+        html,
       });
 
       sendEmail({
