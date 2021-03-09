@@ -249,21 +249,45 @@ const payOrder = asyncHandler(async (req, res) => {
       select: 'name email',
     });
 
-    //Send email to admin
+    //Send emails
+    const userTemplate = await readHTML(
+      path.join(__dirname, '..', 'config', 'emails', 'payment-success.html')
+    );
+    const userHandlebarsTemplate = handlebars.compile(userTemplate);
+    const userReplacements = {
+      orderId: updatedOrder._id,
+      price: updatedOrder.adjustedTotal || updatedOrder.totalPrice,
+    };
+    const userHTML = userHandlebarsTemplate(userReplacements);
+
+    const adminTemplate = await readHTML(
+      path.join(__dirname, '..', 'config', 'emails', 'payment-received.html')
+    );
+    const adminHandlebarsTemplate = handlebars.compile(adminTemplate);
+    const adminReplacements = {
+      orderId: updatedOrder._id,
+      price: updatedOrder.adjustedTotal || updatedOrder.totalPrice,
+      email: populatedOrder.user.email,
+      name: populatedOrder.user.name,
+      addressLine1: updatedOrder.shippingDetails.addressLine1,
+      addressLine2: updatedOrder.shippingDetails.addressLine2,
+      city: updatedOrder.shippingDetails.city,
+      state: updatedOrder.shippingDetails.state,
+      pincode: updatedOrder.shippingDetails.pincode,
+    };
+    const adminHTML = adminHandlebarsTemplate(adminReplacements);
+
     try {
       sendEmail({
         toEmail: 'admin@example.com',
         subject: `Payment received for order ${updatedOrder._id}`,
-        message: `You have received ₹${
-          updatedOrder.adjustedTotal || updatedOrder.totalPrice
-        } for order ID ${updatedOrder._id}`,
+        html: adminHTML,
       });
+
       sendEmail({
         toEmail: populatedOrder.user.email,
-        subject: `Payment successful for order ${updatedOrder._id}`,
-        message: `You have successfully paid ₹${
-          updatedOrder.adjustedTotal || updatedOrder.totalPrice
-        } for order ID ${updatedOrder._id}`,
+        subject: `PCB Cupid - Payment successful for order ${updatedOrder._id}`,
+        html: userHTML,
       });
     } catch (error) {
       console.log(error);
@@ -301,11 +325,35 @@ const dispatchOrder = asyncHandler(async (req, res) => {
   });
 
   // Send email to user
+  const htmlTemplate = await readHTML(
+    path.join(__dirname, '..', 'config', 'emails', 'order-shipped.html')
+  );
+  const handlebarsTemplate = handlebars.compile(htmlTemplate);
+  const replacements = {
+    orderId: updatedOrder._id,
+    price: updatedOrder.adjustedTotal || updatedOrder.totalPrice,
+    email: populatedOrder.user.email,
+    name: populatedOrder.user.name,
+    billingAddress1: updatedOrder.billingDetails.addressLine1,
+    billingAddress2: updatedOrder.billingDetails.addressLine2,
+    billingCity: updatedOrder.billingDetails.city,
+    billingState: updatedOrder.billingDetails.state,
+    billingPincode: updatedOrder.billingDetails.pincode,
+    shippingAddress1: updatedOrder.shippingDetails.addressLine1,
+    shippingAddress2: updatedOrder.shippingDetails.addressLine2,
+    shippingCity: updatedOrder.shippingDetails.city,
+    shippingState: updatedOrder.shippingDetails.state,
+    shippingPincode: updatedOrder.shippingDetails.pincode,
+    logisticsPartner: updatedOrder.logisticsPartner,
+    trackingId: updatedOrder.trackingId,
+  };
+  const html = handlebarsTemplate(replacements);
+
   try {
     sendEmail({
       toEmail: populatedOrder.user.email,
-      subject: 'Your order has been dispatched',
-      message: `Your order with ID of ${updatedOrder._id} has been dispatched via ${logisticsPartner}. The tracking ID for your package is ${trackingId}.`,
+      subject: 'PCB Cupid - Your order has been dispatched',
+      html,
     });
   } catch (error) {
     console.log(error);
