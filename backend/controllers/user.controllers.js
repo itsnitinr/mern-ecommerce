@@ -1,8 +1,11 @@
+const path = require('path');
 const crypto = require('crypto');
+const handlebars = require('handlebars');
 const asyncHandler = require('express-async-handler');
 const googleClient = require('../config/oauth');
 const generateJWT = require('../utils/generateJWT.utils');
 const sendEmail = require('../utils/sendEmail.utils');
+const readHTML = require('../utils/readHTML.utils');
 const User = require('../models/User.model');
 
 // @route   POST /api/users/
@@ -28,13 +31,27 @@ const registerUser = asyncHandler(async (req, res) => {
       'host'
     )}/verify/${verificationToken}`;
 
-    const message = `Welcome to The Firm!. To verify your account, please click here: \n\n ${verificationUrl}`;
+    const htmlTemplate = await readHTML(
+      path.join(
+        __dirname,
+        '..',
+        'config',
+        'emails',
+        'verify-email',
+        'verify-email.html'
+      )
+    );
+    const handlebarsTemplate = handlebars.compile(htmlTemplate);
+    const replacements = {
+      verificationUrl,
+    };
+    const html = handlebarsTemplate(replacements);
 
     try {
       sendEmail({
         toEmail: user.email,
         subject: 'Account Verification',
-        message,
+        html,
       });
     } catch (err) {
       user.verificationToken = undefined;
