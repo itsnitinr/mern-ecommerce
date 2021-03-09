@@ -153,20 +153,20 @@ const reviewOrder = asyncHandler(async (req, res) => {
       parseInt(adjustedPrice) +
       parseInt(order.adjustedTax) +
       parseInt(order.shippingPrice);
-  }
 
-  const razorpayOptions = {
-    amount: Math.round(order.adjustedTotal * 100),
-    currency: 'INR',
-    receipt: `Adjusted Order: ${order._id}`,
-    payment_capture: 1,
-  };
+    const razorpayOptions = {
+      amount: Math.round(order.adjustedTotal * 100),
+      currency: 'INR',
+      receipt: `Adjusted Order: ${order._id}`,
+      payment_capture: 1,
+    };
 
-  try {
-    const response = await razorpay.orders.create(razorpayOptions);
-    order.razorpayOrderId = response.id;
-  } catch (error) {
-    console.log(error);
+    try {
+      const response = await razorpay.orders.create(razorpayOptions);
+      order.razorpayOrderId = response.id;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   let updatedOrder = await order.save();
@@ -182,14 +182,21 @@ const reviewOrder = asyncHandler(async (req, res) => {
   ]);
 
   // Send email to user
-  const successMsg = `Congratulations! Your order ${updatedOrder._id} has been approved. You can now visit you dashboard and view your order details to make the payment.`;
-  const failureMsg = `Uh oh! Your order ${updatedOrder._id} has been rejected after thorough review from our team. Please check the specifications you requested and the gerber file.`;
+  const successHTML = await readHTML(
+    path.join(__dirname, '..', 'config', 'emails', 'review-passed.html')
+  );
+
+  const failureHTML = await readHTML(
+    path.join(__dirname, '..', 'config', 'emails', 'review-failed.html')
+  );
 
   try {
     sendEmail({
       toEmail: updatedOrder.user.email,
-      subject: isApproved ? 'Order review approved' : 'Order review failed',
-      message: isApproved ? successMsg : failureMsg,
+      subject: isApproved
+        ? 'PCB Cupid - Order review approved'
+        : 'PCB Cupid - Order review failed',
+      html: isApproved ? successHTML : failureHTML,
     });
   } catch (error) {
     console.log(error);
