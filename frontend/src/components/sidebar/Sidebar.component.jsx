@@ -10,7 +10,7 @@ import {
   SwipeableDrawer,
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
-import { ReactComponent as Logo } from '../../assets/firmLogo.svg';
+import { ReactComponent as Logo } from '../../assets/PCBCUPIDfooterlogo.svg';
 import useStyles from './Sidebar.styles';
 
 export default function SideDrawer({

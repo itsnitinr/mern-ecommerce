@@ -9,7 +9,7 @@ import {
   AiOutlineLinkedin,
   AiTwotoneBank,
 } from 'react-icons/ai';
-import { ReactComponent as Logo } from '../../assets/firmLogo.svg';
+import { ReactComponent as Logo } from '../../assets/PCBCUPIDfooterlogo.svg';
 import useStyles from './Footer.styles';
 
 const Footer = () => {
@@ -23,9 +23,9 @@ const Footer = () => {
       style={match && { display: 'none' }}
     >
       <Container>
-        <Grid container spacing={4} justify="center">
+        <Grid container spacing={4} justify="center" alignItems="flex-start">
           <Grid item md={3} sm={12}>
-            <Logo />
+            <Logo style={{ height: '100%', width: '100%' }} />
           </Grid>
           <Grid item md={3} sm={6}>
             <Typography className={classes.footerHead} variant="h5">

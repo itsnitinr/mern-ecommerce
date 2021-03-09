@@ -38,20 +38,25 @@ const LandingPage = () => {
               color="textPrimary"
               className={classes.aboutBody}
             >
-              We help companies in Firmware Development / Rapid Prototyping /
-              Product Developments based on electronics, embedded and IoT
-              solutions. Transition between an idea to a prototype has never
-              been this easy. Just contact us and let's talk about bringing your
-              idea into reality.
+              We help you transition your idea to a prototype, it doesn't matter
+              if it's your first PCB or you are developing a product we deliver
+              our best!
             </Typography>
             <Typography
               variant="body1"
               color="textPrimary"
               className={classes.aboutBody}
             >
-              We help companies in Firmware Development / Rapid Prototyping /
-              Product Developments based on electronics, embedded and IoT
-              solutions.
+              In PCB CUPID, we put our best effort to bring down the cost for
+              your R&D which makes it easy and quick to produce prototypes so
+              you can iterate, improve way faster.
+            </Typography>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              className={classes.aboutBody}
+            >
+              Try it out by yourself! It starts with low as ₹600!
             </Typography>
             <Link to="/about">
               <Button

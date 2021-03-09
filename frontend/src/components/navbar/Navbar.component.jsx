@@ -20,7 +20,7 @@ import {
 } from 'react-icons/ai';
 import { RiDashboardLine } from 'react-icons/ri';
 import { FaUserCircle } from 'react-icons/fa';
-import { ReactComponent as Logo } from '../../assets/firmLogo.svg';
+import { ReactComponent as Logo } from '../../assets/PCBCUPIDlogotext.svg';
 import MenuIcon from '@material-ui/icons/Menu';
 import SideDrawer from '../sidebar/Sidebar.component';
 import useStyles from './Navbar.styles';
