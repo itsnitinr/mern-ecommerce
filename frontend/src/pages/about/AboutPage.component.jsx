@@ -1,14 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Grid, Typography, Button } from '@material-ui/core';
-import {
-  Mail,
-  Phone,
-  LinkedIn,
-  Instagram,
-  Twitter,
-  Facebook,
-} from '@material-ui/icons';
+import { Mail, Phone, LinkedIn, Instagram } from '@material-ui/icons';
 import CountUp from 'react-countup';
 import VisibilitySensor from 'react-visibility-sensor';
 import PageHeader from '../../components/page-header/PageHeader.component';
@@ -102,9 +95,9 @@ const AboutPage = () => {
               >
                 <Mail /> Email Address
               </Typography>
-              <a href="mailto:thefirm.dev@gmail.com">
+              <a href="mailto:customercare@pcbcupid.com">
                 <Typography variant="h6" color="secondary" align="center">
-                  <b>thefirm.dev@gmail.com</b>
+                  <b>customercare@pcbcupid.com</b>
                 </Typography>
               </a>
             </Grid>
@@ -119,28 +112,16 @@ const AboutPage = () => {
               </Typography>
               <Typography align="center">
                 <a
-                  href="https://www.thefirm.dev/"
+                  href="https://www.linkedin.com/company/pcbcupid"
                   className={classes.socialIcon}
                 >
-                  <LinkedIn fontSize="small" />
+                  <LinkedIn fontSize="medium" />
                 </a>
                 <a
-                  href="https://www.instagram.com/thefirm.dev/?hl=en"
+                  href="https://www.instagram.com/pcbcupid/"
                   className={classes.socialIcon}
                 >
-                  <Instagram fontSize="small" />
-                </a>
-                <a
-                  href="https://twitter.com/ThefirmD"
-                  className={classes.socialIcon}
-                >
-                  <Twitter fontSize="small" />
-                </a>
-                <a
-                  href="https://twitter.com/ThefirmD"
-                  className={classes.socialIcon}
-                >
-                  <Facebook fontSize="small" />
+                  <Instagram fontSize="medium" />
                 </a>
               </Typography>
             </Grid>
@@ -151,11 +132,7 @@ const AboutPage = () => {
         <Container>
           <Grid container justify="center" spacing={5}>
             <Grid item sm={3} xs={12}>
-              <CountUp
-                end={100}
-                duration={5}
-                start={viewPortEntered ? null : 0}
-              >
+              <CountUp end={10} duration={2} start={viewPortEntered ? null : 0}>
                 {({ countUpRef }) => (
                   <VisibilitySensor
                     active={!viewPortEntered}
@@ -179,7 +156,7 @@ const AboutPage = () => {
               </CountUp>
             </Grid>
             <Grid item sm={3} xs={12}>
-              <CountUp end={75} duration={5} start={viewPortEntered ? null : 0}>
+              <CountUp end={10} duration={2} start={viewPortEntered ? null : 0}>
                 {({ countUpRef }) => (
                   <VisibilitySensor
                     active={!viewPortEntered}
@@ -203,35 +180,7 @@ const AboutPage = () => {
               </CountUp>
             </Grid>
             <Grid item sm={3} xs={12}>
-              <CountUp end={50} duration={5} start={viewPortEntered ? null : 0}>
-                {({ countUpRef }) => (
-                  <VisibilitySensor
-                    active={!viewPortEntered}
-                    onChange={(isVisible) =>
-                      isVisible && setViewPortEntered(true)
-                    }
-                    delayedCall
-                  >
-                    <>
-                      <Typography
-                        ref={countUpRef}
-                        variant="h2"
-                        align="center"
-                      ></Typography>
-                      <Typography variant="h6" align="center">
-                        Manufacturing Partners
-                      </Typography>
-                    </>
-                  </VisibilitySensor>
-                )}
-              </CountUp>
-            </Grid>
-            <Grid item sm={3} xs={12}>
-              <CountUp
-                end={200}
-                duration={5}
-                start={viewPortEntered ? null : 0}
-              >
+              <CountUp end={10} duration={2} start={viewPortEntered ? null : 0}>
                 {({ countUpRef }) => (
                   <VisibilitySensor
                     active={!viewPortEntered}

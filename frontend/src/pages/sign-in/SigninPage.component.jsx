@@ -26,7 +26,7 @@ function Copyright() {
       align="center"
     >
       {'Copyright © '}
-      <a href="http://thefirm.dev/">The Firm</a> {new Date().getFullYear()}
+      <a href="https://pcbcupid.com/">PCB Cupid</a> {new Date().getFullYear()}
       {'.'}
     </Typography>
   );

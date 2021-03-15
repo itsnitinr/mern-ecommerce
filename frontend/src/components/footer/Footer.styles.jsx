@@ -22,6 +22,16 @@ const useStyles = makeStyles((theme) => ({
       width: 100,
     },
   },
+  pages: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  pageLinks: {
+    textAlign: 'left',
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
+    },
+  },
   link: {
     color: 'white',
     fontSize: '1.1rem',
@@ -42,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     color: 'white',
     marginBottom: '0.5rem',
-    width: '80%',
+    width: '95%',
     margin: '0 auto',
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center',
@@ -79,6 +89,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  copyright: {
+    background: '#fff',
+    padding: '1rem 0',
+    color: '#333',
   },
 }));
 

@@ -22,36 +22,36 @@ const HeroCarousel = () => {
         <div className={classes.slideOne}>
           <div className={classes.textContainer}>
             <Typography variant="h3" className={classes.headingText}>
-              An Awesome Quote
+              PCB Cupid
             </Typography>
             <Typography variant="h6" className={classes.paragraphText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-              iste mollitia voluptatum aspernatur asperiores enim laborum et
-              rerum fugit deleniti.
+              We manufacture PCB for makers/ professionals alike, starting from
+              prototype to full fledge production. Check out our Gallery to see
+              our production result.
             </Typography>
           </div>
         </div>
         <div className={classes.slideTwo}>
           <div className={classes.textContainer}>
             <Typography variant="h3" className={classes.headingText}>
-              An Awesome Quote
+              PCB Cupid
             </Typography>
             <Typography variant="h6" className={classes.paragraphText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-              iste mollitia voluptatum aspernatur asperiores enim laborum et
-              rerum fugit deleniti.
+              We manufacture PCB for makers/ professionals alike, starting from
+              prototype to full fledge production. Check out our Gallery to see
+              our production result.
             </Typography>
           </div>
         </div>
         <div className={classes.slideThree}>
           <div className={classes.textContainer}>
             <Typography variant="h3" className={classes.headingText}>
-              An Awesome Quote
+              PCB Cupid
             </Typography>
             <Typography variant="h6" className={classes.paragraphText}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-              iste mollitia voluptatum aspernatur asperiores enim laborum et
-              rerum fugit deleniti.
+              We manufacture PCB for makers/ professionals alike, starting from
+              prototype to full fledge production. Check out our Gallery to see
+              our production result.
             </Typography>
           </div>
         </div>

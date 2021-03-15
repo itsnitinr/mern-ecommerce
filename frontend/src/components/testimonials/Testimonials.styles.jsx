@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
   },
   testimonialCard: {
     marginBottom: '2rem',
+    minHeight: 400,
+    [theme.breakpoints.down('sm')]: {
+      minHeight: 0,
+    },
   },
   testimonialCardImage: {
     height: '100%',

@@ -26,7 +26,7 @@ function Copyright() {
       align="center"
     >
       {'Copyright © '}
-      <a href="http://thefirm.dev/">The Firm</a> {new Date().getFullYear()}
+      <a href="https://pcbcupid.com/">PCB Cupid</a> {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -48,7 +48,7 @@ export default function SignUp({ history, location }) {
   const onFormSubmit = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      console.log('Passwords dont match!');
+      alert('Passwords dont match!');
     } else {
       dispatch(registerUser(name, email, password));
       history.push('/');

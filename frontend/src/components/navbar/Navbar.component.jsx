@@ -15,8 +15,6 @@ import {
   AiOutlineUnlock,
   AiOutlineUserAdd,
   AiOutlineLogout,
-  AiOutlineUsergroupDelete,
-  AiOutlineShoppingCart,
 } from 'react-icons/ai';
 import { RiDashboardLine } from 'react-icons/ri';
 import { FaUserCircle } from 'react-icons/fa';
@@ -169,7 +167,7 @@ const NavMenu = ({ classes, navItems, navCommon, user, dispatch, logout }) => {
           );
         })}
       <IconButton onClick={handleMenu}>
-        <FaUserCircle color="black" />
+        <FaUserCircle style={{ color: '#2196f3' }} />
       </IconButton>
       <Menu
         anchorEl={anchorEl}

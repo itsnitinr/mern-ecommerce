@@ -5,7 +5,9 @@ import useStyles from './Testimonials.styles';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import pcbImage from '../../assets/bg1.jpg';
+import iotBoardImg from '../../assets/2.JPG';
+import digitalTokenImg from '../../assets/1.JPG';
+import thermalPrinterImg from '../../assets/6.JPG';
 
 const Testimonials = () => {
   const settings = {
@@ -23,9 +25,9 @@ const Testimonials = () => {
         <Grid container className={classes.testimonialCard}>
           <Grid item sm={6} xs={12}>
             <img
-              src={pcbImage}
+              src={iotBoardImg}
               className={classes.testimonialCardImage}
-              alt="Ordered PCB"
+              alt="SST-IoT-Board (Development boards for students)"
             />
           </Grid>
           <Grid item sm={6} xs={12}>
@@ -36,10 +38,8 @@ const Testimonials = () => {
                 className={classes.quoteIcon}
               />
               <Typography variant="body1" gutterBottom>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-                odio aspernatur quam ducimus repudiandae voluptate aliquid,
-                nobis consectetur officia, temporibus unde voluptatem cumque
-                praesentium dicta culpa aliquam consequatur veniam magni.
+                Very Well done, happy with PCB quality and on time delivery on
+                both prototyping and production PCBs.
               </Typography>
               <div className={classes.userInfo}>
                 <img
@@ -49,7 +49,9 @@ const Testimonials = () => {
                   width="50"
                   height="50"
                 />
-                <Typography variant="h6">John Doe</Typography>
+                <Typography variant="h6">
+                  SST Technologies, Bangalore
+                </Typography>
               </div>
             </div>
           </Grid>
@@ -59,9 +61,9 @@ const Testimonials = () => {
         <Grid container className={classes.testimonialCard}>
           <Grid item sm={6} xs={12}>
             <img
-              src={pcbImage}
+              src={digitalTokenImg}
               className={classes.testimonialCardImage}
-              alt="Ordered PCB"
+              alt="A prototype for digital token system"
             />
           </Grid>
           <Grid item sm={6} xs={12}>
@@ -72,10 +74,7 @@ const Testimonials = () => {
                 className={classes.quoteIcon}
               />
               <Typography variant="body1" gutterBottom>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-                odio aspernatur quam ducimus repudiandae voluptate aliquid,
-                nobis consectetur officia, temporibus unde voluptatem cumque
-                praesentium dicta culpa aliquam consequatur veniam magni.
+                Highly recommeded for fast prototyping!
               </Typography>
               <div className={classes.userInfo}>
                 <img
@@ -85,7 +84,7 @@ const Testimonials = () => {
                   width="50"
                   height="50"
                 />
-                <Typography variant="h6">John Doe</Typography>
+                <Typography variant="h6">Waitlessbuzz, Bangalore</Typography>
               </div>
             </div>
           </Grid>
@@ -95,9 +94,9 @@ const Testimonials = () => {
         <Grid container className={classes.testimonialCard}>
           <Grid item sm={6} xs={12}>
             <img
-              src={pcbImage}
+              src={thermalPrinterImg}
               className={classes.testimonialCardImage}
-              alt="Ordered PCB"
+              alt="Thermal printer circuit board"
             />
           </Grid>
           <Grid item sm={6} xs={12}>
@@ -108,10 +107,7 @@ const Testimonials = () => {
                 className={classes.quoteIcon}
               />
               <Typography variant="body1" gutterBottom>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-                odio aspernatur quam ducimus repudiandae voluptate aliquid,
-                nobis consectetur officia, temporibus unde voluptatem cumque
-                praesentium dicta culpa aliquam consequatur veniam magni.
+                Quick prototyping, fast and effcient.
               </Typography>
               <div className={classes.userInfo}>
                 <img
@@ -121,7 +117,7 @@ const Testimonials = () => {
                   width="50"
                   height="50"
                 />
-                <Typography variant="h6">John Doe</Typography>
+                <Typography variant="h6">Sanjay, A2D Circuits</Typography>
               </div>
             </div>
           </Grid>

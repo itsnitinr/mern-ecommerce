@@ -16,9 +16,9 @@ const TableItem = ({ item, image, capability, remark }) => {
       <TableCell>
         <Typography>{item}</Typography>
       </TableCell>
-      <TableCell>
+      {/* <TableCell>
         {image ? <img src={image} alt={item} /> : <Typography> - </Typography>}
-      </TableCell>
+      </TableCell> */}
       <TableCell>
         <Typography>{capability}</Typography>
       </TableCell>
