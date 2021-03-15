@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     color: 'white',
+    cursor: 'pointer',
     fontSize: '1.1rem',
     '&:hover': {
       color: theme.palette.secondary.main,
@@ -94,6 +95,23 @@ const useStyles = makeStyles((theme) => ({
     background: '#fff',
     padding: '1rem 0',
     color: '#333',
+  },
+  modal: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '80vw',
+    height: '90vh',
+    backgroundColor: theme.palette.background.paper,
+    border: '5px solid #54be73',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    overflowY: 'scroll',
+    outline: 0,
+    [theme.breakpoints.down('sm')]: {
+      width: '90vw',
+    },
   },
 }));
 
