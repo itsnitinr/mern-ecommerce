@@ -17,21 +17,6 @@ import GoogleOAuthButton from '../../components/google-oauth-button/GoogleOAuthB
 
 import { loginUser } from '../../redux/user/user.actions';
 
-function Copyright() {
-  return (
-    <Typography
-      style={{ paddingBottom: '1.5rem' }}
-      variant="body2"
-      color="textSecondary"
-      align="center"
-    >
-      {'Copyright © '}
-      <a href="https://pcbcupid.com/">PCB Cupid</a> {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 export default function SignIn({ history, location }) {
   const classes = useStyles();
 
@@ -68,6 +53,10 @@ export default function SignIn({ history, location }) {
             Sign in
           </Typography>
           <form className={classes.form} onSubmit={(e) => onFormSubmit(e)}>
+            <GoogleOAuthButton />
+            <div className={classes.separator}>
+              <Typography>&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;</Typography>
+            </div>
             <TextField
               variant="outlined"
               margin="normal"
@@ -115,16 +104,10 @@ export default function SignIn({ history, location }) {
                 </Link>
               </Grid>
             </Grid>
-            <div className={classes.separator}>
-              <Typography>&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;</Typography>
-            </div>
-            <GoogleOAuthButton />
           </form>
         </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
       </Container>
+      <Box mb={8}></Box>
     </>
   );
 }

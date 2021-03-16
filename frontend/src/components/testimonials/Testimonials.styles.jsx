@@ -48,11 +48,14 @@ const useStyles = makeStyles((theme) => ({
   },
   userInfo: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
   },
   userImage: {
     borderRadius: '50%',
     margin: '1rem 1rem 1rem 0',
+    height: 75,
+    width: 75,
   },
 }));
 

@@ -46,18 +46,6 @@ const Footer = () => {
                   <Link to="/gallery">
                     <Typography className={classes.link}>Gallery</Typography>
                   </Link>
-                  <Typography
-                    className={classes.link}
-                    onClick={() => setPrivacyModalOpen(true)}
-                  >
-                    Privacy Policy
-                  </Typography>
-                  <Typography
-                    className={classes.link}
-                    onClick={() => setTermsModalOpen(true)}
-                  >
-                    Terms & Conditions
-                  </Typography>
                 </div>
               </div>
             </Grid>
@@ -136,10 +124,36 @@ const Footer = () => {
             <b>PCB Cupid</b>
           </Typography>
         </Typography>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            marginTop: '0.25rem',
+          }}
+        >
+          <Typography
+            component="div"
+            align="center"
+            style={{ color: '#555555', marginRight: '1rem', cursor: 'pointer' }}
+            onClick={() => setPrivacyModalOpen(true)}
+          >
+            Privacy Policy
+          </Typography>
+          <Typography
+            component="div"
+            align="center"
+            style={{ color: '#555555', cursor: 'pointer' }}
+            onClick={() => setTermsModalOpen(true)}
+          >
+            Terms & Conditions
+          </Typography>
+        </div>
       </section>
       <Modal open={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)}>
         <div className={classes.modal}>
           <h1>Privacy Policy for PCB cupid</h1>
+          <br />
           <p>
             At pcb cupid, accessible from www.pcbcupid.com, one of our main
             priorities is the privacy of our visitors. This Privacy Policy
@@ -157,12 +171,16 @@ const Footer = () => {
             applicable to any information collected offline or via channels
             other than this website.
           </p>
+          <br />
           <h2>Consent</h2>
+          <br />
           <p>
             By using our website, you hereby consent to our Privacy Policy and
             agree to its terms.
           </p>
+          <br />
           <h2>Information we collect</h2>
+          <br />
           <p>
             The personal information that you are asked to provide, and the
             reasons why you are asked to provide it, will be made clear to you
@@ -179,7 +197,9 @@ const Footer = () => {
             information, including items such as name, company name, address,
             email address, and telephone number.
           </p>
+          <br />
           <h2>How we use your information</h2>
+          <br />
           <p>
             We use the information we collect in various ways, including to:
           </p>
@@ -197,7 +217,9 @@ const Footer = () => {
             <li>Send you emails</li>
             <li>Find and prevent fraud</li>
           </ul>
+          <br />
           <h2>Log Files</h2>
+          <br />
           <p>
             pcb cupid follows a standard procedure of using log files. These
             files log visitors when they visit websites. All hosting companies
@@ -210,7 +232,9 @@ const Footer = () => {
             the site, tracking users' movement on the website, and gathering
             demographic information.
           </p>
+          <br />
           <h2>Cookies and Web Beacons</h2>
+          <br />
           <p>
             Like any other website, pcb cupid uses 'cookies'. These cookies are
             used to store information including visitors' preferences, and the
@@ -226,7 +250,9 @@ const Footer = () => {
             </a>
             .
           </p>
+          <br />
           <h2>Advertising Partners Privacy Policies</h2>
+          <br />
           <p>
             You may consult this list to find the Privacy Policy for each of the
             advertising partners of pcb cupid.
@@ -245,7 +271,9 @@ const Footer = () => {
             Note that pcb cupid has no access to or control over these cookies
             that are used by third-party advertisers.
           </p>
+          <br />
           <h2>Third Party Privacy Policies</h2>
+          <br />
           <p>
             pcb cupid's Privacy Policy does not apply to other advertisers or
             websites. Thus, we are advising you to consult the respective
@@ -259,7 +287,9 @@ const Footer = () => {
             with specific web browsers, it can be found at the browsers'
             respective websites.
           </p>
+          <br />
           <h2>CCPA Privacy Rights (Do Not Sell My Personal Information)</h2>
+          <br />
           <p>
             Under the CCPA, among other rights, California consumers have the
             right to:
@@ -281,7 +311,9 @@ const Footer = () => {
             If you make a request, we have one month to respond to you. If you
             would like to exercise any of these rights, please contact us.
           </p>
+          <br />
           <h2>GDPR Data Protection Rights</h2>
+          <br />
           <p>
             We would like to make sure you are fully aware of all of your data
             protection rights. Every user is entitled to the following:
@@ -318,7 +350,9 @@ const Footer = () => {
             If you make a request, we have one month to respond to you. If you
             would like to exercise any of these rights, please contact us.
           </p>
+          <br />
           <h2>Children's Information</h2>
+          <br />
           <p>
             Another part of our priority is adding protection for children while
             using the internet. We encourage parents and guardians to observe,
@@ -338,7 +372,9 @@ const Footer = () => {
           <h2>
             <strong>Terms and Conditions</strong>
           </h2>
+          <br />
           <p>Welcome to pcb cupid!</p>
+          <br />
           <p>
             These terms and conditions outline the rules and regulations for the
             use of Pcb cupid's Website, located at www.pcbcupid.com.
@@ -365,9 +401,11 @@ const Footer = () => {
             and/or he/she or they, are taken as interchangeable and therefore as
             referring to same.
           </p>
+          <br />
           <h3>
             <strong>Cookies</strong>
           </h3>
+          <br />
           <p>
             We employ the use of cookies. By accessing pcb cupid, you agreed to
             use cookies in agreement with the Pcb cupid's Privacy Policy.{' '}
@@ -379,9 +417,11 @@ const Footer = () => {
             visiting our website. Some of our affiliate/advertising partners may
             also use cookies.
           </p>
+          <br />
           <h3>
             <strong>License</strong>
           </h3>
+          <br />
           <p>
             Unless otherwise stated, Pcb cupid and/or its licensors own the
             intellectual property rights for all material on pcb cupid. All
@@ -440,9 +480,11 @@ const Footer = () => {
             reproduce, edit and authorize others to use, reproduce and edit any
             of your Comments in any and all forms, formats or media.
           </p>
+          <br />
           <h3>
             <strong>Hyperlinking to our Content</strong>
           </h3>
+          <br />
           <p>
             The following organizations may link to our Website without prior
             written approval:
@@ -522,17 +564,21 @@ const Footer = () => {
             No use of Pcb cupid's logo or other artwork will be allowed for
             linking absent a trademark license agreement.
           </p>
+          <br />
           <h3>
             <strong>iFrames</strong>
           </h3>
+          <br />
           <p>
             Without prior approval and written permission, you may not create
             frames around our Webpages that alter in any way the visual
             presentation or appearance of our Website.
           </p>
+          <br />
           <h3>
             <strong>Content Liability</strong>
           </h3>
+          <br />
           <p>
             We shall not be hold responsible for any content that appears on
             your Website. You agree to protect and defend us against all claims
@@ -541,13 +587,17 @@ const Footer = () => {
             which infringes, otherwise violates, or advocates the infringement
             or other violation of, any third party rights.
           </p>
+          <br />
           <h3>
             <strong>Your Privacy</strong>
           </h3>
+          <br />
           <p>Please read Privacy Policy</p>
+          <br />
           <h3>
             <strong>Reservation of Rights</strong>
           </h3>
+          <br />
           <p>
             We reserve the right to request that you remove all links or any
             particular link to our Website. You approve to immediately remove
@@ -556,9 +606,11 @@ const Footer = () => {
             By continuously linking to our Website, you agree to be bound to and
             follow these linking terms and conditions.
           </p>
+          <br />
           <h3>
             <strong>Removal of links from our website</strong>
           </h3>
+          <br />
           <p>
             If you find any link on our Website that is offensive for any
             reason, you are free to contact and inform us any moment. We will
@@ -571,9 +623,11 @@ const Footer = () => {
             ensure that the website remains available or that the material on
             the website is kept up to date.
           </p>
+          <br />
           <h3>
             <strong>Disclaimer</strong>
           </h3>
+          <br />
           <p>
             To the maximum extent permitted by applicable law, we exclude all
             representations, warranties and conditions relating to our website

@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '2.5rem',
     background: theme.palette.primary.main,
     color: theme.palette.secondary.main,
-    padding: '3rem',
+    padding: '2rem',
     textAlign: 'center',
   },
   footerHead: {
@@ -97,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#333',
   },
   modal: {
+    fontFamily: theme.typography.fontFamily,
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -104,9 +105,8 @@ const useStyles = makeStyles((theme) => ({
     width: '80vw',
     height: '90vh',
     backgroundColor: theme.palette.background.paper,
-    border: '5px solid #54be73',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: '2.5rem',
     overflowY: 'scroll',
     outline: 0,
     [theme.breakpoints.down('sm')]: {

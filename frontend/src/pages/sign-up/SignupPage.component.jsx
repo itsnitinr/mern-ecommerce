@@ -17,21 +17,6 @@ import GoogleOAuthButton from '../../components/google-oauth-button/GoogleOAuthB
 
 import { registerUser } from '../../redux/user/user.actions';
 
-function Copyright() {
-  return (
-    <Typography
-      style={{ paddingBottom: '1.5rem' }}
-      variant="body2"
-      color="textSecondary"
-      align="center"
-    >
-      {'Copyright © '}
-      <a href="https://pcbcupid.com/">PCB Cupid</a> {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 export default function SignUp({ history, location }) {
   const classes = useStyles();
 
@@ -76,6 +61,10 @@ export default function SignUp({ history, location }) {
             Sign up
           </Typography>
           <form className={classes.form} onSubmit={(e) => onFormSubmit(e)}>
+            <GoogleOAuthButton />
+            <div className={classes.separator}>
+              <Typography>&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;</Typography>
+            </div>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -149,14 +138,13 @@ export default function SignUp({ history, location }) {
                 </Link>
               </Grid>
             </Grid>
-            <div className={classes.separator}>
-              <Typography>&nbsp;&nbsp;&nbsp;or&nbsp;&nbsp;&nbsp;</Typography>
-            </div>
-            <GoogleOAuthButton />
           </form>
         </div>
-        <Box mt={5}>
-          <Copyright />
+        <Box mb={8} mt={2}>
+          <Typography align="center">
+            By registering to PCB Cupid, you hereby agree to our terms &
+            conditions.
+          </Typography>
         </Box>
       </Container>
     </>

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import backgroundOne from '../../assets/bg1.jpg';
 import backgroundTwo from '../../assets/bg2.jpg';
-import backgroundThree from '../../assets/bg3.jpeg';
+import backgroundThree from '../../assets/bg3.jpg';
 
 const useStyles = makeStyles((theme) => ({
   textContainer: {

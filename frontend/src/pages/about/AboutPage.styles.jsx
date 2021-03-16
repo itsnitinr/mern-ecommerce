@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   countupContainer: {
     background: theme.palette.secondary.main,
-    padding: '3rem 0',
+    padding: '2rem 0',
     marginBottom: '-2.5rem',
     color: '#fff',
   },

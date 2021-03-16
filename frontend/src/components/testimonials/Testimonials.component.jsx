@@ -8,6 +8,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import iotBoardImg from '../../assets/2.JPG';
 import digitalTokenImg from '../../assets/1.JPG';
 import thermalPrinterImg from '../../assets/6.JPG';
+import sstLogo from '../../assets/sst-logo.jpg';
+import waitlessbuzzLogo from '../../assets/waitlessbuzz-logo.jpg';
+import a2dLogo from '../../assets/a2d-logo.jpg';
 
 const Testimonials = () => {
   const settings = {
@@ -43,7 +46,7 @@ const Testimonials = () => {
               </Typography>
               <div className={classes.userInfo}>
                 <img
-                  src="https://picsum.photos/100"
+                  src={sstLogo}
                   className={classes.userImage}
                   alt="Testimonial user avatar"
                   width="50"
@@ -52,39 +55,6 @@ const Testimonials = () => {
                 <Typography variant="h6">
                   SST Technologies, Bangalore
                 </Typography>
-              </div>
-            </div>
-          </Grid>
-        </Grid>
-      </div>
-      <div>
-        <Grid container className={classes.testimonialCard}>
-          <Grid item sm={6} xs={12}>
-            <img
-              src={digitalTokenImg}
-              className={classes.testimonialCardImage}
-              alt="A prototype for digital token system"
-            />
-          </Grid>
-          <Grid item sm={6} xs={12}>
-            <div className={classes.testimonialCardText}>
-              <FormatQuote
-                fontSize="large"
-                color="secondary"
-                className={classes.quoteIcon}
-              />
-              <Typography variant="body1" gutterBottom>
-                Highly recommeded for fast prototyping!
-              </Typography>
-              <div className={classes.userInfo}>
-                <img
-                  src="https://picsum.photos/100"
-                  className={classes.userImage}
-                  alt="Testimonial user avatar"
-                  width="50"
-                  height="50"
-                />
-                <Typography variant="h6">Waitlessbuzz, Bangalore</Typography>
               </div>
             </div>
           </Grid>
@@ -111,13 +81,46 @@ const Testimonials = () => {
               </Typography>
               <div className={classes.userInfo}>
                 <img
-                  src="https://picsum.photos/100"
+                  src={a2dLogo}
                   className={classes.userImage}
                   alt="Testimonial user avatar"
                   width="50"
                   height="50"
                 />
                 <Typography variant="h6">Sanjay, A2D Circuits</Typography>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
+      </div>
+      <div>
+        <Grid container className={classes.testimonialCard}>
+          <Grid item sm={6} xs={12}>
+            <img
+              src={digitalTokenImg}
+              className={classes.testimonialCardImage}
+              alt="A prototype for digital token system"
+            />
+          </Grid>
+          <Grid item sm={6} xs={12}>
+            <div className={classes.testimonialCardText}>
+              <FormatQuote
+                fontSize="large"
+                color="secondary"
+                className={classes.quoteIcon}
+              />
+              <Typography variant="body1" gutterBottom>
+                Highly recommeded for fast prototyping!
+              </Typography>
+              <div className={classes.userInfo}>
+                <img
+                  src={waitlessbuzzLogo}
+                  className={classes.userImage}
+                  alt="Testimonial user avatar"
+                  width="50"
+                  height="50"
+                />
+                <Typography variant="h6">Waitlessbuzz, Bangalore</Typography>
               </div>
             </div>
           </Grid>
