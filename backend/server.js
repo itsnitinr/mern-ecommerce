@@ -1,4 +1,5 @@
 // Bring in the dependencies!
+const path = require('path');
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
@@ -34,6 +35,13 @@ app.post(
     res.json({ file: req.file.path });
   })
 );
+
+app.use(express.static(path.join(__dirname, '../frontend/build'))) /
+    app.get('*', (req, res) =>
+      res.sendFile(
+        path.resolve(__dirname, '../frontend', 'build', 'index.html')
+      )
+    );
 
 // Handle errors
 app.use(routeNotFound);
