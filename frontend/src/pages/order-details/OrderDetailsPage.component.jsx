@@ -29,6 +29,7 @@ import {
   ORDER_PAY_RESET,
   ORDER_DISPATCH_RESET,
 } from '../../redux/order/order.types';
+import logo from '../../assets/PCBCUPIDlogotext.svg';
 import useStyles from './OrderDetails.styles';
 
 function loadRazorpay() {
@@ -94,11 +95,11 @@ const OrderDetailsPage = ({ history }) => {
     }
 
     const options = {
-      key: 'rzp_test_tCLOmiV4RXNrMu',
+      key: process.env.RAZORPAY_KEY_ID,
       currency: 'INR',
-      name: 'The Firm',
+      name: 'PCB Cupid',
       description: 'PCB Order Payment',
-      image: 'https://example.com/your_logo',
+      image: logo,
       order_id: `${order.razorpayOrderId}`,
       handler: function (response) {
         dispatch(
