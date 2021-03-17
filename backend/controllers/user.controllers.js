@@ -23,47 +23,47 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // Create new user
   const user = await User.create({ name, email, password });
-  if (user) {
-    const verificationToken = user.getVerificationToken();
-    await user.save({ validateBeforeSave: false });
-
-    const verificationUrl = `${req.protocol}://${req.get(
-      'host'
-    )}/verify/${verificationToken}`;
-
-    const htmlTemplate = await readHTML(
-      path.join(__dirname, '..', 'config', 'emails', 'verify-email.html')
-    );
-    const handlebarsTemplate = handlebars.compile(htmlTemplate);
-    const replacements = {
-      verificationUrl,
-    };
-    const html = handlebarsTemplate(replacements);
-
-    try {
-      sendEmail({
-        toEmail: user.email,
-        subject: 'PCB Cupid - Account Verification',
-        html,
-      });
-    } catch (err) {
-      user.verificationToken = undefined;
-      await user.save({ validateBeforeSave: false });
-      res.status(500);
-      throw new Error('Email could not be sent');
-    }
-
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      token: generateJWT(user._id),
-    });
-  } else {
+  if (!user) {
     res.status(400);
     throw new Error('Invalid data entered. Please recheck your inputs.');
   }
+
+  const verificationToken = user.getVerificationToken();
+  await user.save({ validateBeforeSave: false });
+
+  const verificationUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/verify/${verificationToken}`;
+
+  const htmlTemplate = await readHTML(
+    path.join(__dirname, '..', 'config', 'emails', 'verify-email.html')
+  );
+  const handlebarsTemplate = handlebars.compile(htmlTemplate);
+  const replacements = {
+    verificationUrl,
+  };
+  const html = handlebarsTemplate(replacements);
+
+  try {
+    sendEmail({
+      toEmail: user.email,
+      subject: 'PCB Cupid - Account Verification',
+      html,
+    });
+  } catch (err) {
+    user.verificationToken = undefined;
+    await user.save({ validateBeforeSave: false });
+    res.status(500);
+    throw new Error('Email could not be sent');
+  }
+
+  res.status(201).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token: generateJWT(user._id),
+  });
 });
 
 // @route   PUT /api/users/verify/:verificationToken
