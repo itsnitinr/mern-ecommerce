@@ -133,6 +133,10 @@ const orderSchema = new mongoose.Schema(
         type: Number,
         required: [true, 'Please provide the shipping pincode'],
       },
+      phoneNumber: {
+        type: Number,
+        required: [true, 'Please provide your phone number'],
+      },
     },
     billingDetails: {
       addressLine1: {
@@ -154,6 +158,10 @@ const orderSchema = new mongoose.Schema(
       pincode: {
         type: Number,
         required: [true, 'Please provide the billing pincode'],
+      },
+      phoneNumber: {
+        type: Number,
+        required: [true, 'Please provide your phone number'],
       },
     },
     isPaid: {

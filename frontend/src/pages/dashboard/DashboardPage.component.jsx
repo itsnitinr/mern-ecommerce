@@ -81,6 +81,7 @@ const DashboardPage = ({ history }) => {
     city: '',
     state: '',
     pincode: '',
+    phoneNumber: '',
   });
 
   const [billingDetails, setBillingDetails] = useState({
@@ -89,6 +90,7 @@ const DashboardPage = ({ history }) => {
     city: '',
     state: '',
     pincode: '',
+    phoneNumber: '',
   });
 
   const onShippingChange = (e) => {
@@ -414,6 +416,12 @@ const DashboardPage = ({ history }) => {
                           </TableCell>
                           <TableCell>{billingAddress.pincode}</TableCell>
                         </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>Phone Number</b>
+                          </TableCell>
+                          <TableCell>{billingAddress.phoneNumber}</TableCell>
+                        </TableRow>
                       </Table>
                     ) : (
                       <Typography>
@@ -511,6 +519,16 @@ const DashboardPage = ({ history }) => {
                         value={billingDetails.pincode}
                         onChange={onBillingChange}
                       />
+                      <TextField
+                        variant="outlined"
+                        type="number"
+                        required
+                        fullWidth
+                        name="phoneNumber"
+                        label="Phone Number"
+                        value={billingDetails.phoneNumber}
+                        onChange={onBillingChange}
+                      />
                     </form>
                   </DialogContent>
                   <DialogActions>
@@ -573,6 +591,12 @@ const DashboardPage = ({ history }) => {
                             <b>Pincode</b>
                           </TableCell>
                           <TableCell>{shippingAddress.pincode}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>
+                            <b>Phone Number</b>
+                          </TableCell>
+                          <TableCell>{shippingAddress.phoneNumber}</TableCell>
                         </TableRow>
                       </Table>
                     ) : (
@@ -669,6 +693,16 @@ const DashboardPage = ({ history }) => {
                         name="pincode"
                         label="Pincode"
                         value={shippingDetails.pincode}
+                        onChange={onShippingChange}
+                      />
+                      <TextField
+                        variant="outlined"
+                        type="number"
+                        required
+                        fullWidth
+                        name="phoneNumber"
+                        label="Phone Number"
+                        value={shippingDetails.phoneNumber}
                         onChange={onShippingChange}
                       />
                     </form>

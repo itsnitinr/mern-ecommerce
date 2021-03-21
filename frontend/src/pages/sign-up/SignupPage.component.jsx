@@ -11,8 +11,10 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Modal from '@material-ui/core/Modal';
+import TermsModal from '../../components/terms-modal/TermsModal.component';
+import PrivacyModal from '../../components/privacy-modal/PrivacyModal.component';
 import useStyles from './SignupPage.styles';
-
 import GoogleOAuthButton from '../../components/google-oauth-button/GoogleOAuthButton.component';
 
 import { registerUser } from '../../redux/user/user.actions';
@@ -24,6 +26,8 @@ export default function SignUp({ history, location }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [termsModalOpen, setTermsModalOpen] = useState(false);
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
 
   const { loading } = useSelector((state) => state.userRegister);
   const { user } = useSelector((state) => state.userLogin);
@@ -122,6 +126,25 @@ export default function SignUp({ history, location }) {
                 />
               </Grid>
             </Grid>
+            <Box mt={2}>
+              <Typography className={classes.disclaimer}>
+                By signing up, you agree to PCB Cupid's{' '}
+                <span
+                  style={{ cursor: 'pointer', color: '#1d1d1d' }}
+                  onClick={() => setTermsModalOpen(true)}
+                >
+                  Terms of Use
+                </span>{' '}
+                and{' '}
+                <span
+                  style={{ cursor: 'pointer', color: '#1d1d1d' }}
+                  onClick={() => setPrivacyModalOpen(true)}
+                >
+                  Privacy Policy
+                </span>
+                .
+              </Typography>
+            </Box>
             <Button
               type="submit"
               fullWidth
@@ -131,7 +154,7 @@ export default function SignUp({ history, location }) {
             >
               Sign Up
             </Button>
-            <Grid container justify="flex-end">
+            <Grid container justify="flex-end" style={{ marginBottom: '3rem' }}>
               <Grid item>
                 <Link to="/signin" className={classes.link}>
                   Already have an account? Sign in
@@ -140,13 +163,13 @@ export default function SignUp({ history, location }) {
             </Grid>
           </form>
         </div>
-        <Box mb={8} mt={2}>
-          <Typography align="center">
-            By registering to PCB Cupid, you hereby agree to our terms &
-            conditions.
-          </Typography>
-        </Box>
       </Container>
+      <Modal open={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)}>
+        <PrivacyModal />
+      </Modal>
+      <Modal open={termsModalOpen} onClose={() => setTermsModalOpen(false)}>
+        <TermsModal />
+      </Modal>
     </>
   );
 }

@@ -77,6 +77,7 @@ const PlaceOrderPage = ({ history }) => {
     city: shippingAddress.city || '',
     state: shippingAddress.state || '',
     pincode: shippingAddress.pincode || '',
+    phoneNumber: shippingAddress.phoneNumber || '',
   });
 
   const [billingDetails, setBillingDetails] = useState({
@@ -85,6 +86,7 @@ const PlaceOrderPage = ({ history }) => {
     city: billingAddress.city || '',
     state: billingAddress.state || '',
     pincode: billingAddress.pincode || '',
+    phoneNumber: billingAddress.phoneNumber || '',
   });
 
   const [sameAddress, setSameAddress] = useState(false);
@@ -286,7 +288,8 @@ const PlaceOrderPage = ({ history }) => {
                       !billingDetails.addressLine2 ||
                       !billingDetails.city ||
                       !billingDetails.state ||
-                      !billingDetails.pincode))
+                      !billingDetails.pincode ||
+                      !billingDetails.phoneNumber))
                 }
               >
                 Next
@@ -303,7 +306,8 @@ const PlaceOrderPage = ({ history }) => {
                   !shippingDetails.addressLine2 ||
                   !shippingDetails.city ||
                   !shippingDetails.state ||
-                  !shippingDetails.pincode
+                  !shippingDetails.pincode ||
+                  !shippingDetails.phoneNumber
                 }
               >
                 Place Order

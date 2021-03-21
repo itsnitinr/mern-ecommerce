@@ -507,6 +507,8 @@ const OrderDetailsPage = ({ history }) => {
                       {order.billingDetails.addressLine2},{' '}
                       {order.billingDetails.city}, {order.billingDetails.state},{' '}
                       {order.billingDetails.pincode}
+                      <br />
+                      Phone: {order.billingDetails.phoneNumber}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -517,6 +519,8 @@ const OrderDetailsPage = ({ history }) => {
                       {order.shippingDetails.city},{' '}
                       {order.shippingDetails.state},{' '}
                       {order.shippingDetails.pincode}
+                      <br />
+                      Phone: {order.shippingDetails.phoneNumber}
                     </TableCell>
                   </TableRow>
                 </Table>

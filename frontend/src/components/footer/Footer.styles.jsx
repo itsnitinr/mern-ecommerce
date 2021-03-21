@@ -93,24 +93,24 @@ const useStyles = makeStyles((theme) => ({
   },
   copyright: {
     background: '#fff',
-    padding: '1rem 0',
+    padding: '1rem',
     color: '#333',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      flex: 1,
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+        flex: 'initial',
+      },
+    },
   },
-  modal: {
-    fontFamily: theme.typography.fontFamily,
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '80vw',
-    height: '90vh',
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: '2.5rem',
-    overflowY: 'scroll',
-    outline: 0,
-    [theme.breakpoints.down('sm')]: {
-      width: '90vw',
+  disclaimer: {
+    textAlign: 'right',
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
     },
   },
 }));

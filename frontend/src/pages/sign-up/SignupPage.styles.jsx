@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 0, 2),
   },
   link: {
     textDecoration: 'none',
@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     '&:first-line': {
       backgroundColor: 'white',
     },
+  },
+  disclaimer: {
+    color: '#a9a9a9',
+    fontSize: 13,
   },
 }));
 
