@@ -1,16 +1,18 @@
 import {
   AiOutlineHome,
   AiOutlineInfoCircle,
-  AiOutlineUnlock,
   AiOutlineUserAdd,
   AiOutlineUser,
   AiOutlineShoppingCart,
-  AiOutlineLogout,
   AiOutlineUsergroupDelete,
 } from 'react-icons/ai';
 import { VscCircuitBoard } from 'react-icons/vsc';
 import { HiOutlinePhotograph } from 'react-icons/hi';
-import { RiDashboardLine } from 'react-icons/ri';
+import {
+  RiDashboardLine,
+  RiLogoutCircleLine,
+  RiLoginCircleLine,
+} from 'react-icons/ri';
 
 export const getNavItems = (props) => ({
   common: [
@@ -46,7 +48,7 @@ export const getNavItems = (props) => ({
       type: 'button',
       buttonType: 'outlined',
       class: props.classes.signInButton,
-      icon: <AiOutlineUnlock fontSize={28} />,
+      icon: <RiLoginCircleLine fontSize={28} />,
       showInNavbar: false,
     },
     {
@@ -80,7 +82,7 @@ export const getNavItems = (props) => ({
     },
     {
       label: 'Logout',
-      icon: <AiOutlineLogout fontSize={28} />,
+      icon: <RiLogoutCircleLine fontSize={28} />,
       type: 'button',
       buttonType: 'contained',
       class: props.classes.signUpButton,
@@ -108,7 +110,7 @@ export const getNavItems = (props) => ({
     },
     {
       label: 'Logout',
-      icon: <AiOutlineLogout fontSize={28} />,
+      icon: <RiLogoutCircleLine fontSize={28} />,
       type: 'button',
       buttonType: 'contained',
       class: props.classes.signUpButton,

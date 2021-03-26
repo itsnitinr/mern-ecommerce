@@ -76,21 +76,21 @@ const DashboardPage = ({ history }) => {
   const [shippingDialogOpen, setShippingDialogOpen] = useState(false);
 
   const [shippingDetails, setShippingDetails] = useState({
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    pincode: '',
-    phoneNumber: '',
+    addressLine1: shippingAddress.addressLine1 || '',
+    addressLine2: shippingAddress.addressLine2 || '',
+    city: shippingAddress.city || '',
+    state: shippingAddress.state || '',
+    pincode: shippingAddress.pincode || '',
+    phoneNumber: shippingAddress.phoneNumber || '',
   });
 
   const [billingDetails, setBillingDetails] = useState({
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    pincode: '',
-    phoneNumber: '',
+    addressLine1: billingAddress.addressLine1 || '',
+    addressLine2: billingAddress.addressLine2 || '',
+    city: billingAddress.city || '',
+    state: billingAddress.state || '',
+    pincode: billingAddress.pincode || '',
+    phoneNumber: billingAddress.phoneNumber || '',
   });
 
   const onShippingChange = (e) => {

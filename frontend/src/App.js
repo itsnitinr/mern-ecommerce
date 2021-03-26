@@ -24,6 +24,8 @@ import OrderDetailsPage from './pages/order-details/OrderDetailsPage.component';
 import AdminPanelUsers from './pages/admin-panel-users/AdminPanelUsers.component';
 import EditUserPage from './pages/edit-user/EditUserPage.component';
 import AdminPanelOrders from './pages/admin-panel-orders/AdminPanelOrders.component';
+import TermsPage from './pages/terms/TermsPage.component';
+import PrivacyPage from './pages/privacy/PrivacyPage.component';
 import { closeSnackbar } from './redux/alert/alert.actions';
 import store from './redux/store';
 import theme from './theme';
@@ -64,6 +66,8 @@ const App = () => {
                 <Route exact path="/" component={LandingPage} />
                 <Route path="/about" component={AboutPage} />
                 <Route path="/gallery" component={GalleryPage} />
+                <Route path="/terms" component={TermsPage} />
+                <Route path="/privacy" component={PrivacyPage} />
                 <Route path="/signup" component={SignupPage} />
                 <Route path="/signin" component={SigninPage} />
                 <Route path="/guidelines" component={GuidelinesPage} />

@@ -30,7 +30,10 @@ const Footer = () => {
         <Container>
           <Grid container spacing={4} justify="center" alignItems="flex-start">
             <Grid item md={3} sm={12}>
-              <Logo style={{ height: '100%', width: '100%' }} />
+              <Logo
+                onClick={() => window.scrollTo(0, 0)}
+                style={{ height: '100%', width: '100%' }}
+              />
             </Grid>
             <Grid item md={3} sm={6}>
               <Typography className={classes.footerHead} variant="h5">

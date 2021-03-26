@@ -75,6 +75,25 @@ const BillingDetails = ({ details, onChange, sameAddress, setSameAddress }) => {
               </Grid>
               <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth required>
+                  <InputLabel id="stateLabel">State</InputLabel>
+                  <Select
+                    labelId="stateLabel"
+                    label="State"
+                    color="secondary"
+                    name="state"
+                    value={details.state}
+                    onChange={onChange}
+                  >
+                    {regionData.map((state) => (
+                      <MenuItem value={state.state} key={state.state}>
+                        {state.state}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl variant="outlined" fullWidth required>
                   <InputLabel id="cityLabel">City / Town</InputLabel>
                   <Select
                     labelId="cityLabel"
@@ -109,25 +128,6 @@ const BillingDetails = ({ details, onChange, sameAddress, setSameAddress }) => {
                   value={details.pincode}
                   onChange={onChange}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl variant="outlined" fullWidth required>
-                  <InputLabel id="stateLabel">State</InputLabel>
-                  <Select
-                    labelId="stateLabel"
-                    label="State"
-                    color="secondary"
-                    name="state"
-                    value={details.state}
-                    onChange={onChange}
-                  >
-                    {regionData.map((state) => (
-                      <MenuItem value={state.state} key={state.state}>
-                        {state.state}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <TextField

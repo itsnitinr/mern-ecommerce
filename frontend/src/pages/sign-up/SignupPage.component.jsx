@@ -16,8 +16,13 @@ import TermsModal from '../../components/terms-modal/TermsModal.component';
 import PrivacyModal from '../../components/privacy-modal/PrivacyModal.component';
 import useStyles from './SignupPage.styles';
 import GoogleOAuthButton from '../../components/google-oauth-button/GoogleOAuthButton.component';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
 
 import { registerUser } from '../../redux/user/user.actions';
+import { enqueueSnackbar } from '../../redux/alert/alert.actions';
 
 export default function SignUp({ history, location }) {
   const classes = useStyles();
@@ -28,6 +33,8 @@ export default function SignUp({ history, location }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [termsModalOpen, setTermsModalOpen] = useState(false);
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { loading } = useSelector((state) => state.userRegister);
   const { user } = useSelector((state) => state.userLogin);
@@ -36,8 +43,20 @@ export default function SignUp({ history, location }) {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
+    if (password.length < 8)
+      return dispatch(
+        enqueueSnackbar({
+          message: 'Password should be atleast 8 characters long',
+          options: { variant: 'error' },
+        })
+      );
     if (password !== confirmPassword) {
-      alert('Passwords dont match!');
+      dispatch(
+        enqueueSnackbar({
+          message: 'Passwords do not match',
+          options: { variant: 'error' },
+        })
+      );
     } else {
       dispatch(registerUser(name, email, password));
       history.push('/');
@@ -104,11 +123,24 @@ export default function SignUp({ history, location }) {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowPassword(!showPassword)}
+                          edge="end"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -118,11 +150,30 @@ export default function SignUp({ history, location }) {
                   fullWidth
                   name="confirmPassword"
                   label="Confirm Password"
-                  type="password"
+                  type={showConfirmPassword ? 'text' : 'password'}
                   id="confirmPassword"
                   autoComplete="current-password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
+                          edge="end"
+                        >
+                          {showConfirmPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </Grid>
             </Grid>

@@ -90,19 +90,6 @@ const ShippingDetails = ({ details, onChange }) => {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  type="number"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  InputProps={{ inputProps: { max: 999999 } }}
-                  name="pincode"
-                  label="Pincode"
-                  value={details.pincode}
-                  onChange={onChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth required>
                   <InputLabel id="cityLabel">City / Town</InputLabel>
                   <Select
@@ -125,6 +112,19 @@ const ShippingDetails = ({ details, onChange }) => {
                       : []}
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  type="number"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  InputProps={{ inputProps: { max: 999999 } }}
+                  name="pincode"
+                  label="Pincode"
+                  value={details.pincode}
+                  onChange={onChange}
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField

@@ -11,12 +11,12 @@ import {
   Menu,
   MenuItem,
 } from '@material-ui/core';
+import { AiOutlineUserAdd } from 'react-icons/ai';
 import {
-  AiOutlineUnlock,
-  AiOutlineUserAdd,
-  AiOutlineLogout,
-} from 'react-icons/ai';
-import { RiDashboardLine } from 'react-icons/ri';
+  RiDashboardLine,
+  RiLoginCircleLine,
+  RiLogoutCircleLine,
+} from 'react-icons/ri';
 import { FaUserCircle } from 'react-icons/fa';
 import { ReactComponent as Logo } from '../../assets/PCBCUPIDlogotext.svg';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -202,7 +202,7 @@ const NavMenu = ({ classes, navItems, navCommon, user, dispatch, logout }) => {
                   disableRipple
                   disableTouchRipple
                   disableFocusRipple
-                  startIcon={<AiOutlineUnlock />}
+                  startIcon={<RiLoginCircleLine />}
                 >
                   Login
                 </Button>
@@ -216,7 +216,7 @@ const NavMenu = ({ classes, navItems, navCommon, user, dispatch, logout }) => {
               disableRipple
               disableTouchRipple
               disableFocusRipple
-              startIcon={<AiOutlineLogout />}
+              startIcon={<RiLogoutCircleLine />}
               onClick={() => dispatch(logout())}
             >
               Logout
@@ -233,7 +233,7 @@ const NavMenu = ({ classes, navItems, navCommon, user, dispatch, logout }) => {
                   disableFocusRipple
                   startIcon={<RiDashboardLine />}
                 >
-                  Account
+                  Dashboard
                 </Button>
               </MenuItem>
             </Link>
@@ -243,7 +243,7 @@ const NavMenu = ({ classes, navItems, navCommon, user, dispatch, logout }) => {
                 disableRipple
                 disableTouchRipple
                 disableFocusRipple
-                startIcon={<AiOutlineLogout />}
+                startIcon={<RiLogoutCircleLine />}
                 onClick={() => dispatch(logout())}
               >
                 Logout

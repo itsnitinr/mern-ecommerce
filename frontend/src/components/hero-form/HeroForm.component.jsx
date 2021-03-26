@@ -85,7 +85,7 @@ const HeroForm = () => {
             <InputLabel id="thicknessLabel">Thickness</InputLabel>
             <Select
               labelId="thicknessLabel"
-              label="Layers"
+              label="Thickness"
               color="secondary"
               value={thickness}
               onChange={(e) => setThickness(e.target.value)}
