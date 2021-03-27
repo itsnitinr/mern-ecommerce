@@ -24,7 +24,6 @@ app.use('/api/users', require('./routes/user.routes'));
 app.use('/api/orders', require('./routes/order.routes'));
 
 // Gerber file upload
-const { auth } = require('./middlewares/auth.middleware');
 const uploadGerber = require('./utils/uploadGerber.utils');
 const asyncHandler = require('express-async-handler');
 
@@ -32,16 +31,14 @@ app.post(
   '/api/upload',
   uploadGerber.single('gerberFile'),
   asyncHandler((req, res) => {
-    res.json({ file: req.file.path });
+    res.json({ file: req.file.location });
   })
 );
 
 app.use(express.static(path.join(__dirname, '../frontend/build'))) /
-    app.get('*', (req, res) =>
-      res.sendFile(
-        path.resolve(__dirname, '../frontend', 'build', 'index.html')
-      )
-    );
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'))
+  );
 
 // Handle errors
 app.use(routeNotFound);
